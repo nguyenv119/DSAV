@@ -1,4 +1,4 @@
-# DSA Visualizer: https://nguyenv119.github.io/DSAV/
+# DSA Visualizer: https://nguyenv119.github.io/SortingVisualizer/
 
 Hey there! 🧋
 
