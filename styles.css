@@ -1,3 +1,7 @@
 h1 {
   color: red;
 }
+
+:root {
+  background-color: black;
+}
