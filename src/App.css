@@ -11,6 +11,7 @@
   --gradcolor1: #ec0000;
   --gradcolor2: #cd24ff;
   --gradcolor3: #4600a6;
+    overflow-x: hidden;
 }
 
 body {
