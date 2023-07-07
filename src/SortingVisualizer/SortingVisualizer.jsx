@@ -1,16 +1,3 @@
-
-
-
-                                    /* 
-                                    TODO:
-                                    * ? : formatting
-                                    ? Progress bar corresponding to the completed animations? 
-                                    ? Pop ups/down thing to show code while its running, explain runtime
-                                    */
-
-
-
-
 import React from "react";
 import {mergeSortExp} from "../SortingAlgos/mergeSort"
 import {bubbleSortExp} from "../SortingAlgos/bubbleSort"
@@ -54,7 +41,7 @@ export default class SortingVisualizer extends React.Component {
             BARS: 10, 
             sortingInProgress: false, 
             activeButton: null,
-            comparisons: 0
+            comparisons: 0,
         };
     };
 
@@ -144,7 +131,6 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars, ANIMATION_SPEED_MS] = this.makeProps();
         let comparisons = 0;
         let [animations, arr] = bubbleSortExp(array, arrayBars, ANIMATION_SPEED_MS, comparisons, this.updateComparisons)
-        
 
         setTimeout(() => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
