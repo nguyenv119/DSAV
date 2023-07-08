@@ -69,11 +69,11 @@ export default class SortingVisualizer extends React.Component {
     getSpeed(ANIMATION_SPEED_MS) {
         const speed = ANIMATION_SPEED_MS === 10?
         1 : ANIMATION_SPEED_MS === 8 ?
-            4 : ANIMATION_SPEED_MS === 6 ?
-                10 : ANIMATION_SPEED_MS === 4 ?
-                    100 : ANIMATION_SPEED_MS === 2 ?
-                        500 : ANIMATION_SPEED_MS === 0 ?
-                            1000 : 3000;
+            10 : ANIMATION_SPEED_MS === 6 ?
+                20 : ANIMATION_SPEED_MS === 4 ?
+                    200 : ANIMATION_SPEED_MS === 2 ?
+                        1000 : ANIMATION_SPEED_MS === 0 ?
+                            2000 : 3000;
         return speed;
     }
 
@@ -136,11 +136,9 @@ export default class SortingVisualizer extends React.Component {
     bubbleSort() {
         let [array, arrayBars, ANIMATION_SPEED_MS] = this.makeProps();
         let comparisons = 0;
-        let [animations, arr] = bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons)
-
-        setTimeout(() => {
+        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons).then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
-        }, (animations.length) * ANIMATION_SPEED_MS);
+        })
     }
 
     selectionSort() {

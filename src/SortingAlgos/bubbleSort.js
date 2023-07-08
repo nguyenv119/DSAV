@@ -8,12 +8,15 @@ import {    PRIMARY_COLOR,
         } from "../SortingVisualizer/SortingVisualizer";
 
 const GOOD_COLOR = "#9706ff";
-/** The bubbleSort function we are exporting with the animation array */
+
+/*
+? The bubbleSort function we are exporting with the animation array */
 export function bubbleSortExp(array, arrayBars, getSpeedCallback, comparisons, updateComparisons) {
-    resetAllBarColors(arrayBars, PRIMARY_COLOR);        
-    const [res, arr] = getBubbleSortAnimationArray(array.slice());
-    animate(res, arrayBars, 0, array.length - 1, getSpeedCallback, comparisons, updateComparisons);
-    return [res, arr];
+    return new Promise((resolve) => {
+        const [animations, arr] = getBubbleSortAnimationArray(array.slice());
+        resetAllBarColors(arrayBars, PRIMARY_COLOR);        
+        animate(animations, arrayBars, 0, array.length - 1, getSpeedCallback, comparisons, updateComparisons, () => resolve(arr));
+    })
 }
 
 /**
@@ -71,27 +74,33 @@ function bubbleSort(array, animations) {
     }
 }
 
-/** Animates bubbleSort */
-function animate(res, arrayBars, completedAnimations, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons) {
-    if (completedAnimations >= res.length) return;
-
+/*
+? Animates bubbleSort */
+function animate(animations, arrayBars, completedAnimations, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, resolveCallback) {
+    if (completedAnimations >= animations.length) {
+        /*
+        ? Resolves promise when animation is finished */
+        greenify(completedAnimations, animations, arrayBars);
+        resolveCallback(animations) 
+        return;
+    }
     const i = completedAnimations;
     const stage = i % 3;
 
     let nextStepTimeout = 0;
 
     if (stage === 0) {
-        const [barOneIdx, barTwoIdx] = res[i];
+        const [barOneIdx, barTwoIdx] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         const barTwoStyle = arrayBars[barTwoIdx].style;
 
         barOneStyle.backgroundColor = SECONDARY_COLOR;
         barTwoStyle.backgroundColor = SECONDARY_COLOR;
         completedAnimations++;
-        nextStepTimeout = getSpeedCallback();
+        // nextStepTimeout = getSpeedCallback();
     } else if (stage === 1) {
-        const [indexJ, indexJ1] = res[i - 1];
-        const [indexJVal, indexJ1Val] = res[i];
+        const [indexJ, indexJ1] = animations[i - 1];
+        const [indexJVal, indexJ1Val] = animations[i];
 
         if (indexJVal === indexJ1Val) {
             const barOneStyle = arrayBars[indexJ].style;
@@ -101,7 +110,6 @@ function animate(res, arrayBars, completedAnimations, toBeSortedIndex, getSpeedC
             barTwoStyle.backgroundColor = SAMESIZE_COLOR;
             updateComparisons(comparisons + 1);
             comparisons++;
-            nextStepTimeout = getSpeedCallback();
         } else {
             const smallerBarIndex = (indexJVal < indexJ1Val) ? indexJ : indexJ1;
             const largerBarIndex = (smallerBarIndex === indexJ) ? indexJ1 : indexJ;
@@ -112,14 +120,11 @@ function animate(res, arrayBars, completedAnimations, toBeSortedIndex, getSpeedC
             barTwoStyle.backgroundColor = LARGER_COLOR;
             updateComparisons(comparisons + 1);
             comparisons++;
-            nextStepTimeout = getSpeedCallback();
         }
         completedAnimations++;
-        greenify(completedAnimations, res, arrayBars);
-
     } else {
-        const [indexJ, indexJ1] = res[i - 2];
-        const [indexJVal, indexJ1Val] = res[i - 1];
+        const [indexJ, indexJ1] = animations[i - 2];
+        const [indexJVal, indexJ1Val] = animations[i - 1];
 
         const smallerBarIndex = (indexJVal < indexJ1Val) ? indexJ : indexJ1;
         const largerBarIndex = (smallerBarIndex === indexJ) ? indexJ1 : indexJ;
@@ -144,12 +149,10 @@ function animate(res, arrayBars, completedAnimations, toBeSortedIndex, getSpeedC
                 toBeSortedIndex--;
             }
         }, getSpeedCallback())
-        
-        greenify(completedAnimations, res, arrayBars);
-        nextStepTimeout = getSpeedCallback();
-
+    
     }
-    setTimeout(() => animate(res, arrayBars, completedAnimations, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons), nextStepTimeout);
+    nextStepTimeout = getSpeedCallback();
+    setTimeout(() => animate(animations, arrayBars, completedAnimations, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
 }
 
 
