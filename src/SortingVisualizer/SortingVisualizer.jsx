@@ -60,6 +60,13 @@ export default class SortingVisualizer extends React.Component {
         this.setState({ buttonsDisabled: true, isSorting: true, sortingInProgress: true });
         const arrayBars = document.getElementsByClassName("arrayBar");
         const { array, ANIMATION_SPEED_MS } = this.state;
+        const speed = this.getSpeed(ANIMATION_SPEED_MS );
+        return [array, arrayBars, speed];
+    }
+
+    /*
+    ? Gets the speed of the animation */
+    getSpeed(ANIMATION_SPEED_MS) {
         const speed = ANIMATION_SPEED_MS === 10?
         1 : ANIMATION_SPEED_MS === 8 ?
             4 : ANIMATION_SPEED_MS === 6 ?
@@ -67,8 +74,7 @@ export default class SortingVisualizer extends React.Component {
                     100 : ANIMATION_SPEED_MS === 2 ?
                         500 : ANIMATION_SPEED_MS === 0 ?
                             1000 : 3000;
-        
-        return [array, arrayBars, speed];
+        return speed;
     }
 
     /* 
@@ -130,7 +136,7 @@ export default class SortingVisualizer extends React.Component {
     bubbleSort() {
         let [array, arrayBars, ANIMATION_SPEED_MS] = this.makeProps();
         let comparisons = 0;
-        let [animations, arr] = bubbleSortExp(array, arrayBars, ANIMATION_SPEED_MS, comparisons, this.updateComparisons)
+        let [animations, arr] = bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons)
 
         setTimeout(() => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
@@ -190,10 +196,7 @@ export default class SortingVisualizer extends React.Component {
     /* 
     ? Changes the speed of animation */
     handleAnimationSpeedChange = (e) => {
-        if (!this.state.isSorting) {
-            const newSpeed = parseInt(e.target.value);
-            this.setState({ ANIMATION_SPEED_MS: newSpeed });
-        }
+        this.setState({ ANIMATION_SPEED_MS: parseInt(e.target.value) });
     };
     
     /* 
