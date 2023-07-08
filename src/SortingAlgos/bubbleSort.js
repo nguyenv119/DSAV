@@ -13,8 +13,12 @@ const GOOD_COLOR = "#9706ff";
 ? The bubbleSort function we are exporting with the animation array */
 export function bubbleSortExp(array, arrayBars, getSpeedCallback, comparisons, updateComparisons) {
     return new Promise((resolve) => {
-        const [animations, arr] = getBubbleSortAnimationArray(array.slice());
         resetAllBarColors(arrayBars, PRIMARY_COLOR);        
+        const [animations, arr] = getBubbleSortAnimationArray(array.slice());
+        /*
+        ? We need to pass in () => resolve(arr) to
+        ? 1. The parameter of arr lets the promise know what to return, the actual sorted array
+        ? 2. The callback function requires for the "animate" function to be completed before returning. If we removed the "() =>" JS asynchronous nature would return it immedientally */
         animate(animations, arrayBars, 0, array.length - 1, getSpeedCallback, comparisons, updateComparisons, () => resolve(arr));
     })
 }
@@ -97,7 +101,7 @@ function animate(animations, arrayBars, completedAnimations, toBeSortedIndex, ge
         barOneStyle.backgroundColor = SECONDARY_COLOR;
         barTwoStyle.backgroundColor = SECONDARY_COLOR;
         completedAnimations++;
-        // nextStepTimeout = getSpeedCallback();
+
     } else if (stage === 1) {
         const [indexJ, indexJ1] = animations[i - 1];
         const [indexJVal, indexJ1Val] = animations[i];
@@ -122,6 +126,7 @@ function animate(animations, arrayBars, completedAnimations, toBeSortedIndex, ge
             comparisons++;
         }
         completedAnimations++;
+
     } else {
         const [indexJ, indexJ1] = animations[i - 2];
         const [indexJVal, indexJ1Val] = animations[i - 1];
@@ -155,9 +160,4 @@ function animate(animations, arrayBars, completedAnimations, toBeSortedIndex, ge
     setTimeout(() => animate(animations, arrayBars, completedAnimations, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
 }
 
-
-
-
-  
-  
 

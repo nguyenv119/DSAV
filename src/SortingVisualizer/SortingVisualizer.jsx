@@ -59,9 +59,8 @@ export default class SortingVisualizer extends React.Component {
     makeProps() {
         this.setState({ buttonsDisabled: true, isSorting: true, sortingInProgress: true });
         const arrayBars = document.getElementsByClassName("arrayBar");
-        const { array, ANIMATION_SPEED_MS } = this.state;
-        const speed = this.getSpeed(ANIMATION_SPEED_MS );
-        return [array, arrayBars, speed];
+        const { array } = this.state;
+        return [array, arrayBars];
     }
 
     /*
@@ -134,7 +133,7 @@ export default class SortingVisualizer extends React.Component {
      * to be the sorted array, as to not redo the animations on the unsorted array
      * if it were not replaced with the sorted array */ 
     bubbleSort() {
-        let [array, arrayBars, ANIMATION_SPEED_MS] = this.makeProps();
+        let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
         bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons).then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
@@ -142,43 +141,44 @@ export default class SortingVisualizer extends React.Component {
     }
 
     selectionSort() {
-        let [array, arrayBars, ANIMATION_SPEED_MS] = this.makeProps();
+        let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
-        let [animations, arr] = selectionSortExp(array, arrayBars, ANIMATION_SPEED_MS, comparisons, this.updateComparisons);
 
-        setTimeout(() => {
+        selectionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons).then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
-        }, (animations.length) * ANIMATION_SPEED_MS);
+        })
     }
 
     insertionSort() {
-        let [array, arrayBars, ANIMATION_SPEED_MS] = this.makeProps();
+        let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
-        let [animations, arr] = insertionSortExp(array, arrayBars, ANIMATION_SPEED_MS, comparisons, this.updateComparisons);
 
-        setTimeout(() => {
+        insertionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons).then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
-        }, (animations.length) * ANIMATION_SPEED_MS);
+        })
     }
     
     mergeSort() {
-        let [array, arrayBars, ANIMATION_SPEED_MS] = this.makeProps();
+        let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
-        let [animations, arr] = mergeSortExp(array, arrayBars, ANIMATION_SPEED_MS, comparisons, this.updateComparisons);
 
-        setTimeout(() => {
+        mergeSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons).then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
-        }, (animations.length * 1.15) * ANIMATION_SPEED_MS);
+        })
     }
 
     heapSort() {
-        let [array, arrayBars, ANIMATION_SPEED_MS] = this.makeProps();
+        let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
-        let [maxHeapAnimations, heapSortAnimations, arr] = heapSortExp(array, arrayBars, ANIMATION_SPEED_MS, comparisons, this.updateComparisons);
+        // let [maxHeapAnimations, heapSortAnimations, arr] = heapSortExp(array, arrayBars, ANIMATION_SPEED_MS, comparisons, this.updateComparisons);
 
-        setTimeout(() => {
+        heapSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons).then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
-        }, (maxHeapAnimations.length + heapSortAnimations.length) * ANIMATION_SPEED_MS);
+        })
+
+        // setTimeout(() => {
+        //     this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
+        // }, (maxHeapAnimations.length + heapSortAnimations.length) * ANIMATION_SPEED_MS);
     }
     
     /* 
@@ -344,13 +344,8 @@ export default class SortingVisualizer extends React.Component {
     }
 }
 
-/*
-! Put functions outside 
-*/
-
 /* 
-? Generates random int from min to max 
-*/
+? Generates random int from min to max */
 function randomIntFrom(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
