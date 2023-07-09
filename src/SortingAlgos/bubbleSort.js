@@ -101,6 +101,7 @@ function animate(animations, arrayBars, completedAnimations, toBeSortedIndex, ge
         barOneStyle.backgroundColor = SECONDARY_COLOR;
         barTwoStyle.backgroundColor = SECONDARY_COLOR;
         completedAnimations++;
+        nextStepTimeout = getSpeedCallback(); 
 
     } else if (stage === 1) {
         const [indexJ, indexJ1] = animations[i - 1];
@@ -126,6 +127,7 @@ function animate(animations, arrayBars, completedAnimations, toBeSortedIndex, ge
             comparisons++;
         }
         completedAnimations++;
+        nextStepTimeout = getSpeedCallback(); 
 
     } else {
         const [indexJ, indexJ1] = animations[i - 2];
@@ -154,9 +156,9 @@ function animate(animations, arrayBars, completedAnimations, toBeSortedIndex, ge
                 toBeSortedIndex--;
             }
         }, getSpeedCallback())
-    
+        nextStepTimeout = getSpeedCallback(); 
     }
-    nextStepTimeout = getSpeedCallback();
+    // nextStepTimeout = getSpeedCallback();
     setTimeout(() => animate(animations, arrayBars, completedAnimations, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
 }
 
