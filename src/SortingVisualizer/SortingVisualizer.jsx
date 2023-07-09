@@ -1,6 +1,13 @@
 
 
 
+
+                                    /*
+                                    TODO: Do heap-sorting speed
+                                    ? We can try make merge-sort more compelling by changing the margins of the size of the auxiliary array 
+                                    ? */
+
+
 import React from "react";
 import {mergeSortExp} from "../SortingAlgos/mergeSort"
 import {bubbleSortExp} from "../SortingAlgos/bubbleSort"

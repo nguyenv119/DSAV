@@ -33,10 +33,9 @@ function getMergeSortAnimationArray(arr) {
 }
 
 /** The actual merge sort function 
- * 0: initial compare
- * 1: indexSmall, indexLarge
- * 2: indexSmallValue, indexLargeValue
- * 3: replace index with heights
+ * 0: initial highlighting bars: index1, index2
+ * 1: comparing values
+ * 2: replace with heights: indexSmallValue, indexLargeValue
 */
 function mergeSort(array, l, r, copy, animations) {
 
@@ -69,13 +68,11 @@ function mergeSort(array, l, r, copy, animations) {
                  * readded
                  * 
                  */
-                // animations.push([i, j]);
                 animations.push([copy[i], copy[j]]);
                 animations.push([index, copy[i]]);
                 mainArr[index++] = copy[i++];
             }
             else {
-                // animations.push([j, i]);
                 animations.push([copy[j], copy[i]]);
                 animations.push([index, copy[j]]);
                 mainArr[index++] = copy[j++];
@@ -109,7 +106,8 @@ function mergeSort(array, l, r, copy, animations) {
 }
 
 
-/** Animates mergeSort */
+/*
+? Animates mergeSort */
 function animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, resolveCallback) {
     if (completedAnimations >= animations.length) {
         greenify(completedAnimations, animations, arrayBars);
@@ -137,7 +135,6 @@ function animate(animations, arrayBars, completedAnimations, getSpeedCallback, c
 
     } else if (stage === 1) {
         const [indexSmall, indexLarge] = animations[i - 1];
-        const [smallBar, largeBar] = animations[i];
         const smallBarStyle = arrayBars[indexSmall].style;
         const largeBarStyle = arrayBars[indexLarge].style;
 
