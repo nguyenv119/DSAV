@@ -7,6 +7,8 @@ import {    PRIMARY_COLOR,
             DONE_COLOR
         } from "../SortingVisualizer/SortingVisualizer";
 
+const GOOD_COLOR = "#9706ff";
+
 /** The mergeSort function we are exporting with the animation array */
 export function mergeSortExp(array, arrayBars, getSpeedCallback, comparisons, updateComparisons) {
     return new Promise((resolve) => {
@@ -33,9 +35,10 @@ function getMergeSortAnimationArray(arr) {
 }
 
 /** The actual merge sort function 
- * 0: initial highlighting bars: index1, index2
- * 1: comparing values
- * 2: replace with heights: indexSmallValue, indexLargeValue
+ * 0: initial compare
+ * 1: indexSmall, indexLarge
+ * 2: indexSmallValue, indexLargeValue
+ * 3: replace index with heights
 */
 function mergeSort(array, l, r, copy, animations) {
 
@@ -68,12 +71,14 @@ function mergeSort(array, l, r, copy, animations) {
                  * readded
                  * 
                  */
-                animations.push([copy[i], copy[j]]);
+                animations.push([i, j]);
+                // animations.push([copy[i], copy[j]]);
                 animations.push([index, copy[i]]);
                 mainArr[index++] = copy[i++];
             }
             else {
-                animations.push([copy[j], copy[i]]);
+                animations.push([j, i]);
+                // animations.push([copy[j], copy[i]]);
                 animations.push([index, copy[j]]);
                 mainArr[index++] = copy[j++];
             }
@@ -81,15 +86,15 @@ function mergeSort(array, l, r, copy, animations) {
     
         while (i <= m) {
             animations.push([i, i]);
-            // animations.push([i, i]);
-            animations.push([copy[i], copy[i]]);
+            animations.push([i, i]);
+            // animations.push([copy[i], copy[i]]);
             animations.push([index, copy[i]])
             mainArr[index++] = copy[i++];
         }
         while (j <= r) {
             animations.push([j, j]);
-            // animations.push([j, j]);
-            animations.push([copy[j], copy[j]]);
+            animations.push([j, j]);
+            // animations.push([copy[j], copy[j]]);
             animations.push([index, copy[j]])
             mainArr[index++] = copy[j++];
         }
@@ -106,8 +111,7 @@ function mergeSort(array, l, r, copy, animations) {
 }
 
 
-/*
-? Animates mergeSort */
+/** Animates mergeSort */
 function animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, resolveCallback) {
     if (completedAnimations >= animations.length) {
         greenify(completedAnimations, animations, arrayBars);
@@ -127,24 +131,33 @@ function animate(animations, arrayBars, completedAnimations, getSpeedCallback, c
 
         barOneStyle.backgroundColor = SECONDARY_COLOR;
         barTwoStyle.backgroundColor = SECONDARY_COLOR;
-        completedAnimations++;
+        completedAnimations ++;
 
         /*
         ? We have to use the latest speed changed in the animation due to some delay */
         nextStepTimeout = getSpeedCallback();  
-
+    
     } else if (stage === 1) {
-        const [indexSmall, indexLarge] = animations[i - 1];
+        const [indexSmall, indexLarge] = animations[i];
         const smallBarStyle = arrayBars[indexSmall].style;
         const largeBarStyle = arrayBars[indexLarge].style;
 
-        smallBarStyle.backgroundColor = LARGER_COLOR;
-        largeBarStyle.backgroundColor = SMALLER_COLOR;
-
+        /*
+        ? If it's the same index, meaning extra elements from auxiliary left right arr */
+        if (indexSmall === indexLarge) {
+            smallBarStyle.backgroundColor = GOOD_COLOR;
+        } else if (arrayBars[indexSmall] === arrayBars[indexLarge]) {
+            smallBarStyle.backgroundColor = SAMESIZE_COLOR;
+            largeBarStyle.backgroundColor = SAMESIZE_COLOR;
+        } else {
+            smallBarStyle.backgroundColor = LARGER_COLOR;
+            largeBarStyle.backgroundColor = SMALLER_COLOR;
+        }
         setTimeout(() => {
             smallBarStyle.backgroundColor = PRIMARY_COLOR;
             largeBarStyle.backgroundColor = PRIMARY_COLOR;
         }, getSpeedCallback());
+
         updateComparisons(comparisons + 1);
         comparisons++;
         completedAnimations++;
@@ -162,7 +175,7 @@ function animate(animations, arrayBars, completedAnimations, getSpeedCallback, c
         setTimeout(() => {
             barOneStyle.backgroundColor = PRIMARY_COLOR;
         }, getSpeedCallback());
+        nextStepTimeout = getSpeedCallback();  
     }
-    nextStepTimeout = getSpeedCallback();  
     setTimeout(() => animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
 }
