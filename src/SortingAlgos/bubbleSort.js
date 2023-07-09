@@ -20,7 +20,7 @@ export function bubbleSortExp(array, arrayBars, getSpeedCallback, comparisons, u
         ? 1. The parameter of arr lets the promise know what to return, the actual sorted array
         ? 2. The callback function requires for the "animate" function to be completed before returning. If we removed the "() =>" JS asynchronous nature would return it immedientally */
         animate(animations, arrayBars, 0, array.length - 1, getSpeedCallback, comparisons, updateComparisons, () => resolve(arr));
-    })
+    });
 }
 
 /**
