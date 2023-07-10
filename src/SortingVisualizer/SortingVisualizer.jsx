@@ -9,6 +9,8 @@
                                     TODO: MergeSort
                                     ? We can try make merge-sort more compelling by changing the margins of the size of the auxiliary array 
                                     ? Make it more visually compelling by pinking the completion of the merging of aux arrays
+
+                                    CHECKING
                                     */
 
 
