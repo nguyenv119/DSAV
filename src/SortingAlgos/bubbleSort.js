@@ -158,7 +158,6 @@ function animate(animations, arrayBars, completedAnimations, toBeSortedIndex, ge
         }, getSpeedCallback())
         nextStepTimeout = getSpeedCallback(); 
     }
-    // nextStepTimeout = getSpeedCallback();
     setTimeout(() => animate(animations, arrayBars, completedAnimations, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
 }
 

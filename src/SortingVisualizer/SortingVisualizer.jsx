@@ -3,6 +3,7 @@
 
 
                                     /*
+                                    ! Add a super fast sorting option so we can have that option, not to wait for so damn long: in there, we just run the regular animate
                                     TODO: Do heap-sorting speed
 
                                     TODO: MergeSort
@@ -183,15 +184,10 @@ export default class SortingVisualizer extends React.Component {
     heapSort() {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
-        // let [maxHeapAnimations, heapSortAnimations, arr] = heapSortExp(array, arrayBars, ANIMATION_SPEED_MS, comparisons, this.updateComparisons);
 
         heapSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons).then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
         })
-
-        // setTimeout(() => {
-        //     this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
-        // }, (maxHeapAnimations.length + heapSortAnimations.length) * ANIMATION_SPEED_MS);
     }
     
     /* 

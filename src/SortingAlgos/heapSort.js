@@ -12,12 +12,22 @@ const NO_SWITCH_COLOR = "#9706ff";
 ! We have to animate the buildMaxHeap and sorting differently, since they both use heapifyDown, 
 ! but we have different animations 
 */
-export function heapSortExp(array, arrayBars, ANIMATION_SPEED_MS, comparisons, updateComparisons) {
-    resetAllBarColors(arrayBars, PRIMARY_COLOR);     
-    const [maxHeapAnimations, heapSortAnimations, arr] = getHeapSortAnimationArray(array.slice());
-    let newCompare = animateMaxHeap(maxHeapAnimations, arrayBars, 0, ANIMATION_SPEED_MS, comparisons, updateComparisons);
-    animateHeapSort(heapSortAnimations, maxHeapAnimations, arrayBars, 0, ANIMATION_SPEED_MS, newCompare, updateComparisons);
-    return [maxHeapAnimations, heapSortAnimations, arr];
+export function heapSortExp(array, arrayBars, getSpeedCallback, comparisons, updateComparisons) {
+    return new Promise((resolve) => {
+        resetAllBarColors(arrayBars, PRIMARY_COLOR);     
+        const [maxHeapAnimations, heapSortAnimations, arr] = getHeapSortAnimationArray(array.slice());
+        /*
+        ? animateMaxHeap returns a promise, only after which we called animateHeapSort */
+        animateMaxHeap(maxHeapAnimations, arrayBars, 0, getSpeedCallback, comparisons, updateComparisons)
+        .then((comparisons) => {
+            /*
+            ? animateHeapSort also returns a promise, which after it is done, then we return the original array to the React component for it to update its state with */
+            animateHeapSort(heapSortAnimations, arrayBars, 0, getSpeedCallback, comparisons, updateComparisons)
+            .then(() => {
+                resolve(arr);
+            })
+        })
+    });
 }
 
 function getHeapSortAnimationArray(arr) {
@@ -143,77 +153,84 @@ function heapSort(array, maxHeapAnimations, heapSortAnimations) {
         heapSize--;
         heapifyDownSort(array, 0, heapSize + 1, heapSortAnimations, true);
     }
-    console.log(`${array}`);
 }
-
 
 /*
  ! Build MAXHEAP ANIMATION
  * 0: We highlight the 3 bars to compare the indices(index, left, right)
  * 1: Highlight the largest one GREEN, the rest RED
  * 2: Switch heights, and keeping the color of the heights before, then back to primary, do i + 1 timing
- */
-function animateMaxHeap(maxHeapAnimations, arrayBars, completedAnimations, ANIMATION_SPEED_MS, comparisons, updateComparisons) {
-    let alreadyCompared = comparisons;
-    for (let i = 0; i < maxHeapAnimations.length; i++) {
-        const stage = i % 3;
-        /*
-         ? maxHeapAnimations.push([idx, left, (right)]); */
-        if (stage === 0) {
-            setTimeout(() => {
-                for (let j = 0; j < maxHeapAnimations[i].length; j++) {
-                    arrayBars[maxHeapAnimations[i][j]].style.backgroundColor = SECONDARY_COLOR;
+ */    
+
+function animateMaxHeap(maxHeapAnimations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons) {
+
+    return new Promise(async resolve => {
+        for (const animation of maxHeapAnimations) {
+
+            const stage = completedAnimations % 3;
+            let nextStepTimeout = 0;
+
+            if (stage === 0) {
+                for (let j = 0; j < animation.length; j++) {
+                    arrayBars[animation[j]].style.backgroundColor = SECONDARY_COLOR;
                 }
                 completedAnimations++;
-            }, (i) * ANIMATION_SPEED_MS);
-        }
-        /* 
-        ? maxHeapAnimations.push([largest, other, (other)]); */
-        else if (stage === 1) {
-            setTimeout(() => {
-                for (let j = 0; j < maxHeapAnimations[i].length; j++) {
-                    arrayBars[maxHeapAnimations[i][j]].style.backgroundColor = SMALLER_COLOR;
+                nextStepTimeout = getSpeedCallback(); 
+            }
+
+            else if (stage === 1) {
+                for (let j = 1; j < animation.length; j++) {
+                    arrayBars[animation[j]].style.backgroundColor = SMALLER_COLOR;
                 }
-                arrayBars[maxHeapAnimations[i][0]].style.backgroundColor = LARGER_COLOR;
+                arrayBars[animation[0]].style.backgroundColor = LARGER_COLOR;
                 updateComparisons(comparisons + 1);
                 comparisons++;
-                // console.log(alreadyCompared);
                 completedAnimations++;
-            }, (i) * ANIMATION_SPEED_MS);
-            alreadyCompared++;
-        }
-        /* 
-        ? maxHeapAnimations.push([largest, idx, arr[largest], arr[idx]]); */
-        else {
-            const [largestIdx, originalIdx, largestVal, originalVal] = maxHeapAnimations[i];
-            const largerStyle = arrayBars[largestIdx].style;
-            const originalStyle = arrayBars[originalIdx].style;
 
-            /** If Largest index is same as original index, turn PURPLE */            
-            setTimeout(() => {
+                nextStepTimeout = getSpeedCallback(); 
+            }
+
+            else {
+                const [largestIdx, originalIdx, largestVal, originalVal] = animation;
+                const largerStyle = arrayBars[largestIdx].style;
+                const originalStyle = arrayBars[originalIdx].style;
+
                 if (largestIdx !== originalIdx) {
                     [largerStyle.height, originalStyle.height] = [`${originalVal}px`, `${largestVal}px`];
                     originalStyle.backgroundColor = LARGER_COLOR;
                     largerStyle.backgroundColor = SMALLER_COLOR;
-                }
-                else {
-                    for (let j = 0; j < maxHeapAnimations[i - 1].length; j++) {
-                        arrayBars[maxHeapAnimations[i - 1][j]].style.backgroundColor = NO_SWITCH_COLOR;
+                } else {
+                    for (let j = 0; j < maxHeapAnimations[completedAnimations - 1].length; j++) {
+                        arrayBars[maxHeapAnimations[completedAnimations - 1][j]].style.backgroundColor = NO_SWITCH_COLOR;
                     }
                 }
-                completedAnimations++;
-            }, (i) * ANIMATION_SPEED_MS);
 
-            /*
-            ? Switch back PRIMARY */
-            setTimeout(() => {
-                for (let j = 0; j < maxHeapAnimations[i - 1].length; j++) {
-                    arrayBars[maxHeapAnimations[i - 1][j]].style.backgroundColor = PRIMARY_COLOR;
-                }
-            }, (i + 1) * ANIMATION_SPEED_MS);
+                /*
+                ? Despite maxHeapAnimations going like:
+                ? 0: [index, index...]
+                ? 1: [indexSmall, indexBig...]
+                ? 2: [switch heights] 
+                
+                ? And even though we are on 2, and want to access 1, Async nature of JS increments completedAnimations
+                ? Instantaneously, so we we are on 3, essentially. 
+                ! Thus, we have to do - 2*/
+                setTimeout(() => {
+                    console.log(maxHeapAnimations[completedAnimations - 2]);
+                    for (let j = 0; j < maxHeapAnimations[completedAnimations - 2].length; j++) {
+                        arrayBars[maxHeapAnimations[completedAnimations - 2][j]].style.backgroundColor = PRIMARY_COLOR;
+                    }
+                }, getSpeedCallback());
+                
+                completedAnimations++;
+                nextStepTimeout = getSpeedCallback(); 
+            }
+            
+            await new Promise(resolve => setTimeout(resolve, nextStepTimeout));
         }
-    }
-    return alreadyCompared;
+        /*
+        ? Promise returns how many comparisons have been made as to not reset it when we call aniamteHeapSort */
+        resolve(comparisons);
+    })
 }
 
 /*
@@ -228,101 +245,88 @@ function animateMaxHeap(maxHeapAnimations, arrayBars, completedAnimations, ANIMA
  * 3: Highlight the largest one GREEN, the rest RED
  * 4: Switch heights, and keeping the color of the heights before, then back to primary, do i + 1 timing
 */
-function animateHeapSort(heapSortAnimations, maxHeapAnimations, arrayBars, completedAnimations, ANIMATION_SPEED_MS, comparisons, updateComparisons) {
-    for (let i = 0; i < heapSortAnimations.length; i++) {
+function animateHeapSort(heapSortAnimations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons) {
+    return new Promise((resolve) => {
+        if (completedAnimations >= heapSortAnimations.length) {
+            greenify(completedAnimations, heapSortAnimations, arrayBars);
+            resolve();
+            return;
+        }
+
+        const i = completedAnimations;
         const stage = i % 5;
-        /*
-        ? Switch ends, if we we are in the initial stage 
-        ? heapSortAnimations.push([0, heapSize]);*/
+
+        let nextStepTimeout = 0;
+
         if (stage === 0) {
-            /** If we don't switch ends */
             if (heapSortAnimations[i].length === 0) {
-                setTimeout(() => {
-                    completedAnimations++;
-                }, (i + maxHeapAnimations.length) * ANIMATION_SPEED_MS)
-            }
-            else {
-                setTimeout(() => {
-                }, (i + maxHeapAnimations.length) * ANIMATION_SPEED_MS)
+                completedAnimations++;
+            } else {
                 const [beginningIdx, endIdx] = heapSortAnimations[i];
                 const beginningStyle = arrayBars[beginningIdx].style;
                 const endStyle = arrayBars[endIdx].style;
-                setTimeout(() => {
-                    [beginningStyle.backgroundColor, endStyle.backgroundColor] = [SECONDARY_COLOR, SECONDARY_COLOR];
-                    completedAnimations++;
-                }, (i + maxHeapAnimations.length) * ANIMATION_SPEED_MS);
+                [beginningStyle.backgroundColor, endStyle.backgroundColor] = [SECONDARY_COLOR, SECONDARY_COLOR];
+                completedAnimations++;
+                nextStepTimeout = getSpeedCallback(); 
             }
         }
-
-        /*
-        ? Switch bar heights beginning and end, and set in the (i + 1)'th time to reset color of end
-        ? heapSortAnimations.push([arr[0], arr[heapSize]]) */
         else if (stage === 1) {
             if (heapSortAnimations[i - 1].length !== 0) {
                 const [beginningIdx, endIdx] = heapSortAnimations[i - 1];
                 const beginningStyle = arrayBars[beginningIdx].style;
                 const endStyle = arrayBars[endIdx].style;
-    
-                setTimeout(() => {
-                    [beginningStyle.height, endStyle.height] = [endStyle.height, beginningStyle.height];
-                    endStyle.backgroundColor = DONE_COLOR;
-                    updateComparisons(comparisons + 1);
-                    comparisons++
-                }, (i + maxHeapAnimations.length) * ANIMATION_SPEED_MS);
+
+                [beginningStyle.height, endStyle.height] = [endStyle.height, beginningStyle.height];
+                endStyle.backgroundColor = DONE_COLOR;
+                updateComparisons(comparisons + 1);
+                comparisons++
             }
             completedAnimations++;
-        }
+            nextStepTimeout = getSpeedCallback(); 
+        } 
         else if (stage === 2) {
-            setTimeout(() => {
-                for (let j = 0; j < heapSortAnimations[i].length; j++) {
-                    arrayBars[heapSortAnimations[i][j]].style.backgroundColor = SECONDARY_COLOR;
-                }
-                completedAnimations++;
-            }, (i + maxHeapAnimations.length) * ANIMATION_SPEED_MS);
-        }
+            for (let j = 0; j < heapSortAnimations[i].length; j++) {
+                arrayBars[heapSortAnimations[i][j]].style.backgroundColor = SECONDARY_COLOR;
+            }
+            completedAnimations++;
+            nextStepTimeout = getSpeedCallback(); 
+        } 
         else if (stage === 3) {
-            setTimeout(() => {
-                for (let j = 0; j < heapSortAnimations[i].length; j++) {
-                    arrayBars[heapSortAnimations[i][j]].style.backgroundColor = SMALLER_COLOR;
-                }
-                if (heapSortAnimations[i].length !== 1) {
-                    updateComparisons(comparisons + 1);
-                    comparisons++
-                }
-                arrayBars[heapSortAnimations[i][0]].style.backgroundColor = LARGER_COLOR;
-                completedAnimations++;
-            }, (i + maxHeapAnimations.length) * ANIMATION_SPEED_MS);
-        }
+            for (let j = 0; j < heapSortAnimations[i].length; j++) {
+                arrayBars[heapSortAnimations[i][j]].style.backgroundColor = SMALLER_COLOR;
+            }
+            if (heapSortAnimations[i].length !== 1) {
+                updateComparisons(comparisons + 1);
+                comparisons++
+            }
+            arrayBars[heapSortAnimations[i][0]].style.backgroundColor = LARGER_COLOR;
+            completedAnimations++;
+            nextStepTimeout = getSpeedCallback(); 
+        } 
         else {
-
-            /** Problem is here */
             const [largestIdx, originalIdx, largestVal, originalVal] = heapSortAnimations[i];
             const largerStyle = arrayBars[largestIdx].style;
             const originalStyle = arrayBars[originalIdx].style;
 
-            /** If Largest index is same as original index, turn PURPLE */            
-            setTimeout(() => {
-                if (largestIdx !== originalIdx) {
-                    [largerStyle.height, originalStyle.height] = [`${originalVal}px`, `${largestVal}px`];
-                    originalStyle.backgroundColor = LARGER_COLOR;
-                    largerStyle.backgroundColor = SMALLER_COLOR;
+            if (largestIdx !== originalIdx) {
+                [largerStyle.height, originalStyle.height] = [`${originalVal}px`, `${largestVal}px`];
+                originalStyle.backgroundColor = LARGER_COLOR;
+                largerStyle.backgroundColor = SMALLER_COLOR;
+            } else {
+                for (let j = 0; j < heapSortAnimations[i - 1].length; j++) {
+                    arrayBars[heapSortAnimations[i - 1][j]].style.backgroundColor = NO_SWITCH_COLOR;
                 }
-                else {
-                    for (let j = 0; j < heapSortAnimations[i - 1].length; j++) {
-                        arrayBars[heapSortAnimations[i - 1][j]].style.backgroundColor = NO_SWITCH_COLOR;
-                    }
-                }
-                completedAnimations++;
-            }, (i + maxHeapAnimations.length) * ANIMATION_SPEED_MS);
-            
-            /*
-            ? Switch back PRIMARY */
+            }
+            completedAnimations++;
+
             setTimeout(() => {
                 for (let j = 0; j < heapSortAnimations[i - 1].length; j++) {
                     arrayBars[heapSortAnimations[i - 1][j]].style.backgroundColor = PRIMARY_COLOR;
                 }
-                greenify(completedAnimations, heapSortAnimations, arrayBars);
-            }, (i + maxHeapAnimations.length + 1) * ANIMATION_SPEED_MS);
+            }, getSpeedCallback());
+            nextStepTimeout = getSpeedCallback(); 
         }
-    }
+
+        setTimeout(() => animateHeapSort(heapSortAnimations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons).then(() => resolve()), nextStepTimeout);
+    });
 }
