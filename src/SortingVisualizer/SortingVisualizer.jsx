@@ -56,7 +56,8 @@ export default class SortingVisualizer extends React.Component {
             ANIMATION_SPEED_MS: 6, 
             BARS: 10, 
             sortingInProgress: false, 
-            activeButton: null,
+            activeButton: "",
+            activeSortingButton: "",
             comparisons: 0,
             isPaused: false
         };
@@ -259,54 +260,54 @@ export default class SortingVisualizer extends React.Component {
             <div className="arrayContainer">
                 <div>
                     <div className="buttonContainer">
-                        <div className="buttonGroup">
+                       <div className="buttonGroup">
                             <div className="btn-container">
-                                <button className = {`btn-3d regular${activeButton === "generateArray" ? ' down' : ''}`} 
-                                onClick={() => {
-                                    this.makeArray();
-                                    this.buttonDown("generateArray");
-                                }} 
-                                disabled={isSorting}>Generate New Array</button>
+                                <button className={`btn-3d regular${this.state.activeButton === "generateArray" ? ' down' : ''}`} 
+                                    onClick={() => {
+                                        this.makeArray();
+                                        this.setState({ activeButton: "generateArray", activeSortingButton: "" });
+                                    }} 
+                                    disabled={this.state.isSorting}>Generate New Array</button>
                             </div>
                             <div className="btn-container">
-                                <button className = {`btn-3d regular${activeButton === "bubbleSort" ? ' down' : ''}`} 
-                                onClick={() => {
-                                    this.bubbleSort()
-                                    this.buttonDown("bubbleSort");
-                                }} 
-                                disabled={this.state.sortingInProgress}>Bubble Sort</button>
+                                <button className={`btn-3d regular${this.state.activeSortingButton === "bubbleSort" ? ' down' : ''}`} 
+                                    onClick={() => {
+                                        this.bubbleSort()
+                                        this.setState({ activeSortingButton: "bubbleSort" });
+                                    }} 
+                                    disabled={this.state.sortingInProgress}>Bubble Sort</button>
                             </div>
                             <div className="btn-container">
-                                <button className = {`btn-3d regular${activeButton === "selectionSort" ? ' down' : ''}`} 
-                                onClick={() => {
-                                    this.selectionSort()
-                                    this.buttonDown("selectionSort");
-                                }}
-                                disabled={this.state.sortingInProgress}>Selection Sort</button>
+                                <button className={`btn-3d regular${this.state.activeSortingButton === "selectionSort" ? ' down' : ''}`} 
+                                    onClick={() => {
+                                        this.selectionSort()
+                                        this.setState({ activeSortingButton: "selectionSort" });
+                                    }}
+                                    disabled={this.state.sortingInProgress}>Selection Sort</button>
                             </div>
                             <div className="btn-container">
-                                <button className = {`btn-3d regular${activeButton === "insertionSort" ? ' down' : ''}`} 
-                                onClick={() => {
-                                    this.insertionSort()
-                                    this.buttonDown("insertionSort");
-                                }} 
-                                disabled={this.state.sortingInProgress}>Insertion Sort</button>
+                                <button className={`btn-3d regular${this.state.activeSortingButton === "insertionSort" ? ' down' : ''}`} 
+                                    onClick={() => {
+                                        this.insertionSort()
+                                        this.setState({ activeSortingButton: "insertionSort" });
+                                    }} 
+                                    disabled={this.state.sortingInProgress}>Insertion Sort</button>
                             </div>
                             <div className="btn-container">
-                                <button className = {`btn-3d regular${activeButton === "mergeSort" ? ' down' : ''}`} 
-                                onClick={() => {
-                                    this.mergeSort()
-                                    this.buttonDown("mergeSort");
-                                }
-                                } disabled={this.state.sortingInProgress}>Merge Sort</button>
+                                <button className={`btn-3d regular${this.state.activeSortingButton === "mergeSort" ? ' down' : ''}`} 
+                                    onClick={() => {
+                                        this.mergeSort()
+                                        this.setState({ activeSortingButton: "mergeSort" });
+                                    }
+                                    } disabled={this.state.sortingInProgress}>Merge Sort</button>
                             </div>
                             <div className="btn-container">
-                                <button className = {`btn-3d regular${activeButton === "heapSort" ? ' down' : ''}`} 
-                                onClick={() => {
-                                    this.heapSort()
-                                    this.buttonDown("heapSort");
-                                }} 
-                                disabled={this.state.sortingInProgress}>Heap Sort</button>
+                                <button className={`btn-3d regular${this.state.activeSortingButton === "heapSort" ? ' down' : ''}`} 
+                                    onClick={() => {
+                                        this.heapSort()
+                                        this.setState({ activeSortingButton: "heapSort" });
+                                    }} 
+                                    disabled={this.state.sortingInProgress}>Heap Sort</button>
                             </div>
                         </div>
                     </div>
@@ -351,13 +352,15 @@ export default class SortingVisualizer extends React.Component {
                         Comparisions: {comparisons}                                
                         </button>
                         <div className="btn-container">
-                            <button className = {`btn-3d regular${activeButton === "pause" ? ' down' : ''}`} 
-                            onClick={() => {
-                                this.handlePause()
-                                this.buttonDown("pause");
-                            }} 
-                            disabled={!this.state.sortingInProgress}>Pause/Continue</button>
+                            <button className={`btn-3d regular pp${this.state.activeButton === "pause" ? ' down' : ''}`} 
+                                onClick={() => {
+                                    this.handlePause();
+                                    this.setState({ activeButton: this.state.isPaused ? "" : "pause" });
+                                }} 
+                                disabled={!this.state.sortingInProgress}>{this.state.isPaused ? "Play" : "Pause"}</button>
                         </div>
+
+
 
                     </div>
                 </div>
