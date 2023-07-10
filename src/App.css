@@ -133,12 +133,12 @@ button[class*="btn"] {border: 1;}
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: -25px 0px 25px 170px;
+  margin: -25px 0px 25px 155px;
 }
 
 .buttonGroup {
   display: flex;
-  margin: 0 0 0 50px;
+  margin: -10px 0 -10px 45px;
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -147,6 +147,7 @@ button[class*="btn"] {border: 1;}
 /** Scrolling bar */
 .scrollableRangeContainer {
   width: auto;
+  margin: 0 5px 0 0;
 }
 
 .settings {
@@ -154,7 +155,7 @@ button[class*="btn"] {border: 1;}
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  margin: -70px 0px 5px 240px;
+  margin: -70px 0px -10px 220px;
   font-size: 15px;
 }
 
@@ -170,11 +171,12 @@ button[class*="btn"] {border: 1;}
 }
 
 .btn-3d.regular.colorful.speed {
-  margin: 0 60px 0 0;
+  margin: 0 23px 0 0;
 }
 
+
 .btn-3d.regular.comparisons {
-  margin: -3px 0px 0px 0px;
+  margin: -3px 0px 0px -10px;
   transform: translateX(-220px);
   pointer-events: none;
   width: 200px;
@@ -182,7 +184,7 @@ button[class*="btn"] {border: 1;}
 
 .pp {
   width: 80px;
-  transform: translateX(-165px) translateY(-3px);
+  transform: translateX(-195px) translateY(-4px);
 }
 
 @keyframes AnimationName {
