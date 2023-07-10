@@ -86,6 +86,7 @@ function animate(animations, arrayBars, completedAnimations, getSpeedCallback, c
         smallStyle.backgroundColor = SECONDARY_COLOR;
         largeStyle.backgroundColor = SECONDARY_COLOR;
         completedAnimations++;
+        nextStepTimeout = getSpeedCallback();
     }
 
     else if (stage === 1) {
@@ -107,6 +108,7 @@ function animate(animations, arrayBars, completedAnimations, getSpeedCallback, c
             comparisons++;
         }
         completedAnimations++;
+        nextStepTimeout = getSpeedCallback();
     }
 
     else if (stage === 2) {
@@ -126,6 +128,7 @@ function animate(animations, arrayBars, completedAnimations, getSpeedCallback, c
             barLargerStyle.backgroundColor = SMALLER_COLOR;
         }
         completedAnimations++;
+        nextStepTimeout = getSpeedCallback();
     }
 
     else {
@@ -138,7 +141,7 @@ function animate(animations, arrayBars, completedAnimations, getSpeedCallback, c
             indexNoLongerInUseStyle.backgroundColor = PRIMARY_COLOR;
             indexStillUsingStyle.backgroundColor = PRIMARY_COLOR;
         }, getSpeedCallback());
+        nextStepTimeout = getSpeedCallback();
     }
-    nextStepTimeout = getSpeedCallback();
     setTimeout(() => animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
 }

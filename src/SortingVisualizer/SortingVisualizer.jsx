@@ -22,7 +22,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 const MINVAL = 5;
 const MAXVAL = 625;
-export const GREEN_SPEED = 1;
+export const GREEN_SPEED = 7;
 export const PRIMARY_COLOR = '#007ce8';
 export const SECONDARY_COLOR = '#fe5f24';
 export const SMALLER_COLOR = "#f44336";

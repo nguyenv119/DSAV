@@ -10,12 +10,11 @@ import {    PRIMARY_COLOR,
 const GOOD_COLOR = "#9706ff";
 
 /** The mergeSort function we are exporting with the animation array */
-export function mergeSortExp(array, arrayBars, getSpeedCallback, comparisons, updateComparisons, change) {
+export function mergeSortExp(array, arrayBars, getSpeedCallback, comparisons, updateComparisons) {
     return new Promise((resolve) => {
         resetAllBarColors(arrayBars, PRIMARY_COLOR);        
         const [animations, arr] = getMergeSortAnimationArray(array.slice());
-        if (change) animateChange(animations, arrayBars, 0, getSpeedCallback, comparisons, updateComparisons, () => resolve(arr));
-        else animateNorm(animations, arrayBars, 0, getSpeedCallback, comparisons, updateComparisons, () => resolve(arr));
+        animate(animations, arrayBars, 0, getSpeedCallback, comparisons, updateComparisons, () => resolve(arr));
     });
 }
 
@@ -113,7 +112,7 @@ function mergeSort(array, l, r, copy, animations) {
 
 
 /** Animates mergeSort */
-function animateChange(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, resolveCallback) {
+function animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, resolveCallback) {
     if (completedAnimations >= animations.length) {
         greenify(completedAnimations, animations, arrayBars);
         resolveCallback(animations) 
@@ -178,73 +177,5 @@ function animateChange(animations, arrayBars, completedAnimations, getSpeedCallb
         }, getSpeedCallback());
         nextStepTimeout = getSpeedCallback();  
     }
-    setTimeout(() => animateChange(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
-}
-
-function animateNorm(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, resolveCallback) {
-    if (completedAnimations >= animations.length) {
-        greenify(completedAnimations, animations, arrayBars);
-        resolveCallback(animations) 
-        return;
-    } 
-
-    const i = completedAnimations;
-    const stage = i % 3;
-
-    let nextStepTimeout = 0;
-
-    if (stage === 0) {
-        const [barOneIdx, barTwoIdx] = animations[i];
-        const barOneStyle = arrayBars[barOneIdx].style;
-        const barTwoStyle = arrayBars[barTwoIdx].style;        
-
-        barOneStyle.backgroundColor = SECONDARY_COLOR;
-        barTwoStyle.backgroundColor = SECONDARY_COLOR;
-        completedAnimations ++;
-
-        /*
-        ? We have to use the latest speed changed in the animation due to some delay */
-        nextStepTimeout = getSpeedCallback();  
-    
-    } else if (stage === 1) {
-        const [indexSmall, indexLarge] = animations[i];
-        const smallBarStyle = arrayBars[indexSmall].style;
-        const largeBarStyle = arrayBars[indexLarge].style;
-
-        /*
-        ? If it's the same index, meaning extra elements from auxiliary left right arr */
-        if (indexSmall === indexLarge) {
-            smallBarStyle.backgroundColor = GOOD_COLOR;
-        } else if (arrayBars[indexSmall] === arrayBars[indexLarge]) {
-            smallBarStyle.backgroundColor = SAMESIZE_COLOR;
-            largeBarStyle.backgroundColor = SAMESIZE_COLOR;
-        } else {
-            smallBarStyle.backgroundColor = LARGER_COLOR;
-            largeBarStyle.backgroundColor = SMALLER_COLOR;
-        }
-        setTimeout(() => {
-            smallBarStyle.backgroundColor = PRIMARY_COLOR;
-            largeBarStyle.backgroundColor = PRIMARY_COLOR;
-        }, getSpeedCallback());
-
-        updateComparisons(comparisons + 1);
-        comparisons++;
-        completedAnimations++;
-        nextStepTimeout = getSpeedCallback();  
-
-    } else if (stage === 2) {
-        const [barOneIdx, newHeight] = animations[i];
-        const barOneStyle = arrayBars[barOneIdx].style;
-        barOneStyle.height = `${newHeight}px`;
-        barOneStyle.backgroundColor = DONE_COLOR;
-        completedAnimations++;
-
-        /*
-        ? Resets the color of the bars */
-        setTimeout(() => {
-            barOneStyle.backgroundColor = PRIMARY_COLOR;
-        }, getSpeedCallback());
-        nextStepTimeout = getSpeedCallback();  
-    }
-    setTimeout(() => animateChange(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
+    setTimeout(() => animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
 }

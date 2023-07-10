@@ -120,33 +120,37 @@ function animate(animations, arrayBars, completedAnimations, BARS, getSpeedCallb
             const [barOneIdx, barTwoIdx] = animations[i];
             const barOneStyle = arrayBars[barOneIdx].style;
             const barTwoStyle = arrayBars[barTwoIdx].style;  
+
             barOneStyle.backgroundColor = SECONDARY_COLOR;
             barTwoStyle.backgroundColor = SECONDARY_COLOR;
             completedAnimations += 2;
+            nextStepTimeout = getSpeedCallback();
         }
         else if (stage === 2) {
             const [indexMinSoFar, indexJ] = animations[i - 1];
             const [minSoFarVal, jVal] = animations[i];
 
-            /** If two bars have the same height, set to yellow */
+            /*
+            ? If two bars have the same height, set to yellow */
             const smallerBarStyle = arrayBars[indexMinSoFar].style;
             const largerBarStyle = arrayBars[indexJ].style; 
             if (minSoFarVal === jVal) {
-    
-                    smallerBarStyle.backgroundColor = SAMESIZE_COLOR;
-                    largerBarStyle.backgroundColor = SAMESIZE_COLOR;
-                    completedAnimations++;
-                    updateComparisons(comparisons + 1)
-                    comparisons++;
+                smallerBarStyle.backgroundColor = SAMESIZE_COLOR;
+                largerBarStyle.backgroundColor = SAMESIZE_COLOR;
+
+                completedAnimations++;
+                updateComparisons(comparisons + 1)
+                comparisons++;
             }
             else {
-    
-                    smallerBarStyle.backgroundColor = SMALLER_COLOR;
-                    largerBarStyle.backgroundColor = LARGER_COLOR;
-                    updateComparisons(comparisons + 1)
-                    comparisons++;
-                    completedAnimations++;
+                smallerBarStyle.backgroundColor = SMALLER_COLOR;
+                largerBarStyle.backgroundColor = LARGER_COLOR;
+
+                updateComparisons(comparisons + 1)
+                comparisons++;
+                completedAnimations++;
             }
+            nextStepTimeout = getSpeedCallback();
         }
         else if (stage === 3) {
             /** 
@@ -160,10 +164,10 @@ function animate(animations, arrayBars, completedAnimations, BARS, getSpeedCallb
             const smallerBarStyle = arrayBars[indexMinSoFar].style;
             const largerBarStyle = arrayBars[indexOther].style;
 
-
-                smallerBarStyle.backgroundColor = MIN_SOFAR_COLOR;
-                largerBarStyle.backgroundColor = PRIMARY_COLOR;
-                completedAnimations++;
+            smallerBarStyle.backgroundColor = MIN_SOFAR_COLOR;
+            largerBarStyle.backgroundColor = PRIMARY_COLOR;
+            completedAnimations++;
+            nextStepTimeout = getSpeedCallback();
         }
         else if (stage === 4) {
             /** We only switch bars when sorting has reached
@@ -177,7 +181,8 @@ function animate(animations, arrayBars, completedAnimations, BARS, getSpeedCallb
                 const swapBar = arrayBars[indexToBeSwapped].style;
                 const smallestFoundBar = arrayBars[indexSmallestFound].style;
    
-                /** If the smallestFound is not our initial i'th element
+                /* 
+                 * If the smallestFound is not our initial i'th element
                  * We swap heights and change both the colors
                  * --> Makes most recently sorted index DONE_COLOR
                  * --> Revert the other swapped value back to PRIMARY
@@ -192,8 +197,8 @@ function animate(animations, arrayBars, completedAnimations, BARS, getSpeedCallb
             else {
                 completedAnimations++;
             }
+            nextStepTimeout = getSpeedCallback();
         }
     }
-    nextStepTimeout = getSpeedCallback();
     setTimeout(() => animate(animations, arrayBars, completedAnimations, BARS, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
 }
