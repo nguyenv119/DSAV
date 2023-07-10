@@ -8,11 +8,17 @@ const SMALLER_COLOR = "#50af50";
 const LARGER_COLOR = "#f44336";
 
 /** The insertionSort function we are exporting with the animation array */
-export function insertionSortExp(array, arrayBars, getSpeedCallback, comparisons, updateComparisons) {
+export function insertionSortExp(array, 
+                                arrayBars, 
+                                getSpeedCallback, 
+                                comparisons, 
+                                updateComparisons,
+                                isPausedCallback) {
+
     return new Promise((resolve) => {
         resetAllBarColors(arrayBars, PRIMARY_COLOR);        
         const [animations, arr] = getInsertionSortAnimationArray(array.slice());
-        animate(animations, arrayBars, 0, getSpeedCallback, comparisons, updateComparisons, () => resolve(arr));
+        animate(animations, arrayBars, 0, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, () => resolve(arr));
     })
 }
 
@@ -66,10 +72,25 @@ function insertionSort(array, animations) {
 
 /*
 ? Animates insertionSort */
-function animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, resolveCallback) {
+function animate(animations, 
+                arrayBars, 
+                completedAnimations, 
+                getSpeedCallback, 
+                comparisons, 
+                updateComparisons, 
+                isPausedCallback, 
+                resolveCallback) {
+
     if (completedAnimations >= animations.length) {
         greenify(completedAnimations, animations, arrayBars);
         resolveCallback(animations);
+        return;
+    }
+
+    if (isPausedCallback()) {
+        setTimeout(() => {
+            animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback);
+        }, 1);
         return;
     }
 
@@ -87,9 +108,8 @@ function animate(animations, arrayBars, completedAnimations, getSpeedCallback, c
         largeStyle.backgroundColor = SECONDARY_COLOR;
         completedAnimations++;
         nextStepTimeout = getSpeedCallback();
-    }
 
-    else if (stage === 1) {
+    } else if (stage === 1) {
         const [smallerValIndex, largerValIndex] = animations[i - 1];
         const barSmallStyle = arrayBars[smallerValIndex].style;
         const barLargerStyle = arrayBars[largerValIndex].style;    
@@ -99,9 +119,7 @@ function animate(animations, arrayBars, completedAnimations, getSpeedCallback, c
             barLargerStyle.backgroundColor = SAMESIZE_COLOR;
             updateComparisons(comparisons + 1)
             comparisons++;
-        }
-
-        else {
+        } else {
             barSmallStyle.backgroundColor = SMALLER_COLOR;
             barLargerStyle.backgroundColor = LARGER_COLOR;
             updateComparisons(comparisons + 1)
@@ -109,9 +127,8 @@ function animate(animations, arrayBars, completedAnimations, getSpeedCallback, c
         }
         completedAnimations++;
         nextStepTimeout = getSpeedCallback();
-    }
 
-    else if (stage === 2) {
+    } else if (stage === 2) {
         const [smallerVal, largerVal] = animations[i - 1];
         const [smallerValIndex, largerValIndex] = animations[i - 2];
         let barSmallStyle = arrayBars[smallerValIndex].style;
@@ -120,18 +137,14 @@ function animate(animations, arrayBars, completedAnimations, getSpeedCallback, c
         if (smallerVal === largerVal || smallerValIndex < largerValIndex) {
             barSmallStyle.backgroundColor = DONE_COLOR;
             barLargerStyle.backgroundColor = DONE_COLOR;
-        }
-
-        else {
+        } else {
             [barSmallStyle.height, barLargerStyle.height] = [`${largerVal}px`, `${smallerVal}px`]
             barSmallStyle.backgroundColor = LARGER_COLOR;
             barLargerStyle.backgroundColor = SMALLER_COLOR;
         }
         completedAnimations++;
         nextStepTimeout = getSpeedCallback();
-    }
-
-    else {
+    } else {
         const [indexNoLongerInUse, indexStillUsing] = animations[i - 3];
         const indexNoLongerInUseStyle = arrayBars[indexNoLongerInUse].style;
         const indexStillUsingStyle = arrayBars[indexStillUsing].style;
@@ -143,5 +156,5 @@ function animate(animations, arrayBars, completedAnimations, getSpeedCallback, c
         }, getSpeedCallback());
         nextStepTimeout = getSpeedCallback();
     }
-    setTimeout(() => animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
+    setTimeout(() => animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, isPausedCallback), nextStepTimeout);
 }

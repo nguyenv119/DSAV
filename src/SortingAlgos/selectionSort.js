@@ -10,11 +10,17 @@ const SMALLER_COLOR = "#50af50";
 const MIN_SOFAR_COLOR = "#9a17ff";
 
 /** The selectionSort function we are exporting with the animation array */
-export function selectionSortExp(array, arrayBars, getSpeedCallback, comparisons, updateComparisons) {
+export function selectionSortExp(array, 
+                                arrayBars, 
+                                getSpeedCallback, 
+                                comparisons, 
+                                updateComparisons,
+                                isPausedCallback) {
+
     return new Promise((resolve) => {
         resetAllBarColors(arrayBars, PRIMARY_COLOR);        
         const [animations, arr] = getSelectionSortAnimationArray(array.slice());
-        animate(animations, arrayBars, 0, array.length, getSpeedCallback, comparisons, updateComparisons, () => resolve(arr));
+        animate(animations, arrayBars, 0, array.length, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, () => resolve(arr));
     });
 }
 
@@ -93,10 +99,26 @@ function selectionSort(array, animations) {
 }
 
 /** Animates the selectionSort */
-function animate(animations, arrayBars, completedAnimations, BARS, getSpeedCallback, comparisons, updateComparisons, resolveCallback) {
+function animate(animations,
+                 arrayBars, 
+                 completedAnimations, 
+                 BARS, 
+                 getSpeedCallback, 
+                 comparisons, 
+                 updateComparisons, 
+                 isPausedCallback, 
+                 resolveCallback) {
+
     if (completedAnimations >= animations.length) {
         greenify(completedAnimations, animations, arrayBars);
         resolveCallback(animations)
+        return;
+    }
+
+    if (isPausedCallback()) {
+        setTimeout(() => {
+            animate(animations, arrayBars, completedAnimations, BARS, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback);
+        }, 1);
         return;
     }
 
@@ -200,5 +222,5 @@ function animate(animations, arrayBars, completedAnimations, BARS, getSpeedCallb
             nextStepTimeout = getSpeedCallback();
         }
     }
-    setTimeout(() => animate(animations, arrayBars, completedAnimations, BARS, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
+    setTimeout(() => animate(animations, arrayBars, completedAnimations, BARS, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback), nextStepTimeout);
 }
