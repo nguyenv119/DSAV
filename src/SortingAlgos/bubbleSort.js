@@ -11,7 +11,13 @@ const GOOD_COLOR = "#9706ff";
 
 /*
 ? The bubbleSort function we are exporting with the animation array */
-export function bubbleSortExp(array, arrayBars, getSpeedCallback, comparisons, updateComparisons) {
+export function bubbleSortExp(array, 
+                              arrayBars, 
+                              getSpeedCallback, 
+                              comparisons, 
+                              updateComparisons,
+                              isPausedCallback) {
+
     return new Promise((resolve) => {
         resetAllBarColors(arrayBars, PRIMARY_COLOR);        
         const [animations, arr] = getBubbleSortAnimationArray(array.slice());
@@ -19,7 +25,7 @@ export function bubbleSortExp(array, arrayBars, getSpeedCallback, comparisons, u
         ? We need to pass in () => resolve(arr) to
         ? 1. The parameter of arr lets the promise know what to return, the actual sorted array
         ? 2. The callback function requires for the "animate" function to be completed before returning. If we removed the "() =>" JS asynchronous nature would return it immedientally */
-        animate(animations, arrayBars, 0, array.length - 1, getSpeedCallback, comparisons, updateComparisons, () => resolve(arr));
+        animate(animations, arrayBars, 0, array.length - 1, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, () => resolve(arr));
     });
 }
 
@@ -80,7 +86,16 @@ function bubbleSort(array, animations) {
 
 /*
 ? Animates bubbleSort */
-function animate(animations, arrayBars, completedAnimations, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, resolveCallback) {
+function animate(animations, 
+                arrayBars, 
+                completedAnimations, 
+                toBeSortedIndex, 
+                getSpeedCallback, 
+                comparisons, 
+                updateComparisons, 
+                isPausedCallback,
+                resolveCallback) {
+
     if (completedAnimations >= animations.length) {
         /*
         ? Resolves promise when animation is finished */
@@ -88,6 +103,14 @@ function animate(animations, arrayBars, completedAnimations, toBeSortedIndex, ge
         resolveCallback(animations) 
         return;
     }
+
+    if (isPausedCallback()) {
+        setTimeout(() => {
+            animate(animations, arrayBars, completedAnimations, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback);
+        }, 1);
+        return;
+    }
+
     const i = completedAnimations;
     const stage = i % 3;
 
@@ -158,5 +181,5 @@ function animate(animations, arrayBars, completedAnimations, toBeSortedIndex, ge
         }, getSpeedCallback())
         nextStepTimeout = getSpeedCallback(); 
     }
-    setTimeout(() => animate(animations, arrayBars, completedAnimations, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
+    setTimeout(() => animate(animations, arrayBars, completedAnimations, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback), nextStepTimeout);
 }

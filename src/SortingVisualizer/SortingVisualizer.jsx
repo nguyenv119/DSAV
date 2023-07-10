@@ -58,6 +58,7 @@ export default class SortingVisualizer extends React.Component {
             sortingInProgress: false, 
             activeButton: null,
             comparisons: 0,
+            isPaused: false
         };
     };
 
@@ -143,6 +144,12 @@ export default class SortingVisualizer extends React.Component {
         });
     }
 
+    /*
+     ? Returns whether or not the animation is paused or not */
+    getIsPaused() {
+        return this.state.isPaused;
+    }
+
     /* 
      * For all sorting algos, we are returned an animation array, and a copy
      * of the sorted array. At the end of every animation, we set the state
@@ -151,7 +158,7 @@ export default class SortingVisualizer extends React.Component {
     bubbleSort() {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
-        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons).then((arr) => {
+        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
         })
     }
@@ -222,7 +229,14 @@ export default class SortingVisualizer extends React.Component {
         this.setState({ comparisons: newComparisons });
     };
 
-
+    /*
+    ? Handles the pause/play action*/
+    handlePause = () => {
+        this.setState(prevState => ({
+            isPaused: !prevState.isPaused
+        }));
+    }
+    
     /* 
     ? Renders components UI */
     render() {
@@ -336,6 +350,15 @@ export default class SortingVisualizer extends React.Component {
                         <button className="btn-3d regular comparisons"> 
                         Comparisions: {comparisons}                                
                         </button>
+                        <div className="btn-container">
+                            <button className = {`btn-3d regular${activeButton === "pause" ? ' down' : ''}`} 
+                            onClick={() => {
+                                this.handlePause()
+                                this.buttonDown("pause");
+                            }} 
+                            disabled={!this.state.sortingInProgress}>Pause/Continue</button>
+                        </div>
+
                     </div>
                 </div>
                 <div className="arrayBars">
