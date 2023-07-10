@@ -104,6 +104,9 @@ function animate(animations,
         return;
     }
 
+    /*
+    ! If we are paused, we keep calling it. Eventually, when it is unpaused, we will skip this if statement and go
+    ! forward. Whenever we pause again, the parameters will be updated. */
     if (isPausedCallback()) {
         setTimeout(() => {
             animate(animations, arrayBars, completedAnimations, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback);

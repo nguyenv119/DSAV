@@ -10,11 +10,17 @@ import {    PRIMARY_COLOR,
 const GOOD_COLOR = "#9706ff";
 
 /** The mergeSort function we are exporting with the animation array */
-export function mergeSortExp(array, arrayBars, getSpeedCallback, comparisons, updateComparisons) {
+export function mergeSortExp(array, 
+                            arrayBars, 
+                            getSpeedCallback, 
+                            comparisons, 
+                            updateComparisons,
+                            isPausedCallback) {
+
     return new Promise((resolve) => {
         resetAllBarColors(arrayBars, PRIMARY_COLOR);        
         const [animations, arr] = getMergeSortAnimationArray(array.slice());
-        animate(animations, arrayBars, 0, getSpeedCallback, comparisons, updateComparisons, () => resolve(arr));
+        animate(animations, arrayBars, 0, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, () => resolve(arr));
     });
 }
 
@@ -112,12 +118,19 @@ function mergeSort(array, l, r, copy, animations) {
 
 
 /** Animates mergeSort */
-function animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, resolveCallback) {
+function animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback) {
     if (completedAnimations >= animations.length) {
         greenify(completedAnimations, animations, arrayBars);
         resolveCallback(animations) 
         return;
     } 
+
+    if (isPausedCallback()) {
+        setTimeout(() => {
+            animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback);
+        }, getSpeedCallback())
+        return;
+    }
 
     const i = completedAnimations;
     const stage = i % 3;
@@ -177,5 +190,5 @@ function animate(animations, arrayBars, completedAnimations, getSpeedCallback, c
         }, getSpeedCallback());
         nextStepTimeout = getSpeedCallback();  
     }
-    setTimeout(() => animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
+    setTimeout(() => animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback), nextStepTimeout);
 }
