@@ -4,13 +4,11 @@
 
                                     /*
                                     ! Add a super fast sorting option so we can have that option, not to wait for so damn long: in there, we just run the regular animate
-                                    TODO: Do heap-sorting speed
 
                                     TODO: MergeSort
                                     ? We can try make merge-sort more compelling by changing the margins of the size of the auxiliary array 
                                     ? Make it more visually compelling by pinking the completion of the merging of aux arrays
 
-                                    CHECKING
                                     */
 
 
@@ -168,7 +166,7 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
 
-        selectionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons).then((arr) => {
+        selectionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
         })
     }
@@ -177,7 +175,7 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
 
-        insertionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons).then((arr) => {
+        insertionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
         })
     }
@@ -186,7 +184,7 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
 
-        mergeSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons).then((arr) => {
+        mergeSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
         })
     }
@@ -195,7 +193,7 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
 
-        heapSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons).then((arr) => {
+        heapSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
         })
     }
