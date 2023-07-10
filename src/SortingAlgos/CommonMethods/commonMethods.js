@@ -1,6 +1,7 @@
 import { GREEN_SPEED, LARGER_COLOR } from "../../SortingVisualizer/SortingVisualizer";
 
-/** Resets the color of the array before sorting back to PRIMARY */
+/*
+? Resets the color of the array before sorting back to PRIMARY */
 export function resetAllBarColors(arrayBars, PRIMARY_COLOR) {
     for (let i = 0; i < arrayBars.length; i++) {
         arrayBars[i].style.backgroundColor = PRIMARY_COLOR;

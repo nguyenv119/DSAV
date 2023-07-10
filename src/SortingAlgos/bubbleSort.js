@@ -4,16 +4,23 @@ import {    PRIMARY_COLOR,
             LARGER_COLOR,
             SMALLER_COLOR,
             SAMESIZE_COLOR,
-            DONE_COLOR
+            DONE_COLOR,
         } from "../SortingVisualizer/SortingVisualizer";
 
 const GOOD_COLOR = "#9706ff";
-/** The bubbleSort function we are exporting with the animation array */
-export function bubbleSortExp(array, arrayBars, ANIMATION_SPEED_MS, comparisons, updateComparisons) {
-    resetAllBarColors(arrayBars, PRIMARY_COLOR);        
-    const [res, arr] = getBubbleSortAnimationArray(array.slice());
-    animate(res, arrayBars, 0, array.length - 1, ANIMATION_SPEED_MS, comparisons, updateComparisons);
-    return [res, arr];
+
+/*
+? The bubbleSort function we are exporting with the animation array */
+export function bubbleSortExp(array, arrayBars, getSpeedCallback, comparisons, updateComparisons) {
+    return new Promise((resolve) => {
+        resetAllBarColors(arrayBars, PRIMARY_COLOR);        
+        const [animations, arr] = getBubbleSortAnimationArray(array.slice());
+        /*
+        ? We need to pass in () => resolve(arr) to
+        ? 1. The parameter of arr lets the promise know what to return, the actual sorted array
+        ? 2. The callback function requires for the "animate" function to be completed before returning. If we removed the "() =>" JS asynchronous nature would return it immedientally */
+        animate(animations, arrayBars, 0, array.length - 1, getSpeedCallback, comparisons, updateComparisons, () => resolve(arr));
+    });
 }
 
 /**
@@ -71,88 +78,85 @@ function bubbleSort(array, animations) {
     }
 }
 
-/** Animates bubbleSort */
-function animate(res, arrayBars, completedAnimations, toBeSortedIndex, ANIMATION_SPEED_MS, comparisons, updateComparisons) {
-    for (let i = 0; i < res.length; i++) {
-        const stage = i % 3;
+/*
+? Animates bubbleSort */
+function animate(animations, arrayBars, completedAnimations, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, resolveCallback) {
+    if (completedAnimations >= animations.length) {
+        /*
+        ? Resolves promise when animation is finished */
+        greenify(completedAnimations, animations, arrayBars);
+        resolveCallback(animations) 
+        return;
+    }
+    const i = completedAnimations;
+    const stage = i % 3;
 
-        if (stage === 0) {
-            const [barOneIdx, barTwoIdx] = res[i];
-            const barOneStyle = arrayBars[barOneIdx].style;
-            const barTwoStyle = arrayBars[barTwoIdx].style;    
-            setTimeout(() => {
-                barOneStyle.backgroundColor = SECONDARY_COLOR;
-                barTwoStyle.backgroundColor = SECONDARY_COLOR;
-                completedAnimations++;
-              }, (i) * ANIMATION_SPEED_MS);
-        }
-        else if (stage === 1) {
-            const [indexJ, indexJ1] = res[i - 1];
-            const [indexJVal, indexJ1Val] = res[i];
+    let nextStepTimeout = 0;
 
-            /** If two bars have the same height */
-            if (indexJVal === indexJ1Val) {
-                const barOneStyle = arrayBars[indexJ].style;
-                const barTwoStyle = arrayBars[indexJ1].style; 
-                setTimeout(() => {
-                    barOneStyle.backgroundColor = SAMESIZE_COLOR;
-                    barTwoStyle.backgroundColor = SAMESIZE_COLOR;
-                    updateComparisons(comparisons + 1)
-                    comparisons++;
-                }, (i) * ANIMATION_SPEED_MS);   
-            }
-            else {
-                /** Determines which bars should be green (larger) and red (smaller) */
-                const smallerBarIndex = (indexJVal < indexJ1Val) ? indexJ : indexJ1;
-                const largerBarIndex = (smallerBarIndex === indexJ) ? indexJ1 : indexJ;
-                const barOneStyle = arrayBars[smallerBarIndex].style;
-                const barTwoStyle = arrayBars[largerBarIndex].style; 
+    if (stage === 0) {
+        const [barOneIdx, barTwoIdx] = animations[i];
+        const barOneStyle = arrayBars[barOneIdx].style;
+        const barTwoStyle = arrayBars[barTwoIdx].style;
 
-                setTimeout(() => {
-                    barOneStyle.backgroundColor = SMALLER_COLOR;
-                    barTwoStyle.backgroundColor = LARGER_COLOR;
-                    updateComparisons(comparisons + 1)
-                    comparisons++;
-                }, (i) * ANIMATION_SPEED_MS);   
-            }
-            
-            completedAnimations++;
-            greenify(completedAnimations, res, arrayBars);
-        }
-        else {
-            const [indexJ, indexJ1] = res[i - 2];
-            const [indexJVal, indexJ1Val] = res[i - 1];
-            
+        barOneStyle.backgroundColor = SECONDARY_COLOR;
+        barTwoStyle.backgroundColor = SECONDARY_COLOR;
+        completedAnimations++;
+        nextStepTimeout = getSpeedCallback(); 
+
+    } else if (stage === 1) {
+        const [indexJ, indexJ1] = animations[i - 1];
+        const [indexJVal, indexJ1Val] = animations[i];
+
+        if (indexJVal === indexJ1Val) {
+            const barOneStyle = arrayBars[indexJ].style;
+            const barTwoStyle = arrayBars[indexJ1].style;
+
+            barOneStyle.backgroundColor = SAMESIZE_COLOR;
+            barTwoStyle.backgroundColor = SAMESIZE_COLOR;
+            updateComparisons(comparisons + 1);
+            comparisons++;
+        } else {
             const smallerBarIndex = (indexJVal < indexJ1Val) ? indexJ : indexJ1;
             const largerBarIndex = (smallerBarIndex === indexJ) ? indexJ1 : indexJ;
             const barOneStyle = arrayBars[smallerBarIndex].style;
-            const barTwoStyle = arrayBars[largerBarIndex].style; 
-            const largerHeight = (indexJVal >= indexJ1Val) ? indexJVal : indexJ1Val;
-            const smallerHeight = (indexJVal < indexJ1Val) ? indexJVal : indexJ1Val;
+            const barTwoStyle = arrayBars[largerBarIndex].style;
 
-            if (indexJVal > indexJ1Val) {
-                /** only switch height if the smaller index > larger index */
-                setTimeout(() => {
-                    [barOneStyle.height, barTwoStyle.height] = [`${largerHeight}px`, `${smallerHeight}px`];
-                    [barOneStyle.backgroundColor, barTwoStyle.backgroundColor] = [LARGER_COLOR, SMALLER_COLOR];
-                }, (i) * ANIMATION_SPEED_MS);   
-            }
-            /** if not, set both bars to purple */
-            else {
-                setTimeout(() => {
-                    [barOneStyle.backgroundColor, barTwoStyle.backgroundColor] = [GOOD_COLOR, GOOD_COLOR];
-                }, (i) * ANIMATION_SPEED_MS);
-            }
-            completedAnimations++;
-            setTimeout(() => {
-                barOneStyle.backgroundColor = PRIMARY_COLOR;
-                barTwoStyle.backgroundColor = PRIMARY_COLOR;
-                if (indexJ1 === toBeSortedIndex) {
-                        arrayBars[indexJ1].style.backgroundColor = DONE_COLOR;
-                        toBeSortedIndex--;
-                } 
-                greenify(completedAnimations, res, arrayBars);
-            }, (i + 1) * ANIMATION_SPEED_MS);
+            barOneStyle.backgroundColor = SMALLER_COLOR;
+            barTwoStyle.backgroundColor = LARGER_COLOR;
+            updateComparisons(comparisons + 1);
+            comparisons++;
         }
+        completedAnimations++;
+        nextStepTimeout = getSpeedCallback(); 
+
+    } else {
+        const [indexJ, indexJ1] = animations[i - 2];
+        const [indexJVal, indexJ1Val] = animations[i - 1];
+
+        const smallerBarIndex = (indexJVal < indexJ1Val) ? indexJ : indexJ1;
+        const largerBarIndex = (smallerBarIndex === indexJ) ? indexJ1 : indexJ;
+        const barOneStyle = arrayBars[smallerBarIndex].style;
+        const barTwoStyle = arrayBars[largerBarIndex].style;
+        const largerHeight = (indexJVal >= indexJ1Val) ? indexJVal : indexJ1Val;
+        const smallerHeight = (indexJVal < indexJ1Val) ? indexJVal : indexJ1Val;
+
+        if (indexJVal > indexJ1Val) {
+            [barOneStyle.height, barTwoStyle.height] = [`${largerHeight}px`, `${smallerHeight}px`];
+            [barOneStyle.backgroundColor, barTwoStyle.backgroundColor] = [LARGER_COLOR, SMALLER_COLOR];
+        } else {
+            [barOneStyle.backgroundColor, barTwoStyle.backgroundColor] = [GOOD_COLOR, GOOD_COLOR];
+        }
+        completedAnimations++;
+
+        setTimeout(() => {
+            barOneStyle.backgroundColor = PRIMARY_COLOR;
+            barTwoStyle.backgroundColor = PRIMARY_COLOR;
+            if (indexJ1 === toBeSortedIndex) {
+                arrayBars[indexJ1].style.backgroundColor = DONE_COLOR;
+                toBeSortedIndex--;
+            }
+        }, getSpeedCallback())
+        nextStepTimeout = getSpeedCallback(); 
     }
+    setTimeout(() => animate(animations, arrayBars, completedAnimations, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
 }

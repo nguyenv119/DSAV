@@ -10,11 +10,12 @@ const SMALLER_COLOR = "#50af50";
 const MIN_SOFAR_COLOR = "#9a17ff";
 
 /** The selectionSort function we are exporting with the animation array */
-export function selectionSortExp(array, arrayBars, ANIMATION_SPEED_MS, comparisons, updateComparisons) {
-    resetAllBarColors(arrayBars, PRIMARY_COLOR);        
-    const [res, arr] = getSelectionSortAnimationArray(array.slice());
-    animate(res, arrayBars, 0, array.length, ANIMATION_SPEED_MS, comparisons, updateComparisons);
-    return [res, arr, comparisons];
+export function selectionSortExp(array, arrayBars, getSpeedCallback, comparisons, updateComparisons) {
+    return new Promise((resolve) => {
+        resetAllBarColors(arrayBars, PRIMARY_COLOR);        
+        const [animations, arr] = getSelectionSortAnimationArray(array.slice());
+        animate(animations, arrayBars, 0, array.length, getSpeedCallback, comparisons, updateComparisons, () => resolve(arr));
+    });
 }
 
 function getSelectionSortAnimationArray(arr) {
@@ -92,113 +93,112 @@ function selectionSort(array, animations) {
 }
 
 /** Animates the selectionSort */
-function animate(res, arrayBars, completedAnimations, BARS, ANIMATION_SPEED_MS, comparisons, updateComparisons) {
-    for (let i = 0; i < res.length; i++) {
-        /** If we are on the last elment, this means that
-         * in the selectionSort, i === array.length - 1,
-         * so we just set the bar to DONE_COLOR
-         */
-        if (i === res.length - 1) {
-            const [lastBarIndex, IGNORE] = res[i];
-            const lastBarStyle = arrayBars[lastBarIndex].style;
-            setTimeout(() => {
-                lastBarStyle.backgroundColor = DONE_COLOR;
-                completedAnimations++;
-                greenify(completedAnimations, res, arrayBars);
-            }, (i) * ANIMATION_SPEED_MS);
-        }
+function animate(animations, arrayBars, completedAnimations, BARS, getSpeedCallback, comparisons, updateComparisons, resolveCallback) {
+    if (completedAnimations >= animations.length) {
+        greenify(completedAnimations, animations, arrayBars);
+        resolveCallback(animations)
+        return;
+    }
 
-        else {
-            const stage = i % 5;
-            
-            if (stage === 0) {
-                const [barOneIdx, barTwoIdx] = res[i];
-                const barOneStyle = arrayBars[barOneIdx].style;
-                const barTwoStyle = arrayBars[barTwoIdx].style;  
-    
-                setTimeout(() => {
-                    barOneStyle.backgroundColor = SECONDARY_COLOR;
-                    barTwoStyle.backgroundColor = SECONDARY_COLOR;
-                    completedAnimations += 2;
-                    i += 1;
-                  }, (i) * ANIMATION_SPEED_MS);
+    const i = completedAnimations;
+    let nextStepTimeout = 0;
+
+    /** If we are on the last elment, this means that
+     * in the selectionSort, i === array.length - 1,
+     * so we just set the bar to DONE_COLOR
+     */
+    if (i === animations.length - 1) {
+        const [lastBarIndex, IGNORE] = animations[i];
+        const lastBarStyle = arrayBars[lastBarIndex].style;
+        lastBarStyle.backgroundColor = DONE_COLOR;
+        completedAnimations++;
+    } else {
+
+        const stage = i % 5;
+
+        if (stage === 0) {
+            const [barOneIdx, barTwoIdx] = animations[i];
+            const barOneStyle = arrayBars[barOneIdx].style;
+            const barTwoStyle = arrayBars[barTwoIdx].style;  
+
+            barOneStyle.backgroundColor = SECONDARY_COLOR;
+            barTwoStyle.backgroundColor = SECONDARY_COLOR;
+            completedAnimations += 2;
+            nextStepTimeout = getSpeedCallback();
+        }
+        else if (stage === 2) {
+            const [indexMinSoFar, indexJ] = animations[i - 1];
+            const [minSoFarVal, jVal] = animations[i];
+
+            /*
+            ? If two bars have the same height, set to yellow */
+            const smallerBarStyle = arrayBars[indexMinSoFar].style;
+            const largerBarStyle = arrayBars[indexJ].style; 
+            if (minSoFarVal === jVal) {
+                smallerBarStyle.backgroundColor = SAMESIZE_COLOR;
+                largerBarStyle.backgroundColor = SAMESIZE_COLOR;
+
+                completedAnimations++;
+                updateComparisons(comparisons + 1)
+                comparisons++;
             }
-            else if (stage === 2) {
-                const [indexMinSoFar, indexJ] = res[i - 1];
-                const [minSoFarVal, jVal] = res[i];
-    
-                /** If two bars have the same height, set to yellow */
-                const smallerBarStyle = arrayBars[indexMinSoFar].style;
-                const largerBarStyle = arrayBars[indexJ].style; 
-                if (minSoFarVal === jVal) {
-                    setTimeout(() => {
-                        smallerBarStyle.backgroundColor = SAMESIZE_COLOR;
-                        largerBarStyle.backgroundColor = SAMESIZE_COLOR;
-                        completedAnimations++;
-                        updateComparisons(comparisons + 1)
-                        comparisons++;
-                    }, (i) * ANIMATION_SPEED_MS);   
-                }
-                else {
-                    setTimeout(() => {
-                        smallerBarStyle.backgroundColor = SMALLER_COLOR;
-                        largerBarStyle.backgroundColor = LARGER_COLOR;
-                        updateComparisons(comparisons + 1)
-                        comparisons++;
-                        completedAnimations++;
-                    }, (i) * ANIMATION_SPEED_MS);   
-                }
+            else {
+                smallerBarStyle.backgroundColor = SMALLER_COLOR;
+                largerBarStyle.backgroundColor = LARGER_COLOR;
+
+                updateComparisons(comparisons + 1)
+                comparisons++;
+                completedAnimations++;
             }
-            else if (stage === 3) {
-                /** 
-                 * We have a guarantee that the first element of the animations
-                 * element is the smallest value. So, just switch heights. 
-                 * 
-                 * If we dont need to switch heights -- that jValue is <= minValSoFar,
-                 * just make both bars NOSWITCH COLOR
-                 */
-                const [indexMinSoFar, indexOther] = res[i - 2];
-                const smallerBarStyle = arrayBars[indexMinSoFar].style;
-                const largerBarStyle = arrayBars[indexOther].style;
-    
-                setTimeout(() => {
-                    smallerBarStyle.backgroundColor = MIN_SOFAR_COLOR;
-                    largerBarStyle.backgroundColor = PRIMARY_COLOR;
-                    completedAnimations++;
-                }, (i) * ANIMATION_SPEED_MS);   
-            }
-            else if (stage === 4) {
-                /** We only switch bars when sorting has reached
-                 * the end of the array. If not, just increase animations,
-                 * and do nothing
-                 */
-                const [indexToBeSwapped, indexEnd] = res[i];
-                if (indexEnd === BARS - 1) {
-                    const [toBeSwappedVal, smallestFound] = res[i - 1];
-                    const [indexSmallestFound, IGNORE] = res[i - 3];
-                    const swapBar = arrayBars[indexToBeSwapped].style;
-                    const smallestFoundBar = arrayBars[indexSmallestFound].style;
-    
-                    setTimeout(() => {                    
-                        /** If the smallestFound is not our initial i'th element
-                         * We swap heights and change both the colors
-                         * --> Makes most recently sorted index DONE_COLOR
-                         * --> Revert the other swapped value back to PRIMARY
-                        */
-                       if (indexToBeSwapped !== indexSmallestFound) {
-                           [swapBar.height, smallestFoundBar.height] = [`${smallestFound}px`, `${toBeSwappedVal}px`];
-                            smallestFoundBar.backgroundColor = PRIMARY_COLOR;
-                        }
-                        swapBar.backgroundColor = DONE_COLOR;
-                        completedAnimations++;
-                    }, (i) * ANIMATION_SPEED_MS);   
+            nextStepTimeout = getSpeedCallback();
+        }
+        else if (stage === 3) {
+            /** 
+             * We have a guarantee that the first element of the animations
+             * element is the smallest value. So, just switch heights. 
+             * 
+             * If we dont need to switch heights -- that jValue is <= minValSoFar,
+             * just make both bars NOSWITCH COLOR
+             */
+            const [indexMinSoFar, indexOther] = animations[i - 2];
+            const smallerBarStyle = arrayBars[indexMinSoFar].style;
+            const largerBarStyle = arrayBars[indexOther].style;
+
+            smallerBarStyle.backgroundColor = MIN_SOFAR_COLOR;
+            largerBarStyle.backgroundColor = PRIMARY_COLOR;
+            completedAnimations++;
+            nextStepTimeout = getSpeedCallback();
+        }
+        else if (stage === 4) {
+            /** We only switch bars when sorting has reached
+             * the end of the array. If not, just increase animations,
+             * and do nothing
+             */
+            const [indexToBeSwapped, indexEnd] = animations[i];
+            if (indexEnd === BARS - 1) {
+                const [toBeSwappedVal, smallestFound] = animations[i - 1];
+                const [indexSmallestFound, IGNORE] = animations[i - 3];
+                const swapBar = arrayBars[indexToBeSwapped].style;
+                const smallestFoundBar = arrayBars[indexSmallestFound].style;
+   
+                /* 
+                 * If the smallestFound is not our initial i'th element
+                 * We swap heights and change both the colors
+                 * --> Makes most recently sorted index DONE_COLOR
+                 * --> Revert the other swapped value back to PRIMARY
+                */
+                if (indexToBeSwapped !== indexSmallestFound) {
+                    [swapBar.height, smallestFoundBar.height] = [`${smallestFound}px`, `${toBeSwappedVal}px`];
+                    smallestFoundBar.backgroundColor = PRIMARY_COLOR;
                 }
-                else {
-                    setTimeout(() => {
-                        completedAnimations++;
-                    }, (i) * ANIMATION_SPEED_MS);
-                }
+                swapBar.backgroundColor = DONE_COLOR;
+                completedAnimations++;
             }
+            else {
+                completedAnimations++;
+            }
+            nextStepTimeout = getSpeedCallback();
         }
     }
+    setTimeout(() => animate(animations, arrayBars, completedAnimations, BARS, getSpeedCallback, comparisons, updateComparisons, resolveCallback), nextStepTimeout);
 }
