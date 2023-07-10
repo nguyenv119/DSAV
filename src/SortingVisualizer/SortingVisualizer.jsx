@@ -31,7 +31,8 @@ export const SAMESIZE_COLOR = "#f1cc32";
 export const SMALLEST_SOFAR_COLOR = "#FC0FC0"
 export const DONE_COLOR = "rgba(255, 0, 166, 0.87)";
 
-/* export default class defines the class we want to have as a tag*/
+/*
+? export default class defines the class we want to have as a tag*/
 export default class SortingVisualizer extends React.Component {
 
     /* 
