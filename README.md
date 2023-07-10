@@ -10,31 +10,31 @@ But, also to have a code visualizer! I hope this is able to help students and te
 
 I built this using Vite and React, virtually learning both from scratch — seems quite interesting though, components and all that 👀
 
-Check out the page so far at: 
-
-<i>https://nguyenv119.github.io/DSAV/</i>
-
 If you have any suggestions on improving or collaborating, feel free to contact me! 👍
+
+<h3>Check out the page so far at: 
+
+<i><strong>https://nguyenv119.github.io/DSAV/</strong></i></h3>
 
 
 
 # Setup
-1. Open yout terminal, and install `npm` globally to your device, if you haven't already:
+1. Open your terminal and ensure that `npm` is installed globally on your device. If you haven't installed it yet, you can run the following command to install or update npm:
 ```md
 npm install -g npm
 ```
-2. Now, install `git`, if you haven't already. If you have, it will simply show you your git version; if you don't have it installed, it will prompt you to do so.
+2. Check if `git` is installed by running the following command. It will display the Git version if it is already installed; otherwise, it will prompt you to install it:
 ```md
 git --version
 ```
-3. Create a new folder on your device. Name it <i>DSAV</i>, or something that will help you remember the location of your work.
-4. Open that folder on your IDE, usually <i><strong>File —> Open —> Choose your File</strong></i>.
-5. Open an integrated terminal in your IDE within that file, <strong>Right Click, <i>"Open in Integrated Terminal"</i></strong>.
-6. Within your integrated terminal, clone the repositiory:
+3. Create a new folder on your device and name it "DSAV" or any name that suits your preference. This folder will be the location for your work.
+4. Open your IDE (Integrated Development Environment) and navigate to the "DSAV" folder you created. Usually it will be <i><strong>File —> Open —> Choose your File</strong></i>.
+5. In your IDE, open an integrated terminal within the "DSAV" folder. <strong>Right Click</strong> within the folder and select <strong><i>"Open in Integrated Terminal."</i></strong>
+6. Within the integrated terminal, clone the repository using the following command:
 ```
 git clone https://github.com/nguyenv119/DSAV/
 ```
-7. Now, move to the correct file by changing your directory:
+7. Change your current directory to the "DSAV" folder by running the following command:
 ```
 cd DSAV/
 ```
