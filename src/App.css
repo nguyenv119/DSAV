@@ -112,7 +112,7 @@ button[class*="btn"] {border: 1;}
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: -20px 0px 0 20px;
+  margin: -50px 0px 0 20px;
 }
 
 .arrayBar {
@@ -124,7 +124,7 @@ button[class*="btn"] {border: 1;}
 .arrayBars {
   display: flex;
   justify-content: center;
-  margin: 0 15px 0 0;
+  margin: 15px 15px 0 0;
   height: 600px;
 }
 
@@ -133,7 +133,7 @@ button[class*="btn"] {border: 1;}
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin: -25px 0px 25px 155px;
+  margin: -10px 0px 25px 155px;
 }
 
 .buttonGroup {
@@ -155,7 +155,7 @@ button[class*="btn"] {border: 1;}
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  margin: -70px 0px -10px 220px;
+  margin: -80px 0px -10px 220px;
   font-size: 15px;
 }
 

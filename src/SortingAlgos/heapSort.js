@@ -350,3 +350,4 @@ function animateHeapSort(heapSortAnimations, arrayBars, completedAnimations, get
         setTimeout(() => animateHeapSort(heapSortAnimations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, isPausedCallback).then(() => resolve()), nextStepTimeout);
     });
 }
+
