@@ -23,10 +23,13 @@ If you have any suggestions on improving or collaborating, feel free to contact 
 ```md
 npm install -g npm
 ```
-2. Check if `git` is installed by running the following command. It will display the Git version if it is already installed; otherwise, it will prompt you to install it:
+2. Check if `git` is installed by running the following command. It will display the Git version if it is already installed. 
 ```md
 git --version
 ```
+Otherwise, go to <i><strong>https://git-scm.com/downloads</strong></i> to install ```git``` for your device. When you succesfully download it, ```git --version``` should give you the version you've installed.
+
+
 3. Create a new folder on your device and name it "DSAV" or any name that suits your preference. This folder will be the location for your work.
 4. Open your IDE (Integrated Development Environment) and navigate to the "DSAV" folder you created. Usually it will be <i><strong>File —> Open —> Choose your File</strong></i>.
 5. In your IDE, open an integrated terminal within the "DSAV" folder. <strong>Right Click</strong> within the folder and select <strong><i>"Open in Integrated Terminal."</i></strong>
