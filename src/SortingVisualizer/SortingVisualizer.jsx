@@ -1,34 +1,3 @@
-
-
-
-
-                                    /*
-
-                                    * TENTATIVE TO-DO LIST
-
-                                    TODO: CSS
-                                    ? Screen-size optimization
-                                    ? Make sure margins and padding are clean, unmessy
-                                    ? Light and dark mode
-                                    ! Make a progress bar 
-                                    ! Footer for copyright (collaborators can simply change the name to their own)
-
-                                    TODO: Code Organization
-                                    ? Organize everything, in a React-friendly manner
-                                    
-                                    TODO: Code Visualization
-                                    ! Idea: key is using the stages to know where we are?
-
-                                    TODO: Speed
-                                    ! Add a super fast sorting option so we can have that option, not to wait for so damn long: in there, we just run the regular animate
-                                    ? (CSS) can we change the bar such that there is a gradient animating spot at the end to indicating the very fast speed
-
-                                    TODO: MergeSort
-                                    ? We can try make merge-sort more compelling by changing the margins of the size of the auxiliary array 
-                                    ? Make it more visually compelling by pinking the completion of the merging of aux arrays
-                                    */
-
-
 import React from "react";
 import {mergeSortExp} from "../SortingAlgos/mergeSort"
 import {bubbleSortExp} from "../SortingAlgos/bubbleSort"
@@ -175,7 +144,8 @@ export default class SortingVisualizer extends React.Component {
     bubbleSort() {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
-        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
+        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused())
+        .then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
         })
     }
