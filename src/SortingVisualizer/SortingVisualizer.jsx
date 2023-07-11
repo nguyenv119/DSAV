@@ -18,6 +18,7 @@
                                     
                                     TODO: Code Visualization
                                     ! Idea: key is using the stages to know where we are?
+                                    ! Idea: make a reset button so that user doenst have to refresh page
 
                                     TODO: Speed
                                     ! Add a super fast sorting option so we can have that option, not to wait for so damn long: in there, we just run the regular animate
@@ -175,7 +176,8 @@ export default class SortingVisualizer extends React.Component {
     bubbleSort() {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
-        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
+        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused())
+        .then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
         })
     }
