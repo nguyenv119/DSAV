@@ -3,12 +3,29 @@
 
 
                                     /*
+
+                                    * TENTATIVE TO-DO LIST
+
+                                    TODO: CSS
+                                    ? Screen-size optimization
+                                    ? Make sure margins and padding are clean, unmessy
+                                    ? Light and dark mode
+                                    ! Make a progress bar 
+                                    ! Footer for copyright (collaborators can simply change the name to their own)
+
+                                    TODO: Code Organization
+                                    ? Organize everything, in a React-friendly manner
+                                    
+                                    TODO: Code Visualization
+                                    ! Idea: key is using the stages to know where we are?
+
+                                    TODO: Speed
                                     ! Add a super fast sorting option so we can have that option, not to wait for so damn long: in there, we just run the regular animate
+                                    ? (CSS) can we change the bar such that there is a gradient animating spot at the end to indicating the very fast speed
 
                                     TODO: MergeSort
                                     ? We can try make merge-sort more compelling by changing the margins of the size of the auxiliary array 
                                     ? Make it more visually compelling by pinking the completion of the merging of aux arrays
-
                                     */
 
 
@@ -244,7 +261,15 @@ export default class SortingVisualizer extends React.Component {
         ? Gets the state (array we created) out of the object, 
          * We need the {}, won't work with just array
         */
-        const { array, activeButton, isSorting, ANIMATION_SPEED_MS, BARS, comparisons } = this.state;
+        const { array, 
+                activeButton, 
+                activeSortingButton, 
+                sortingInProgress, 
+                isSorting, 
+                ANIMATION_SPEED_MS, 
+                BARS, 
+                comparisons } = this.state;
+
         return (
             /* 
             ? Map = go through each num in array, extracting value and index and making it into a bar:
@@ -261,52 +286,52 @@ export default class SortingVisualizer extends React.Component {
                     <div className="buttonContainer">
                        <div className="buttonGroup">
                             <div className="btn-container">
-                                <button className={`btn-3d regular${this.state.activeButton === "generateArray" ? ' down' : ''}`} 
+                                <button className={`btn-3d regular${activeButton === "generateArray" ? ' down' : ''}`} 
                                     onClick={() => {
                                         this.makeArray();
                                         this.setState({ activeButton: "generateArray", activeSortingButton: "" });
                                     }} 
-                                    disabled={this.state.isSorting}>Generate New Array</button>
+                                    disabled={isSorting}>Generate New Array</button>
                             </div>
                             <div className="btn-container">
-                                <button className={`btn-3d regular${this.state.activeSortingButton === "bubbleSort" ? ' down' : ''}`} 
+                                <button className={`btn-3d regular${activeSortingButton === "bubbleSort" ? ' down' : ''}`} 
                                     onClick={() => {
                                         this.bubbleSort()
                                         this.setState({ activeSortingButton: "bubbleSort" });
                                     }} 
-                                    disabled={this.state.sortingInProgress}>Bubble Sort</button>
+                                    disabled={sortingInProgress}>Bubble Sort</button>
                             </div>
                             <div className="btn-container">
-                                <button className={`btn-3d regular${this.state.activeSortingButton === "selectionSort" ? ' down' : ''}`} 
+                                <button className={`btn-3d regular${activeSortingButton === "selectionSort" ? ' down' : ''}`} 
                                     onClick={() => {
                                         this.selectionSort()
                                         this.setState({ activeSortingButton: "selectionSort" });
                                     }}
-                                    disabled={this.state.sortingInProgress}>Selection Sort</button>
+                                    disabled={sortingInProgress}>Selection Sort</button>
                             </div>
                             <div className="btn-container">
-                                <button className={`btn-3d regular${this.state.activeSortingButton === "insertionSort" ? ' down' : ''}`} 
+                                <button className={`btn-3d regular${activeSortingButton === "insertionSort" ? ' down' : ''}`} 
                                     onClick={() => {
                                         this.insertionSort()
                                         this.setState({ activeSortingButton: "insertionSort" });
                                     }} 
-                                    disabled={this.state.sortingInProgress}>Insertion Sort</button>
+                                    disabled={sortingInProgress}>Insertion Sort</button>
                             </div>
                             <div className="btn-container">
-                                <button className={`btn-3d regular${this.state.activeSortingButton === "mergeSort" ? ' down' : ''}`} 
+                                <button className={`btn-3d regular${activeSortingButton === "mergeSort" ? ' down' : ''}`} 
                                     onClick={() => {
                                         this.mergeSort()
                                         this.setState({ activeSortingButton: "mergeSort" });
                                     }
-                                    } disabled={this.state.sortingInProgress}>Merge Sort</button>
+                                    } disabled={sortingInProgress}>Merge Sort</button>
                             </div>
                             <div className="btn-container">
-                                <button className={`btn-3d regular${this.state.activeSortingButton === "heapSort" ? ' down' : ''}`} 
+                                <button className={`btn-3d regular${activeSortingButton === "heapSort" ? ' down' : ''}`} 
                                     onClick={() => {
                                         this.heapSort()
                                         this.setState({ activeSortingButton: "heapSort" });
                                     }} 
-                                    disabled={this.state.sortingInProgress}>Heap Sort</button>
+                                    disabled={sortingInProgress}>Heap Sort</button>
                             </div>
                         </div>
                     </div>
@@ -351,15 +376,13 @@ export default class SortingVisualizer extends React.Component {
                         Comparisions: {comparisons}                                
                         </button>
                         <div className="btn-container">
-                            <button className={`btn-3d regular pp${this.state.activeButton === "pause" ? ' down' : ''}`} 
+                            <button className={`btn-3d regular pp${activeButton === "pause" ? ' down' : ''}`} 
                                 onClick={() => {
                                     this.handlePause();
                                     this.setState({ activeButton: this.state.isPaused ? "" : "pause" });
                                 }} 
                                 disabled={!this.state.sortingInProgress}>{this.state.isPaused ? "Play" : "Pause"}</button>
                         </div>
-
-
 
                     </div>
                 </div>
