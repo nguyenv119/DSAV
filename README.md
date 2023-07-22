@@ -16,8 +16,6 @@ If you have any suggestions on improving or collaborating, feel free to contact 
 
 <i><strong>https://nguyenv119.github.io/DSAV/</strong></i></h3>
 
-
-
 # Setup
 1. Open your terminal and ensure that `npm` is installed globally on your device. Do this by checking the `npm` version:
 ```
