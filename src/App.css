@@ -162,7 +162,7 @@ button[class*="btn"] {border: 1;}
 .scrollableRange {
   display: flex;
   align-items: center;
-  margin: -15px 20px 0 10px; 
+  margin: -15px 20px 0 100px; 
   white-space: nowrap;
 }
 
