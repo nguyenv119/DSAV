@@ -19,10 +19,12 @@ If you have any suggestions on improving or collaborating, feel free to contact 
 
 
 # Setup
-1. Open your terminal and ensure that `npm` is installed globally on your device. If you haven't installed it yet, you can run the following command to install or update npm:
-```md
-npm install -g npm
+1. Open your terminal and ensure that `npm` is installed globally on your device. Do this by checking the `npm` version:
 ```
+node -v
+```
+If you haven't installed it yet, you download it here: https://nodejs.org/en.
+
 2. Check if `git` is installed by running the following command. It will display the Git version if it is already installed. 
 ```md
 git --version
