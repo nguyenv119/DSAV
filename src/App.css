@@ -23,9 +23,18 @@ body {
 }
 
 .btn-container, .container {
-	border-radius: 4px;
-	text-align: center;
-	margin-bottom: 40px;
+  border-radius: 4px;
+  text-align: center;
+  margin-right: 20px;
+}
+
+.buttonContainer {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  left: 30px;
 }
 
 button[class*="btn"] {border: 1;}
@@ -34,8 +43,7 @@ button[class*="btn"] {border: 1;}
 .btn-3d {
 	position: relative;
 	display: inline-block;
-	font-size: 16px;
-	padding: 5px 17px 5px 17px;
+	padding: 5px 20px 5px 20px;
 	color: white;
   font-weight: 500;
 	text-align: center;
@@ -43,6 +51,18 @@ button[class*="btn"] {border: 1;}
 	text-shadow: 0 1px 0 rgba(0,0,0,0.15);
   border-radius: 8px;
   border: 1px solid transparent;
+}
+
+/* 3D button colors */
+.btn-3d.regular {
+  box-sizing: border-box;
+	background-color: #1a1a1a;
+	box-shadow: 0 0 0 1px #1a1a1a inset,
+        0 0 0 2px rgba(255,255,255,0.15) inset,
+        0 8px 0 0 #1a1a1a,
+        0 8px 0 1px rgba(0,0,0,0.4),
+				0 8px 8px 1px rgba(51, 26, 26, 0.5);
+  margin-right: 20px;
 }
 
 .btn-3d.regular:hover {
@@ -69,25 +89,10 @@ button[class*="btn"] {border: 1;}
   animation: AnimationName 7s ease infinite;
 }
 
-/* 3D button colors */
-.btn-3d.regular {
-  margin:45px 30px 0px 0px;
-	background-color: #1a1a1a;
-	box-shadow: 0 0 0 1px #1a1a1a inset,
-        0 0 0 2px rgba(255,255,255,0.15) inset,
-        0 8px 0 0 #1a1a1a,
-        0 8px 0 1px rgba(0,0,0,0.4),
-				0 8px 8px 1px rgba(51, 26, 26, 0.5);
-}
-
 .btn-3d.regular:active {
 	box-shadow: 0 0 0 1px #1a1a1a inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
-}
-
-.btn-3d.regular.colorful {
-  margin: 0px 300px 0px 0px;
 }
 
 .colorful {
@@ -103,17 +108,72 @@ button[class*="btn"] {border: 1;}
   background: linear-gradient(253deg, var(--gradcolor1), var(--gradcolor2), var(--gradcolor3));
   background-size: 600% 600%;
   animation: AnimationName 7s ease infinite;
-  margin: 3px 80px 0 0; 
   pointer-events: none;
 }
+
+/* .arrayContainer {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  border: solid 2px blue;
+}
+
+.arrayBars {
+  transform: rotateX(180deg);
+  display: flex;
+  justify-content: left;
+  position: relative;
+  top: 0%;
+  height: 600px;
+  width: 1200px;
+  border: 2px solid red;
+}
+
+.buttons {
+  width: 80%;
+  height: 15%;
+  position: fixed;
+  bottom: 50px;
+  left: 30px;
+} */
 
 .arrayContainer {
   display: flex;
   flex-direction: column;
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  height: 100vh; /* This value should be 100vh to fill the entire viewport height */
   align-items: center;
   justify-content: center;
-  margin: -50px 0px 0 20px;
+  border: solid 2px blue;
+  width: 1200px; /* Add width of 1200px */
 }
+
+.arrayBars {
+  transform: rotateX(180deg);
+  display: flex;
+  justify-content: left;
+  position: relative;
+  top: -2%;
+  height: 80%; /* This value should be 80% to fill 80% of the arrayContainer div */
+  width: 100%; /* Add width of 100% to fill the entire parent div */
+  /* border: 2px solid red; */
+}
+
+.buttons {
+  width: 100%; /* Add width of 100% to fill the entire parent div */
+  height: 20%; /* Add height of 23.3% to fill the remaining space of the arrayContainer div */
+  position: relative;
+  /* border: 2px solid purple; */
+  transform: translateY(15%);
+}
+
 
 .arrayBar {
   width: 10.5px;
@@ -121,70 +181,71 @@ button[class*="btn"] {border: 1;}
   margin: 0 2px 0 0;
 }
 
-.arrayBars {
-  display: flex;
-  justify-content: center;
-  margin: 15px 15px 0 0;
-  height: 600px;
-}
-
-.buttonContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin: -10px 0px 25px 155px;
-}
-
 .buttonGroup {
   display: flex;
-  margin: -10px 0 -10px 45px;
+  flex-wrap: wrap; 
+  margin: 0 30px;
   justify-content: center;
   align-items: center;
+  font-size: 17px;
   height: 100%;
+  margin-bottom: 0px;
 }
 
 /** Scrolling bar */
 .scrollableRangeContainer {
-  width: auto;
-  margin: 0 5px 0 0;
-}
-
-.settings {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  margin: -75px 0px -10px 100px;
-  font-size: 15px;
+  position: relative;
+  top: 0px;
 }
 
 .scrollableRange {
   display: flex;
   align-items: center;
-  margin: -15px 20px 0 100px; 
-  white-space: nowrap;
+  position: relative;
+  top: -13px;
+  margin-right: 20px;
 }
 
 .scrollableRange input {
-  width: 100%;
+  width: 140px;
+}
+
+.settings {
+  display: flex;
+  align-items: center;
+  position: relative;
+  bottom: -15px;
+  left: 80px;
+  font-size: 17px;
+  padding: 10px;
+}
+
+.btn-3d.colorful.regular {
+  min-width: 140px;
+  position: relative;
+  top: -2px;
+  margin-right: 60px;
 }
 
 .btn-3d.regular.colorful.speed {
-  margin: 0 -10px 0 0;
+  min-width: 90px;
+  margin-right: 60px;
 }
 
 
 .btn-3d.regular.comparisons {
-  margin: -3px 0px 0px -10px;
-  transform: translateX(-220px);
   pointer-events: none;
-  width: 200px;
+  min-width: 200px;
+  position: relative;
+  top: -2px;
+  margin-right: 20px;
 }
 
 .pp {
-  width: 80px;
-  transform: translateX(-195px) translateY(-4px);
+  box-sizing: border-bx;
+  position: relative;
+  width: 100px;
+  top: -2px;
 }
 
 @keyframes AnimationName {
@@ -196,5 +257,42 @@ button[class*="btn"] {border: 1;}
   }
   100% {
     background-position: 50% 0%;
+  }
+}
+
+@media screen and (max-width: 1110px) {
+  .buttons {
+    height: 30%;
+  }
+  .settings {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px; /* Modified line: increasing padding in smaller screens. */
+  }
+  
+  .btn-3d.colorful.regular {
+    margin-right: 40px; /* Adjusted margin */
+  }
+  
+  .btn-3d.regular.colorful.speed {
+    flex-basis: 50%;
+    order: 2;
+    margin-right: 40px; /* Adjusted margin */
+  }
+
+  .btn-3d.regular.comparisons {
+    order: -2;
+  }
+  .btn-3d.regular.pp {
+    flex-basis: 50%;
+    order: -1;
+  }
+  .scrollableRangeContainer {
+    flex-basis: 100%;
+    order: 1;
+  }
+  .btn-3d.colorful.regular.length {
+    flex-basis: 50%;
+    order: 2;
   }
 }

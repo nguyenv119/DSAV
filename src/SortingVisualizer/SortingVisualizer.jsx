@@ -7,7 +7,7 @@ import {heapSortExp} from "../SortingAlgos/heapSort"
 import 'bootstrap/dist/css/bootstrap.css';
 
 const MINVAL = 5;
-const MAXVAL = 625;
+const MAXVAL = 635;
 export const GREEN_SPEED = 7;
 export const PRIMARY_COLOR = '#007ce8';
 export const SECONDARY_COLOR = '#fe5f24';
@@ -39,7 +39,7 @@ export default class SortingVisualizer extends React.Component {
             isSorting: false,
             buttonsDisabled: false,
             ANIMATION_SPEED_MS: 6, 
-            BARS: 10, 
+            BARS: 14, 
             sortingInProgress: false, 
             activeButton: "",
             activeSortingButton: "",
@@ -80,25 +80,26 @@ export default class SortingVisualizer extends React.Component {
     }
 
     /* 
-    ? Determines how many bars based on scrolling bar */
+    ? Determines how many bars based on scrolling bar.
+    ! We need to have the bars fill up all 1200 pixels. So our 1200/Bars should be a whole number*/
     determineBars() {
         const { BARS } = this.state;
         const length = BARS === 20 ? 
             300 : BARS === 19 ? 
-                290 : BARS === 18 ? 
-                    260 : BARS === 17 ? 
-                        230 : BARS === 16 ? 
-                            200 : BARS === 15 ? 
-                                180 : BARS === 14 ? 
-                                    160 : BARS === 13 ? 
-                                        145 : BARS === 12 ? 
-                                            120 : BARS === 11 ? 
-                                                100 : BARS === 10 ? 
-                                                    80 : BARS === 9 ? 
-                                                        60 : BARS === 8 ? 
-                                                            40 : BARS === 7 ? 
-                                                                20 : BARS === 6 ? 
-                                                                    10 : BARS === 5  
+                240 : BARS === 18 ? 
+                    200 : BARS === 17 ? 
+                        180 : BARS === 16 ? 
+                            150 : BARS === 15 ? 
+                                120 : BARS === 14 ? 
+                                    100 : BARS === 13 ? 
+                                        80 : BARS === 12 ? 
+                                            50 : BARS === 11 ? 
+                                                30 : BARS === 10 ? 
+                                                    25 : BARS === 9 ? 
+                                                        16 : BARS === 8 ? 
+                                                            12 : BARS === 7 ? 
+                                                                10 : BARS === 6 ? 
+                                                                    8 : BARS === 5  
                                                                         ? 5 : 5;
         return length;
     }
@@ -124,7 +125,7 @@ export default class SortingVisualizer extends React.Component {
             ? Resets the color of array back to PRIMARY, and determines width and length */            
             const arrayBars = document.getElementsByClassName("arrayBar");
             for (let i = 0; i < arrayBars.length; i++) {
-                arrayBars[i].style.width = `${810 / length}px`;
+                arrayBars[i].style.width = `${1200 / length}px`;
                 arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
             }
         });
@@ -252,7 +253,19 @@ export default class SortingVisualizer extends React.Component {
             */
 
             <div className="arrayContainer">
-                <div>
+                 <div className="arrayBars">
+                    {array.map((value, index) => (
+                    <div
+                        className="arrayBar"
+                        key={index}
+                        style={{
+                        backgroundColor: PRIMARY_COLOR,
+                        height: `${value}px`
+                        }}
+                    ></div>
+                    ))}
+                </div>
+                <div class="buttons">
                     <div className="buttonContainer">
                        <div className="buttonGroup">
                             <div className="btn-container">
@@ -321,7 +334,7 @@ export default class SortingVisualizer extends React.Component {
                                 ></input>
                             </div>
                         </div>
-                        <button className="btn-3d regular colorful speed">
+                        <button className="btn-3d colorful regular speed">
                             Speed
                         </button>
                         <div className="scrollableRangeContainer">
@@ -355,18 +368,6 @@ export default class SortingVisualizer extends React.Component {
                         </div>
 
                     </div>
-                </div>
-                <div className="arrayBars">
-                    {array.map((value, index) => (
-                    <div
-                        className="arrayBar"
-                        key={index}
-                        style={{
-                        backgroundColor: PRIMARY_COLOR,
-                        height: `${value}px`
-                        }}
-                    ></div>
-                    ))}
                 </div>
             </div>
         );
