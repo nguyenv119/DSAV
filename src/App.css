@@ -15,7 +15,7 @@
 
 body {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 100vh;
   margin: 0;
@@ -111,37 +111,6 @@ button[class*="btn"] {border: 1;}
   pointer-events: none;
 }
 
-/* .arrayContainer {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  left: 0%;
-  top: 0%;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
-  border: solid 2px blue;
-}
-
-.arrayBars {
-  transform: rotateX(180deg);
-  display: flex;
-  justify-content: left;
-  position: relative;
-  top: 0%;
-  height: 600px;
-  width: 1200px;
-  border: 2px solid red;
-}
-
-.buttons {
-  width: 80%;
-  height: 15%;
-  position: fixed;
-  bottom: 50px;
-  left: 30px;
-} */
-
 .arrayContainer {
   display: flex;
   flex-direction: column;
@@ -151,8 +120,27 @@ button[class*="btn"] {border: 1;}
   height: 100vh; /* This value should be 100vh to fill the entire viewport height */
   align-items: center;
   justify-content: center;
-  border: solid 2px blue;
-  width: 1200px; /* Add width of 1200px */
+  border-right: solid 2px #1c1c1c;
+  width: 79%;
+}
+
+.codeArea {
+  background: #222222;
+  position: fixed;
+  left: 80%; /* This value should be set to the width of the .arrayContainer div */
+  top: 0; /* Align to the top of the viewport */
+  bottom: 0; /* Align to the bottom of the viewport */
+  right: 0; /* Align to the right of the viewport */
+  overflow: auto; /* Add scrollbars if content overflows */
+  width: 21%; /* Updated this value to make the div span 30% of the viewport width */
+}
+
+.description {
+  position: relative;
+  top: 2%;
+  height: 50%;
+  color: white;
+  font-size: 12.5px;
 }
 
 .arrayBars {
@@ -161,9 +149,12 @@ button[class*="btn"] {border: 1;}
   justify-content: left;
   position: relative;
   top: -2%;
+  left: -0.3%;
   height: 80%; /* This value should be 80% to fill 80% of the arrayContainer div */
-  width: 100%; /* Add width of 100% to fill the entire parent div */
-  /* border: 2px solid red; */
+  width: 99%; /* Add width of 100% to fill the entire parent div */
+  border-top: solid 2px #1c1c1c;
+  border-bottom: solid 2px #1c1c1c;
+  border-left: solid 2px #1c1c1c;
 }
 
 .buttons {
@@ -173,7 +164,6 @@ button[class*="btn"] {border: 1;}
   /* border: 2px solid purple; */
   transform: translateY(15%);
 }
-
 
 .arrayBar {
   width: 10.5px;

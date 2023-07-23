@@ -251,130 +251,156 @@ export default class SortingVisualizer extends React.Component {
              * 
              * ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_map3
             */
-
-            <div className="arrayContainer">
-                 <div className="arrayBars">
-                    {array.map((value, index) => (
-                    <div
-                        className="arrayBar"
-                        key={index}
-                        style={{
-                        backgroundColor: PRIMARY_COLOR,
-                        height: `${value}px`
-                        }}
-                    ></div>
-                    ))}
-                </div>
-                <div class="buttons">
-                    <div className="buttonContainer">
-                       <div className="buttonGroup">
-                            <div className="btn-container">
-                                <button className={`btn-3d regular${activeButton === "generateArray" ? ' down' : ''}`} 
-                                    onClick={() => {
-                                        this.makeArray();
-                                        this.setState({ activeButton: "generateArray", activeSortingButton: "" });
-                                    }} 
-                                    disabled={isSorting}>Generate New Array</button>
+                <div>
+                    <div className="arrayContainer">
+                        <div className="arrayBars">
+                            {array.map((value, index) => (
+                            <div
+                                className="arrayBar"
+                                key={index}
+                                style={{
+                                backgroundColor: PRIMARY_COLOR,
+                                height: `${value}px`
+                                }}
+                            ></div>
+                            ))}
+                        </div>
+                        <div class="buttons">
+                            <div className="buttonContainer">
+                            <div className="buttonGroup">
+                                    <div className="btn-container">
+                                        <button className={`btn-3d regular${activeButton === "generateArray" ? ' down' : ''}`}
+                                            onClick={() => {
+                                                this.makeArray();
+                                                this.setState({ activeButton: "generateArray", activeSortingButton: "" });
+                                            }}
+                                            disabled={isSorting}>Generate New Array</button>
+                                    </div>
+                                    <div className="btn-container">
+                                        <button className={`btn-3d regular${activeSortingButton === "bubbleSort" ? ' down' : ''}`}
+                                            onClick={() => {
+                                                this.bubbleSort()
+                                                this.setState({ activeSortingButton: "bubbleSort" });
+                                            }}
+                                            disabled={sortingInProgress}>Bubble Sort</button>
+                                    </div>
+                                    <div className="btn-container">
+                                        <button className={`btn-3d regular${activeSortingButton === "selectionSort" ? ' down' : ''}`}
+                                            onClick={() => {
+                                                this.selectionSort()
+                                                this.setState({ activeSortingButton: "selectionSort" });
+                                            }}
+                                            disabled={sortingInProgress}>Selection Sort</button>
+                                    </div>
+                                    <div className="btn-container">
+                                        <button className={`btn-3d regular${activeSortingButton === "insertionSort" ? ' down' : ''}`}
+                                            onClick={() => {
+                                                this.insertionSort()
+                                                this.setState({ activeSortingButton: "insertionSort" });
+                                            }}
+                                            disabled={sortingInProgress}>Insertion Sort</button>
+                                    </div>
+                                    <div className="btn-container">
+                                        <button className={`btn-3d regular${activeSortingButton === "mergeSort" ? ' down' : ''}`}
+                                            onClick={() => {
+                                                this.mergeSort()
+                                                this.setState({ activeSortingButton: "mergeSort" });
+                                            }
+                                            } disabled={sortingInProgress}>Merge Sort</button>
+                                    </div>
+                                    <div className="btn-container">
+                                        <button className={`btn-3d regular${activeSortingButton === "heapSort" ? ' down' : ''}`}
+                                            onClick={() => {
+                                                this.heapSort()
+                                                this.setState({ activeSortingButton: "heapSort" });
+                                            }}
+                                            disabled={sortingInProgress}>Heap Sort</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="btn-container">
-                                <button className={`btn-3d regular${activeSortingButton === "bubbleSort" ? ' down' : ''}`} 
-                                    onClick={() => {
-                                        this.bubbleSort()
-                                        this.setState({ activeSortingButton: "bubbleSort" });
-                                    }} 
-                                    disabled={sortingInProgress}>Bubble Sort</button>
-                            </div>
-                            <div className="btn-container">
-                                <button className={`btn-3d regular${activeSortingButton === "selectionSort" ? ' down' : ''}`} 
-                                    onClick={() => {
-                                        this.selectionSort()
-                                        this.setState({ activeSortingButton: "selectionSort" });
-                                    }}
-                                    disabled={sortingInProgress}>Selection Sort</button>
-                            </div>
-                            <div className="btn-container">
-                                <button className={`btn-3d regular${activeSortingButton === "insertionSort" ? ' down' : ''}`} 
-                                    onClick={() => {
-                                        this.insertionSort()
-                                        this.setState({ activeSortingButton: "insertionSort" });
-                                    }} 
-                                    disabled={sortingInProgress}>Insertion Sort</button>
-                            </div>
-                            <div className="btn-container">
-                                <button className={`btn-3d regular${activeSortingButton === "mergeSort" ? ' down' : ''}`} 
-                                    onClick={() => {
-                                        this.mergeSort()
-                                        this.setState({ activeSortingButton: "mergeSort" });
-                                    }
-                                    } disabled={sortingInProgress}>Merge Sort</button>
-                            </div>
-                            <div className="btn-container">
-                                <button className={`btn-3d regular${activeSortingButton === "heapSort" ? ' down' : ''}`} 
-                                    onClick={() => {
-                                        this.heapSort()
-                                        this.setState({ activeSortingButton: "heapSort" });
-                                    }} 
-                                    disabled={sortingInProgress}>Heap Sort</button>
+                            <div className="settings">
+                                <div className="scrollableRangeContainer">
+                                    <label for="customRange3" className="form-label"></label>
+                                    <div className="scrollableRange">
+                                        <input
+                                            type="range"
+                                            className="form-range"
+                                            min="0"
+                                            max="10"
+                                            step="2"
+                                            id="customRange3"
+                                            value={ANIMATION_SPEED_MS}
+                                            onChange={this.handleAnimationSpeedChange}
+                                        ></input>
+                                    </div>
+                                </div>
+                                <button className="btn-3d colorful regular speed">
+                                    Speed
+                                </button>
+                                <div className="scrollableRangeContainer">
+                                    <label for="customRange4" className="form-label"></label>
+                                    <div className="scrollableRange">
+                                        <input
+                                            type="range"
+                                            className="form-range"
+                                            min="5"
+                                            max="20"
+                                            step="1"
+                                            id="customRange4"
+                                            value={BARS}
+                                            onChange={this.handleBarsChange}
+                                        ></input>
+                                    </div>
+                                </div>
+                                <button className="btn-3d colorful regular length">
+                                    Array Length
+                                </button>
+                                <button className="btn-3d regular comparisons">
+                                Comparisions: {comparisons}
+                                </button>
+                                <div className="btn-container">
+                                    <button className={`btn-3d regular pp${activeButton === "pause" ? ' down' : ''}`}
+                                        onClick={() => {
+                                            this.handlePause();
+                                            this.setState({ activeButton: this.state.isPaused ? "" : "pause" });
+                                        }}
+                                        disabled={!this.state.sortingInProgress}>{this.state.isPaused ? "Play" : "Pause"}</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className="settings">
-                        <div className="scrollableRangeContainer">
-                            <label for="customRange3" className="form-label"></label>
-                            <div className="scrollableRange">
-                                <input
-                                    type="range"
-                                    className="form-range"
-                                    min="0"
-                                    max="10"
-                                    step="2"
-                                    id="customRange3"
-                                    value={ANIMATION_SPEED_MS}
-                                    onChange={this.handleAnimationSpeedChange}
-                                ></input>
-                            </div>
+                    <div className="codeArea">
+                        <div className="description">
+                            <p>
+                                Bubble Sort:
+                                <br />
+                                <br />
+                                A straightforward sorting algorithm that <br></br>
+                                repeatedly compares adjacent elements in a list <br></br>
+                                and swaps them if they are in the wrong order. <br></br>
+                                This process continues until the list is sorted.
+                                <br />
+                                <br />
+                                Time Complexity:
+                            </p>
+                            <ul>
+                                <li>Best-case: O(n) — when the list is already sorted, and no swaps are needed.</li>
+                                <li>Average-case: O(n<sup>2</sup>) — when the algorithm makes about n<sup>2</sup>/2 comparisons and <br></br>
+                                swaps on average.</li>
+                                <li>Worst-case: O(n<sup>2</sup>) — when the list is in <br></br>
+                                reverse order, requiring the maximum <br></br>
+                                number of comparisons and swaps.</li>
+                            </ul>
+                            <p>Space Complexity:</p>
+                            <p>O(1) — Bubble Sort sorts the list in place without requiring additional memory.</p>
                         </div>
-                        <button className="btn-3d colorful regular speed">
-                            Speed
-                        </button>
-                        <div className="scrollableRangeContainer">
-                            <label for="customRange4" className="form-label"></label>
-                            <div className="scrollableRange">
-                                <input
-                                    type="range"
-                                    className="form-range"
-                                    min="5"
-                                    max="20"
-                                    step="1"
-                                    id="customRange4"
-                                    value={BARS}
-                                    onChange={this.handleBarsChange}
-                                ></input>
-                            </div>
-                        </div>
-                        <button className="btn-3d colorful regular length">
-                            Array Length
-                        </button>
-                        <button className="btn-3d regular comparisons"> 
-                        Comparisions: {comparisons}                                
-                        </button>
-                        <div className="btn-container">
-                            <button className={`btn-3d regular pp${activeButton === "pause" ? ' down' : ''}`} 
-                                onClick={() => {
-                                    this.handlePause();
-                                    this.setState({ activeButton: this.state.isPaused ? "" : "pause" });
-                                }} 
-                                disabled={!this.state.sortingInProgress}>{this.state.isPaused ? "Play" : "Pause"}</button>
-                        </div>
-
                     </div>
                 </div>
-            </div>
         );
     }
 }
 
-/* 
+/*
 ? Generates random int from min to max */
 function randomIntFrom(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
