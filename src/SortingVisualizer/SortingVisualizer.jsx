@@ -375,9 +375,9 @@ export default class SortingVisualizer extends React.Component {
                                 Bubble Sort:
                                 <br />
                                 <br />
-                                A straightforward sorting algorithm that <br></br>
-                                repeatedly compares adjacent elements in a list <br></br>
-                                and swaps them if they are in the wrong order. <br></br>
+                                A straightforward sorting algorithm that <br />
+                                repeatedly compares adjacent elements in a list <br />
+                                and swaps them if they are in the wrong order. <br />
                                 This process continues until the list is sorted.
                                 <br />
                                 <br />
@@ -385,10 +385,10 @@ export default class SortingVisualizer extends React.Component {
                             </p>
                             <ul>
                                 <li>Best-case: O(n) — when the list is already sorted, and no swaps are needed.</li>
-                                <li>Average-case: O(n<sup>2</sup>) — when the algorithm makes about n<sup>2</sup>/2 comparisons and <br></br>
+                                <li>Average-case: O(n<sup>2</sup>) — when the algorithm makes about n<sup>2</sup>/2 comparisons and <br />
                                 swaps on average.</li>
-                                <li>Worst-case: O(n<sup>2</sup>) — when the list is in <br></br>
-                                reverse order, requiring the maximum <br></br>
+                                <li>Worst-case: O(n<sup>2</sup>) — when the list is in <br />
+                                reverse order, requiring the maximum <br />
                                 number of comparisons and swaps.</li>
                             </ul>
                             <p>Space Complexity:</p>

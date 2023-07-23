@@ -19,7 +19,7 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  background-color: #242424;
+  background-color: #1d1d1d;
 }
 
 .btn-container, .container {
@@ -120,14 +120,14 @@ button[class*="btn"] {border: 1;}
   height: 100vh; /* This value should be 100vh to fill the entire viewport height */
   align-items: center;
   justify-content: center;
-  border-right: solid 2px #1c1c1c;
+  border-right: solid 1.5px #0c0c0c;
   width: 79%;
 }
 
 .codeArea {
-  background: #222222;
+  background: #1b1b1b;
   position: fixed;
-  left: 80%; /* This value should be set to the width of the .arrayContainer div */
+  left: 79%; /* This value should be set to the width of the .arrayContainer div */
   top: 0; /* Align to the top of the viewport */
   bottom: 0; /* Align to the bottom of the viewport */
   right: 0; /* Align to the right of the viewport */
@@ -138,6 +138,7 @@ button[class*="btn"] {border: 1;}
 .description {
   position: relative;
   top: 2%;
+  left: 5%;
   height: 50%;
   color: white;
   font-size: 12.5px;
@@ -152,9 +153,9 @@ button[class*="btn"] {border: 1;}
   left: -0.3%;
   height: 80%; /* This value should be 80% to fill 80% of the arrayContainer div */
   width: 99%; /* Add width of 100% to fill the entire parent div */
-  border-top: solid 2px #1c1c1c;
-  border-bottom: solid 2px #1c1c1c;
-  border-left: solid 2px #1c1c1c;
+  border-top: solid 2px #000000;
+  border-bottom: solid 2px #000000;
+  border-left: solid 2px #000000;
 }
 
 .buttons {
