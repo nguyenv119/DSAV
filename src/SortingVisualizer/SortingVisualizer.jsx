@@ -44,7 +44,159 @@ export default class SortingVisualizer extends React.Component {
             activeButton: "",
             activeSortingButton: "",
             comparisons: 0,
-            isPaused: false
+            isPaused: false,
+            activeAlgorithm: 1, 
+            algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
+
+            /*
+            ? This is the component that will be chosen dependant on the sorting algo */
+            codeVisualizer: {
+                "none": {
+                    about: [
+                        <p> Hello, this is DSAV. A Data Structure & Algorithm Visualizer <br />
+                        to help you understand the materials in Data Sturctures & Algorithms. </p>
+                    ],
+                    code: [
+                        <p> Please choose an Algorithm to start the animation. </p>
+                    ]
+                },
+                "bubbleSort": {
+                    /*
+                    ? Renders an array of JSX components */
+                    about: [
+                        <p>
+                            Bubble Sort:<br /><br />
+                            A straightforward sorting algorithm that <br />
+                            repeatedly compares adjacent elements in a list <br />
+                            and swaps them if they are in the wrong order. <br />
+                            This process continues until the list is sorted.<br /><br />
+                            Time Complexity:
+                        </p>,
+                        <ul>
+                            <li> Best Case: Ω(n) — when the list is already sorted, and no <br />
+                            swaps are needed, the list is traversed n times, where we have n elements.
+                            </li>
+                            <li> Average Case: O(n<sup>2</sup>) — when the algorithm makes about n<sup>2</sup>/2 comparisons and <br />
+                                swaps on average.
+                            </li>
+                            <li> Worst Case: O(n<sup>2</sup>) — when the list is in <br />
+                                reverse order, requiring the maximum <br />number of comparisons and swaps.
+                            </li>
+                        </ul>,
+                        <p>Space Complexity:</p>,
+                        <p>O(1) — Bubble Sort sorts the list in place without requiring additional memory.</p>
+                    ],
+                    code: [
+                        <pre style={{ fontSize: "12px" }}>
+                            <code>
+                                {`
+                                public void bubbleSort(int[] array) {
+                                    boolean didswaps;
+                                    do {
+                                        didswaps = false;
+                                        for (int i = 0; i < array.length - 1; i++) {
+                                            if (array[i] > array[i + 1]) {
+                                                swap(array[i], array[i + 1]);
+                                            }
+                                        }
+                                    } while (didswaps);
+                                }
+                                `}
+                            </code>
+                        </pre>
+                    ]
+                    
+                },
+                "selectionSort": {
+                    about: [
+                        <p>
+                            Selection Sort:<br /><br />
+                            An easy-top-implement sorting algorithm that <br />
+                            repeatedly finds the smallest element <br />
+                            from the unsorted part of the list and swaps it <br />
+                            with the first unsorted element. <br /><br />
+                            Time Complexity:
+                        </p>,
+                        <ul>
+                            <li> All Cases: θ(n<sup>2</sup>)</li>
+                            In every possible iteration. Unsorted or sorted, the the algorithm still <br />
+                            makes n(n-1)/2 comparisons, which simplifies to <br />O(n<sup>2</sup>). This is
+                            because in any case, we are unsure of where the next <br />
+                            minimum is 
+                        </ul>,
+                        <p>Space Complexity:</p>,
+                        <p>O(1) — Selection Sort sorts the list in place without requiring additional memory.</p>
+                    ],
+                    code: "",
+                },
+                "insertionSort": {
+                    about: [
+                        <p>
+                            Insertion Sort works by building a sorted list one <br />
+                            element at a time. Each iteration removes one element from <br />
+                            the input data, finds the location it belongs within the <br />
+                            sorted list, and inserts it there. <br /><br />
+                            Time Complexity:
+                        </p>,
+                        <ul>
+                            <li> Best Case: Ω(n) — when the list is sorted, the algorithm only <br />
+                            passes through the list once, n times for n elements.
+                            </li>
+                            <li> Average-case: θ(n<sup>2</sup>) — On average, the algorithm makes <br />
+                            quadratic number of comparisons.
+                            </li>
+                            <li> Worst-case: θ(n<sup>2</sup>) — In the worst-case scenario <br />
+                            (when the list is in reverse order), the algorithm makes a quadratic <br />
+                            number of comparisons.
+                            </li>
+                        </ul>,
+                        <p>Space Complexity:</p>,
+                        <p>O(1) — Insertion Sort sorts the list in place without requiring additional memory.</p>
+                    ],
+                    code: "",
+                },
+                "mergeSort": {
+                    about: [
+                        <p>
+                            Merge Sort is a divide and conquer algorithm that divides the <br />
+                            input array into two halves, sorts them and then merges the two <br />
+                            sorted halves. <br /><br />
+                            Time Complexity:
+                        </p>,
+                        <ul>
+                            <li> All Cases: Ω(nlog(n))</li>
+                            In every possible scenario, when the list is sorted,  <br />
+                            or when it is not, the list always performs the same
+                            linearaithmic number of operations
+                        </ul>,
+                        <p>Space Complexity:</p>,
+                        <p>O(n) — Merge Sort is not an in-place sorting algorithm and requires extra space. <br />
+                        However, the space complexity is linear, which makes it more memory-efficient <br />
+                        than other sorting algorithms for large data sets.</p>
+                    ],
+                    code: "",
+                },
+                "heapSort": {
+                    about: [
+                        <p>
+                            Heap Sort is a comparison-based sorting technique based on a <br />
+                            Binary Heap data structure. It works by building a max heap and <br />
+                            then swapping the root element with the end element and reducing <br />
+                            the heap size by one. <br /><br />
+                            Time Complexity:
+                        </p>,
+                        <ul>
+                            <li> All Cases: θ(n log n)</li>
+                            In all scenarios, making a max-heap is θ(n), and the subsequent steps <br />
+                            performs the same number of operations — the end-swapping and HEAPIFY-DOWN <br />
+                            on all n elements.
+                        </ul>,
+                        <p>Space Complexity:</p>,
+                        <p>O(1) — Heap Sort is an in-place sorting algorithm that does not require any extra space.</p>
+                    ],
+                    code: "",
+                },   
+            }
         };
     };
 
@@ -107,7 +259,6 @@ export default class SortingVisualizer extends React.Component {
     /* 
     ? Create the array, including how many bars and how wide */
     makeArray() {
-        
         const array = [];
         let length = this.determineBars();
 
@@ -239,7 +390,11 @@ export default class SortingVisualizer extends React.Component {
                 isSorting, 
                 ANIMATION_SPEED_MS, 
                 BARS, 
-                comparisons } = this.state;
+                comparisons} = this.state;
+        
+        const activeAlgorithmKey = this.state.algorithmKeys[this.state.activeAlgorithm];
+        const algorithm = this.state.codeVisualizer[activeAlgorithmKey];
+        
 
         return (
             /* 
@@ -272,7 +427,9 @@ export default class SortingVisualizer extends React.Component {
                                         <button className={`btn-3d regular${activeButton === "generateArray" ? ' down' : ''}`}
                                             onClick={() => {
                                                 this.makeArray();
-                                                this.setState({ activeButton: "generateArray", activeSortingButton: "" });
+                                                /*
+                                                ? Specifies the button that is active for 1. button animations, and 2. Code Visualization  */
+                                                this.setState({ activeButton: "generateArray", activeSortingButton: "", activeAlgorithm: 0 });
                                             }}
                                             disabled={isSorting}>Generate New Array</button>
                                     </div>
@@ -280,7 +437,7 @@ export default class SortingVisualizer extends React.Component {
                                         <button className={`btn-3d regular${activeSortingButton === "bubbleSort" ? ' down' : ''}`}
                                             onClick={() => {
                                                 this.bubbleSort()
-                                                this.setState({ activeSortingButton: "bubbleSort" });
+                                                this.setState({ activeSortingButton: "bubbleSort", activeAlgorithm: 1 });
                                             }}
                                             disabled={sortingInProgress}>Bubble Sort</button>
                                     </div>
@@ -288,7 +445,7 @@ export default class SortingVisualizer extends React.Component {
                                         <button className={`btn-3d regular${activeSortingButton === "selectionSort" ? ' down' : ''}`}
                                             onClick={() => {
                                                 this.selectionSort()
-                                                this.setState({ activeSortingButton: "selectionSort" });
+                                                this.setState({ activeSortingButton: "selectionSort", activeAlgorithm: 2 });
                                             }}
                                             disabled={sortingInProgress}>Selection Sort</button>
                                     </div>
@@ -296,7 +453,7 @@ export default class SortingVisualizer extends React.Component {
                                         <button className={`btn-3d regular${activeSortingButton === "insertionSort" ? ' down' : ''}`}
                                             onClick={() => {
                                                 this.insertionSort()
-                                                this.setState({ activeSortingButton: "insertionSort" });
+                                                this.setState({ activeSortingButton: "insertionSort", activeAlgorithm: 3 });
                                             }}
                                             disabled={sortingInProgress}>Insertion Sort</button>
                                     </div>
@@ -304,7 +461,7 @@ export default class SortingVisualizer extends React.Component {
                                         <button className={`btn-3d regular${activeSortingButton === "mergeSort" ? ' down' : ''}`}
                                             onClick={() => {
                                                 this.mergeSort()
-                                                this.setState({ activeSortingButton: "mergeSort" });
+                                                this.setState({ activeSortingButton: "mergeSort", activeAlgorithm: 4 });
                                             }
                                             } disabled={sortingInProgress}>Merge Sort</button>
                                     </div>
@@ -312,7 +469,7 @@ export default class SortingVisualizer extends React.Component {
                                         <button className={`btn-3d regular${activeSortingButton === "heapSort" ? ' down' : ''}`}
                                             onClick={() => {
                                                 this.heapSort()
-                                                this.setState({ activeSortingButton: "heapSort" });
+                                                this.setState({ activeSortingButton: "heapSort", activeAlgorithm: 5 });
                                             }}
                                             disabled={sortingInProgress}>Heap Sort</button>
                                     </div>
@@ -371,28 +528,10 @@ export default class SortingVisualizer extends React.Component {
                     </div>
                     <div className="codeArea">
                         <div className="description">
-                            <p>
-                                Bubble Sort:
-                                <br />
-                                <br />
-                                A straightforward sorting algorithm that <br />
-                                repeatedly compares adjacent elements in a list <br />
-                                and swaps them if they are in the wrong order. <br />
-                                This process continues until the list is sorted.
-                                <br />
-                                <br />
-                                Time Complexity:
-                            </p>
-                            <ul>
-                                <li>Best-case: O(n) — when the list is already sorted, and no swaps are needed.</li>
-                                <li>Average-case: O(n<sup>2</sup>) — when the algorithm makes about n<sup>2</sup>/2 comparisons and <br />
-                                swaps on average.</li>
-                                <li>Worst-case: O(n<sup>2</sup>) — when the list is in <br />
-                                reverse order, requiring the maximum <br />
-                                number of comparisons and swaps.</li>
-                            </ul>
-                            <p>Space Complexity:</p>
-                            <p>O(1) — Bubble Sort sorts the list in place without requiring additional memory.</p>
+                            {algorithm.about}
+                        </div>
+                        <div className="code">
+                            {algorithm.code}
                         </div>
                     </div>
                 </div>
