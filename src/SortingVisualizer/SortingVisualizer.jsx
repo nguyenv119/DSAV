@@ -45,7 +45,7 @@ export default class SortingVisualizer extends React.Component {
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 5, 
+            activeAlgorithm: 0, 
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
 
             /*
@@ -53,11 +53,38 @@ export default class SortingVisualizer extends React.Component {
             codeVisualizer: {
                 "none": {
                     about: [
-                        <p> Hello, this is DSAV. A Data Structure & Algorithm Visualizer <br />
-                        to help you understand the materials in Data Sturctures & Algorithms. </p>
+                        <h6><strong>Data Structure & Algorithm Visualizer</strong></h6>,
+                        <h6><strong>Hey there!</strong></h6>,<br />,
+                        <p> This is DSAV. We're all about helping you learn <br />
+                        those pesky algorithms a little easier. We've got <br />
+                        you covered with cool animations you can play, <br />
+                        pause, and analyze at your own pace.
+
+                        <br /><br />You can see exactly what's happening in the <br />
+                        code as you go, thanks to the code area just <br />
+                        below the animation. Fancy changing up the <br />
+                        sorting speed or array length? No problem, you <br />
+                        can tweak it till it fits just right.
+                        
+                        <br /><br />But, we're not stopping at sorting algorithms. <br />
+                        We've got plans to add more data <br />
+                        structures for you to visualize: 
+                        </p>,
+                        <li> Arrays, Stacks, Queues, Linked Lists</li>,
+                        <li> Trees, Heaps, Graphs </li>,<br />,
+                        <p> So, stay updated, and we'll keep you covered!</p>
                     ],
                     code: [
-                        <p> Please choose an Algorithm to start the animation. </p>
+                        <div className="about-us">
+                            <h6><strong>Reach out and Contribute!</strong></h6>
+
+                            <div class="wrapper">
+                                <a class="cta" href="https://github.com/nguyenv119/DSAV" target="_blank">
+                                    <span>Github</span>
+                                </a>
+                            </div>
+                            
+                        </div>
                     ]
                 },
                 "bubbleSort": {
