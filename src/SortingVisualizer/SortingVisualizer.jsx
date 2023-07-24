@@ -45,7 +45,7 @@ export default class SortingVisualizer extends React.Component {
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 1, 
+            activeAlgorithm: 5, 
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
 
             /*
@@ -65,25 +65,28 @@ export default class SortingVisualizer extends React.Component {
                     ? Renders an array of JSX components */
                     about: [
                         <p>
-                            Bubble Sort:<br /><br />
+                            <h6><strong>Bubble Sort:</strong></h6>
                             A straightforward sorting algorithm that <br />
                             repeatedly compares adjacent elements in a list <br />
                             and swaps them if they are in the wrong order. <br />
                             This process continues until the list is sorted.<br /><br />
-                            Time Complexity:
+                            <h6><strong>Time Complexity:</strong></h6>
                         </p>,
                         <ul>
-                            <li> Best Case: Ω(n) — when the list is already sorted, and no <br />
-                            swaps are needed, the list is traversed n times, where we have n elements.
+                            <li> Best Case: Ω(n) — the list is already sorted, <br />
+                            so no swaps are needed. The list <br />
+                            is traversed n times, where we have n <br />
+                            elements.
                             </li>
-                            <li> Average Case: O(n<sup>2</sup>) — when the algorithm makes about n<sup>2</sup>/2 comparisons and <br />
-                                swaps on average.
+                            <li> Average Case: O(n<sup>2</sup>) — the algorithm <br />
+                            makes n<sup>2</sup>/2 comparisons.
                             </li>
-                            <li> Worst Case: O(n<sup>2</sup>) — when the list is in <br />
-                                reverse order, requiring the maximum <br />number of comparisons and swaps.
+                            <li> Worst Case: O(n<sup>2</sup>) — the list is in <br />
+                                reverse order, requiring the n iterations <br />
+                                and (n - 1), (n - 2)... 1 comparisons & swaps.
                             </li>
                         </ul>,
-                        <p>Space Complexity:</p>,
+                        <h6><strong>Space Complexity:</strong></h6>,
                         <p>O(1) — Bubble Sort sorts the list in place without requiring additional memory.</p>
                     ],
                     code: [
@@ -110,47 +113,54 @@ export default class SortingVisualizer extends React.Component {
                 "selectionSort": {
                     about: [
                         <p>
-                            Selection Sort:<br /><br />
+                            <h6><strong>Selection Sort:</strong></h6>
                             An easy-top-implement sorting algorithm that <br />
                             repeatedly finds the smallest element <br />
                             from the unsorted part of the list and swaps it <br />
                             with the first unsorted element. <br /><br />
-                            Time Complexity:
                         </p>,
+                            <h6><strong>Time Complexity:</strong></h6>,
                         <ul>
                             <li> All Cases: θ(n<sup>2</sup>)</li>
-                            In every possible iteration. Unsorted or sorted, the the algorithm still <br />
-                            makes n(n-1)/2 comparisons, which simplifies to <br />O(n<sup>2</sup>). This is
-                            because in any case, we are unsure of where the next <br />
-                            minimum is 
+                            <li>
+                                In every possible iteration, unsorted or <br />
+                                sorted, the the algorithm makes n(n-1)/2  <br />
+                                comparisons, which simplifies to O(n<sup>2</sup>).
+                            </li> 
+                            <li>
+                                This is because in any case, we have no knowledge of where the next minimum is
+                            </li>
                         </ul>,
-                        <p>Space Complexity:</p>,
-                        <p>O(1) — Selection Sort sorts the list in place without requiring additional memory.</p>
+                        <h6><strong>Space Complexity:</strong></h6>,
+                        <p>O(1) — Selection Sort sorts the list in place <br /> 
+                        without requiring additional memory.</p>
                     ],
                     code: "",
                 },
                 "insertionSort": {
                     about: [
                         <p>
-                            Insertion Sort works by building a sorted list one <br />
-                            element at a time. Each iteration removes one element from <br />
-                            the input data, finds the location it belongs within the <br />
-                            sorted list, and inserts it there. <br /><br />
-                            Time Complexity:
+                            <h6><strong>Insertion Sort:</strong></h6>
+                            We build a sorted list one element at a time. <br />
+                            Each iteration removes one element from <br />
+                            the input data, finds the location it belongs <br />
+                            within the sorted list, and inserts it there. <br /><br />
+                            <h6><strong>Time Complexity:</strong></h6>
                         </p>,
                         <ul>
-                            <li> Best Case: Ω(n) — when the list is sorted, the algorithm only <br />
-                            passes through the list once, n times for n elements.
+                            <li> Best Case: Ω(n) — when the list is sorted,<br />
+                            the algorithm only passes through the list <br />
+                            once, n times for n elements.
                             </li>
-                            <li> Average-case: θ(n<sup>2</sup>) — On average, the algorithm makes <br />
-                            quadratic number of comparisons.
+                            <li> Average-case: θ(n<sup>2</sup>) — On average, the algorithm makes quadratic number of comparisons.
                             </li>
-                            <li> Worst-case: θ(n<sup>2</sup>) — In the worst-case scenario <br />
-                            (when the list is in reverse order), the algorithm makes a quadratic <br />
+                            <li> Worst-case: θ(n<sup>2</sup>) — In the worst-case <br />
+                            scenario (when the list is in reverse order), <br /> the
+                            algorithm makes a quadratic <br />
                             number of comparisons.
                             </li>
                         </ul>,
-                        <p>Space Complexity:</p>,
+                        <h6><strong>Space Complexity:</strong></h6>,
                         <p>O(1) — Insertion Sort sorts the list in place without requiring additional memory.</p>
                     ],
                     code: "",
@@ -158,41 +168,49 @@ export default class SortingVisualizer extends React.Component {
                 "mergeSort": {
                     about: [
                         <p>
-                            Merge Sort is a divide and conquer algorithm that divides the <br />
-                            input array into two halves, sorts them and then merges the two <br />
-                            sorted halves. <br /><br />
-                            Time Complexity:
+                            <h6><strong>Merge Sort:</strong></h6>
+                            is a divide and conquer algorithm that divides the <br />
+                            input array into two halves, sorts them and then merges the two sorted halves. <br /><br />
+                            <h6><strong>Time Complexity:</strong></h6>
                         </p>,
                         <ul>
                             <li> All Cases: Ω(nlog(n))</li>
-                            In every possible scenario, when the list is sorted,  <br />
-                            or when it is not, the list always performs the same
-                            linearaithmic number of operations
+                            <li>
+                                In every possible scenario, when the list is sorted,
+                                or when it is not, the list always <br />
+                                performs a linearaithmic number of <br />
+                                operations
+                            </li>
                         </ul>,
-                        <p>Space Complexity:</p>,
-                        <p>O(n) — Merge Sort is not an in-place sorting algorithm and requires extra space. <br />
-                        However, the space complexity is linear, which makes it more memory-efficient <br />
-                        than other sorting algorithms for large data sets.</p>
+                        <h6><strong>Space Complexity:</strong></h6>,
+                        <p>O(n) — Merge Sort is not an in-place algorithm <br />
+                        and requires extra space: our auxiliary array is of
+                        <br /> n elements.</p>
                     ],
                     code: "",
                 },
                 "heapSort": {
                     about: [
                         <p>
-                            Heap Sort is a comparison-based sorting technique based on a <br />
-                            Binary Heap data structure. It works by building a max heap and <br />
-                            then swapping the root element with the end element and reducing <br />
-                            the heap size by one. <br /><br />
-                            Time Complexity:
+                            <h6><strong>Heap Sort:</strong></h6>
+                            A sorting algorithm based on a <br />
+                            Max Binary-Heap. We build a max heap, and, <br />
+                            swapping the root element with the end element, <br /> 
+                            reduce the heap size by one. <br /><br />
+                            <h6><strong>Time Complexity:</strong></h6>
                         </p>,
                         <ul>
                             <li> All Cases: θ(n log n)</li>
-                            In all scenarios, making a max-heap is θ(n), and the subsequent steps <br />
-                            performs the same number of operations — the end-swapping and HEAPIFY-DOWN <br />
-                            on all n elements.
+                            <li> In all scenarios, making a max-heap is θ(n). <br />
+                            The subsequent steps swap the end and <br />
+                            root for n elements, and HEAPIFY-DOWN <br />
+                            for those n elements.
+                            </li>
                         </ul>,
-                        <p>Space Complexity:</p>,
-                        <p>O(1) — Heap Sort is an in-place sorting algorithm that does not require any extra space.</p>
+                        <h6><strong>Space Complexity:</strong></h6>,
+                        <p>O(1) — Heap Sort is an in-place sorting algorithm <br />
+                        since the MAX-HEAP is used from our original <br />
+                        array.</p>
                     ],
                     code: "",
                 },   

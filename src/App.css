@@ -22,6 +22,10 @@ body {
   background-color: #1d1d1d;
 }
 
+li {
+  margin-bottom: 8px;
+}
+
 .btn-container, .container {
   border-radius: 4px;
   text-align: center;
@@ -132,7 +136,7 @@ button[class*="btn"] {border: 1;}
   top: 0; /* Align to the top of the viewport */
   bottom: 0; /* Align to the bottom of the viewport */
   right: 0; /* Align to the right of the viewport */
-  overflow: auto; /* Add scrollbars if content overflows */
+  overflow: hidden; /* Add scrollbars if content overflows */
   width: 21%; /* Updated this value to make the div span 30% of the viewport width */
 }
 
@@ -140,7 +144,7 @@ button[class*="btn"] {border: 1;}
   position: relative;
   top: 2%;
   left: 5%;
-  height: 50%;
+  height: 57%;
   color: white;
   font-size: 12.5px;
   overflow: hidden;
