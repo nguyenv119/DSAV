@@ -130,7 +130,7 @@ button[class*="btn"] {border: 1;}
   align-items: center;
   justify-content: center;
   border-right: solid 1.5px #0c0c0c;
-  width: 79%;
+  width: 80%;
 }
 
 .codeArea {
@@ -308,17 +308,23 @@ button[class*="btn"] {border: 1;}
 }
 
 .cta {
-    display: flex;
-    padding: 5px 20px;
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    color: rgb(255, 255, 255);
-    background: #222222;
-    transition: 1s;
-    box-shadow: 6px 6px 0 black;
-    transform: skewX(-15deg);
+  display: flex;
+  padding: 5px 20px;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  background: #222222;
+  transition: 1s;
+  box-shadow: 6px 6px 0 black;
+  transform: skewX(-7deg);
+  /* border: 0; */
+  border-top: 3px solid #555; /* dark gray to simulate shadow */
+  border-left: 3px solid #888; /* medium gray to simulate ambient light */
+  border-bottom: 3px solid #bbb; /* light gray to simulate direct light */
+  border-right: 3px solid #222; /* darkest gray to simulate darkest area */
 }
+
 
 .cta:focus {
    outline: none; 
@@ -340,18 +346,7 @@ button[class*="btn"] {border: 1;}
     margin-right: 45px;
 }
 
-span {
-  transform: skewX(15deg) 
-}
-
-span:nth-child(2) {
-  width: 20px;
-  margin-left: 30px;
-  position: relative;
-  top: 12%;
-}
-
-.cta:hover span {
+button:hover {
   background: linear-gradient(45deg, #FBC638, #FF6363, #00C6FF, #FF00FF, #FBC638);
   background-size: 500% 500%;
   animation: AnimationName 3s ease infinite;

@@ -79,11 +79,11 @@ export default class SortingVisualizer extends React.Component {
                             <h6><strong>Reach out and Contribute!</strong></h6>
 
                             <div class="wrapper">
-                                <a class="cta" href="https://github.com/nguyenv119/DSAV" target="_blank">
-                                    <span>Github</span>
-                                </a>
+                                <button class="cta" href="https://github.com/nguyenv119/DSAV" target="_blank">
+                                    Github
+                                </button>
                             </div>
-                            
+
                         </div>
                     ]
                 },
@@ -478,14 +478,21 @@ export default class SortingVisualizer extends React.Component {
                                             }}
                                             disabled={isSorting}>Generate New Array</button>
                                     </div>
-                                    <div className="btn-container">
+                                    <button className="cta"
+                                            onClick={() => {
+                                                this.bubbleSort()
+                                                this.setState({ activeSortingButton: "bubbleSort", activeAlgorithm: 1 });
+                                            }}
+                                            disabled={sortingInProgress}>Bubble Sort
+                                    </button>
+                                    {/* <div className="btn-container">
                                         <button className={`btn-3d regular${activeSortingButton === "bubbleSort" ? ' down' : ''}`}
                                             onClick={() => {
                                                 this.bubbleSort()
                                                 this.setState({ activeSortingButton: "bubbleSort", activeAlgorithm: 1 });
                                             }}
                                             disabled={sortingInProgress}>Bubble Sort</button>
-                                    </div>
+                                    </div> */}
                                     <div className="btn-container">
                                         <button className={`btn-3d regular${activeSortingButton === "selectionSort" ? ' down' : ''}`}
                                             onClick={() => {
