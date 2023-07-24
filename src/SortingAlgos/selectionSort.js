@@ -7,7 +7,7 @@ import {    PRIMARY_COLOR,
 
 const LARGER_COLOR = "#f44336";
 const SMALLER_COLOR = "#50af50";
-const MIN_SOFAR_COLOR = "#9a17ff";
+const MIN_SOFAR_COLOR = "#8338EC";
 
 /** The selectionSort function we are exporting with the animation array */
 export function selectionSortExp(array, 
