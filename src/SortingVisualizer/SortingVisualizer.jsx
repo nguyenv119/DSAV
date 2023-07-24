@@ -9,8 +9,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 const MINVAL = 5;
 const MAXVAL = 625;
 export const GREEN_SPEED = 7;
-// export const PRIMARY_COLOR = '#007ce8';
-// export const SECONDARY_COLOR = '#fe5f24';
 export const SMALLER_COLOR = "#f44336";
 export const LARGER_COLOR = "#50af50"
 export const SAMESIZE_COLOR = "#f1cc32";
@@ -19,9 +17,6 @@ export const DONE_COLOR = "#FF006E";
 
 export const PRIMARY_COLOR = '#3A86FF';
 export const SECONDARY_COLOR = '#FB5607';
-
-// export const SAMESIZE_COLOR = "#f1cc32";
-// export const SMALLEST_SOFAR_COLOR = "#FC0FC0"
 
 /*
 ? export default class defines the class we want to have as a tag*/
