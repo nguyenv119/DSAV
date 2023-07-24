@@ -1,9 +1,9 @@
 import React from "react";
-import {mergeSortExp} from "../SortingAlgos/mergeSort"
-import {bubbleSortExp} from "../SortingAlgos/bubbleSort"
-import {selectionSortExp} from "../SortingAlgos/selectionSort"
-import {insertionSortExp} from "../SortingAlgos/insertionSort"
-import {heapSortExp} from "../SortingAlgos/heapSort"
+import { mergeSortExp } from "../SortingAlgos/mergeSort"
+import { bubbleSortExp } from "../SortingAlgos/bubbleSort"
+import { selectionSortExp } from "../SortingAlgos/selectionSort"
+import { insertionSortExp } from "../SortingAlgos/insertionSort"
+import { heapSortExp } from "../SortingAlgos/heapSort"
 import 'bootstrap/dist/css/bootstrap.css';
 
 const MINVAL = 5;
@@ -38,14 +38,14 @@ export default class SortingVisualizer extends React.Component {
             sortingAlgorithm: null,
             isSorting: false,
             buttonsDisabled: false,
-            ANIMATION_SPEED_MS: 6, 
-            BARS: 14, 
-            sortingInProgress: false, 
+            ANIMATION_SPEED_MS: 6,
+            BARS: 14,
+            sortingInProgress: false,
             activeButton: "",
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 0, 
+            activeAlgorithm: 0,
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
 
             /*
@@ -54,24 +54,24 @@ export default class SortingVisualizer extends React.Component {
                 "none": {
                     about: [
                         <h6><strong>Data Structure & Algorithm Visualizer</strong></h6>,
-                        <h6><strong>Hey there!</strong></h6>,<br />,
+                        <h6><strong>Hey there!</strong></h6>, <br />,
                         <p> This is DSAV. We're all about helping you learn <br />
-                        those pesky algorithms a little easier. We've got <br />
-                        you covered with cool animations you can play, <br />
-                        pause, and analyze at your own pace.
+                            those pesky algorithms a little easier. We've got <br />
+                            you covered with cool animations you can play, <br />
+                            pause, and analyze at your own pace.
 
-                        <br /><br />You can see exactly what's happening in the <br />
-                        code as you go, thanks to the code area just <br />
-                        below the animation. Fancy changing up the <br />
-                        sorting speed or array length? No problem, you <br />
-                        can tweak it till it fits just right.
-                        
-                        <br /><br />But, we're not stopping at sorting algorithms. <br />
-                        We've got plans to add more data <br />
-                        structures for you to visualize: 
+                            <br /><br />You can see exactly what's happening in the <br />
+                            code as you go, thanks to the code area just <br />
+                            below the animation. Fancy changing up the <br />
+                            sorting speed or array length? No problem, you <br />
+                            can tweak it till it fits just right.
+
+                            <br /><br />But, we're not stopping at sorting algorithms. <br />
+                            We've got plans to add more data <br />
+                            structures for you to visualize:
                         </p>,
                         <li> Arrays, Stacks, Queues, Linked Lists</li>,
-                        <li> Trees, Heaps, Graphs </li>,<br />,
+                        <li> Trees, Heaps, Graphs </li>, <br />,
                         <p> So, stay updated, and we'll keep you covered!</p>
                     ],
                     code: [
@@ -83,7 +83,7 @@ export default class SortingVisualizer extends React.Component {
                                     <span>Github</span>
                                 </a>
                             </div>
-                            
+
                         </div>
                     ]
                 },
@@ -101,12 +101,12 @@ export default class SortingVisualizer extends React.Component {
                         </p>,
                         <ul>
                             <li> Best Case: Ω(n) — the list is already sorted, <br />
-                            so no swaps are needed. The list <br />
-                            is traversed n times, where we have n <br />
-                            elements.
+                                so no swaps are needed. The list <br />
+                                is traversed n times, where we have n <br />
+                                elements.
                             </li>
                             <li> Average Case: O(n<sup>2</sup>) — the algorithm <br />
-                            makes n<sup>2</sup>/2 comparisons.
+                                makes n<sup>2</sup>/2 comparisons.
                             </li>
                             <li> Worst Case: O(n<sup>2</sup>) — the list is in <br />
                                 reverse order, requiring the n iterations <br />
@@ -135,7 +135,7 @@ export default class SortingVisualizer extends React.Component {
                             </code>
                         </pre>
                     ]
-                    
+
                 },
                 "selectionSort": {
                     about: [
@@ -146,21 +146,21 @@ export default class SortingVisualizer extends React.Component {
                             from the unsorted part of the list and swaps it <br />
                             with the first unsorted element. <br /><br />
                         </p>,
-                            <h6><strong>Time Complexity:</strong></h6>,
+                        <h6><strong>Time Complexity:</strong></h6>,
                         <ul>
                             <li> All Cases: θ(n<sup>2</sup>)</li>
                             <li>
                                 In every possible iteration, unsorted or <br />
                                 sorted, the the algorithm makes n(n-1)/2  <br />
                                 comparisons, which simplifies to O(n<sup>2</sup>).
-                            </li> 
+                            </li>
                             <li>
                                 This is because in any case, we have no knowledge of where the next minimum is
                             </li>
                         </ul>,
                         <h6><strong>Space Complexity:</strong></h6>,
-                        <p>O(1) — Selection Sort sorts the list in place <br /> 
-                        without requiring additional memory.</p>
+                        <p>O(1) — Selection Sort sorts the list in place <br />
+                            without requiring additional memory.</p>
                     ],
                     code: "",
                 },
@@ -176,15 +176,15 @@ export default class SortingVisualizer extends React.Component {
                         </p>,
                         <ul>
                             <li> Best Case: Ω(n) — when the list is sorted,<br />
-                            the algorithm only passes through the list <br />
-                            once, n times for n elements.
+                                the algorithm only passes through the list <br />
+                                once, n times for n elements.
                             </li>
                             <li> Average-case: θ(n<sup>2</sup>) — On average, the algorithm makes quadratic number of comparisons.
                             </li>
                             <li> Worst-case: θ(n<sup>2</sup>) — In the worst-case <br />
-                            scenario (when the list is in reverse order), <br /> the
-                            algorithm makes a quadratic <br />
-                            number of comparisons.
+                                scenario (when the list is in reverse order), <br /> the
+                                algorithm makes a quadratic <br />
+                                number of comparisons.
                             </li>
                         </ul>,
                         <h6><strong>Space Complexity:</strong></h6>,
@@ -211,8 +211,8 @@ export default class SortingVisualizer extends React.Component {
                         </ul>,
                         <h6><strong>Space Complexity:</strong></h6>,
                         <p>O(n) — Merge Sort is not an in-place algorithm <br />
-                        and requires extra space: our auxiliary array is of
-                        <br /> n elements.</p>
+                            and requires extra space: our auxiliary array is of
+                            <br /> n elements.</p>
                     ],
                     code: "",
                 },
@@ -222,25 +222,25 @@ export default class SortingVisualizer extends React.Component {
                             <h6><strong>Heap Sort:</strong></h6>
                             A sorting algorithm based on a <br />
                             Max Binary-Heap. We build a max heap, and, <br />
-                            swapping the root element with the end element, <br /> 
+                            swapping the root element with the end element, <br />
                             reduce the heap size by one. <br /><br />
                             <h6><strong>Time Complexity:</strong></h6>
                         </p>,
                         <ul>
                             <li> All Cases: θ(n log n)</li>
                             <li> In all scenarios, making a max-heap is θ(n). <br />
-                            The subsequent steps swap the end and <br />
-                            root for n elements, and HEAPIFY-DOWN <br />
-                            for those n elements.
+                                The subsequent steps swap the end and <br />
+                                root for n elements, and HEAPIFY-DOWN <br />
+                                for those n elements.
                             </li>
                         </ul>,
                         <h6><strong>Space Complexity:</strong></h6>,
                         <p>O(1) — Heap Sort is an in-place sorting algorithm <br />
-                        since the MAX-HEAP is used from our original <br />
-                        array.</p>
+                            since the MAX-HEAP is used from our original <br />
+                            array.</p>
                     ],
                     code: "",
-                },   
+                },
             }
         };
     };
@@ -250,7 +250,7 @@ export default class SortingVisualizer extends React.Component {
      * invoked immedientally after a component is 
      * mounted (inserted into DOM tree), rendered for the first time
      */
-    componentDidMount() { 
+    componentDidMount() {
         this.makeArray()
     }
 
@@ -266,13 +266,13 @@ export default class SortingVisualizer extends React.Component {
     /*
     ? Gets the speed of the animation */
     getSpeed(ANIMATION_SPEED_MS) {
-        const speed = ANIMATION_SPEED_MS === 10?
-        1 : ANIMATION_SPEED_MS === 8 ?
-            10 : ANIMATION_SPEED_MS === 6 ?
-                20 : ANIMATION_SPEED_MS === 4 ?
-                    200 : ANIMATION_SPEED_MS === 2 ?
-                        1000 : ANIMATION_SPEED_MS === 0 ?
-                            2000 : 3000;
+        const speed = ANIMATION_SPEED_MS === 10 ?
+            1 : ANIMATION_SPEED_MS === 8 ?
+                10 : ANIMATION_SPEED_MS === 6 ?
+                    20 : ANIMATION_SPEED_MS === 4 ?
+                        200 : ANIMATION_SPEED_MS === 2 ?
+                            1000 : ANIMATION_SPEED_MS === 0 ?
+                                2000 : 3000;
         return speed;
     }
 
@@ -281,26 +281,26 @@ export default class SortingVisualizer extends React.Component {
     ! We need to have the bars fill up all 1200 pixels. So our 1200/Bars should be a whole number*/
     determineBars() {
         const { BARS } = this.state;
-        const length = BARS === 20 ? 
-            300 : BARS === 19 ? 
-                240 : BARS === 18 ? 
-                    200 : BARS === 17 ? 
-                        180 : BARS === 16 ? 
-                            150 : BARS === 15 ? 
-                                120 : BARS === 14 ? 
-                                    100 : BARS === 13 ? 
-                                        80 : BARS === 12 ? 
-                                            50 : BARS === 11 ? 
-                                                30 : BARS === 10 ? 
-                                                    25 : BARS === 9 ? 
-                                                        16 : BARS === 8 ? 
-                                                            12 : BARS === 7 ? 
-                                                                10 : BARS === 6 ? 
-                                                                    8 : BARS === 5  
+        const length = BARS === 20 ?
+            300 : BARS === 19 ?
+                240 : BARS === 18 ?
+                    200 : BARS === 17 ?
+                        180 : BARS === 16 ?
+                            150 : BARS === 15 ?
+                                120 : BARS === 14 ?
+                                    100 : BARS === 13 ?
+                                        80 : BARS === 12 ?
+                                            50 : BARS === 11 ?
+                                                30 : BARS === 10 ?
+                                                    25 : BARS === 9 ?
+                                                        16 : BARS === 8 ?
+                                                            12 : BARS === 7 ?
+                                                                10 : BARS === 6 ?
+                                                                    8 : BARS === 5
                                                                         ? 5 : 5;
         return length;
     }
- 
+
     /* 
     ? Create the array, including how many bars and how wide */
     makeArray() {
@@ -318,7 +318,7 @@ export default class SortingVisualizer extends React.Component {
          */
         this.setState({ comparisons: 0, array }, () => {
             /* 
-            ? Resets the color of array back to PRIMARY, and determines width and length */            
+            ? Resets the color of array back to PRIMARY, and determines width and length */
             const arrayBars = document.getElementsByClassName("arrayBar");
             for (let i = 0; i < arrayBars.length; i++) {
                 arrayBars[i].style.width = `${1200 / length}px`;
@@ -337,14 +337,14 @@ export default class SortingVisualizer extends React.Component {
      * For all sorting algos, we are returned an animation array, and a copy
      * of the sorted array. At the end of every animation, we set the state
      * to be the sorted array, as to not redo the animations on the unsorted array
-     * if it were not replaced with the sorted array */ 
+     * if it were not replaced with the sorted array */
     bubbleSort() {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
         bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused())
-        .then((arr) => {
-            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
-        })
+            .then((arr) => {
+                this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+            })
     }
 
     selectionSort() {
@@ -352,7 +352,7 @@ export default class SortingVisualizer extends React.Component {
         let comparisons = 0;
 
         selectionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
-            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
     }
 
@@ -361,16 +361,16 @@ export default class SortingVisualizer extends React.Component {
         let comparisons = 0;
 
         insertionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
-            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
     }
-    
+
     mergeSort() {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
 
         mergeSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
-            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
     }
 
@@ -379,12 +379,12 @@ export default class SortingVisualizer extends React.Component {
         let comparisons = 0;
 
         heapSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
-            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
     }
-    
+
     /* 
-    ? Updates the number of bars and their width */  
+    ? Updates the number of bars and their width */
     handleBarsChange = (e) => {
         if (!this.state.isSorting) {
             this.setState({ BARS: parseInt(e.target.value) }, () => {
@@ -398,7 +398,7 @@ export default class SortingVisualizer extends React.Component {
     handleAnimationSpeedChange = (e) => {
         this.setState({ ANIMATION_SPEED_MS: parseInt(e.target.value) });
     };
-    
+
     /* 
     ? Changes the state of the button that is being pressed down */
     buttonDown = (buttonName) => {
@@ -420,7 +420,7 @@ export default class SortingVisualizer extends React.Component {
             isPaused: !prevState.isPaused
         }));
     }
-    
+
     /* 
     ? Renders components UI */
     render() {
@@ -428,18 +428,28 @@ export default class SortingVisualizer extends React.Component {
         ? Gets the state (array we created) out of the object, 
          * We need the {}, won't work with just array
         */
-        const { array, 
-                activeButton, 
-                activeSortingButton, 
-                sortingInProgress, 
-                isSorting, 
-                ANIMATION_SPEED_MS, 
-                BARS, 
-                comparisons} = this.state;
-        
+        const { array,
+            activeButton,
+            activeSortingButton,
+            sortingInProgress,
+            isSorting,
+            ANIMATION_SPEED_MS,
+            BARS,
+            comparisons } = this.state;
+
         const activeAlgorithmKey = this.state.algorithmKeys[this.state.activeAlgorithm];
         const algorithm = this.state.codeVisualizer[activeAlgorithmKey];
-        
+
+        const footerStyle = {
+            backgroundColor: "#1a1a1a", // Dark background color
+            color: "#ffffff", // Text color (white)
+            textAlign: "center", // Center-align text
+            padding: "10px 0", // Add some padding at the top and bottom
+            position: "fixed",
+            left: 0,
+            bottom: 0,
+            width: "100%",
+        };
 
         return (
             /* 
@@ -451,135 +461,142 @@ export default class SortingVisualizer extends React.Component {
              * 
              * ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_map3
             */
-                <div>
-                    <div className="arrayContainer">
-                        <div className="arrayBars">
-                            {array.map((value, index) => (
+            <div>
+                <div className="arrayContainer">
+                    <div className="arrayBars">
+                        {array.map((value, index) => (
                             <div
                                 className="arrayBar"
                                 key={index}
                                 style={{
-                                backgroundColor: PRIMARY_COLOR,
-                                height: `${value}px`
+                                    backgroundColor: PRIMARY_COLOR,
+                                    height: `${value}px`
                                 }}
                             ></div>
-                            ))}
-                        </div>
-                        <div class="buttons">
-                            <div className="buttonContainer">
-                            <div className="buttonGroup">
-                                    <div className="btn-container">
-                                        <button className={`btn-3d regular${activeButton === "generateArray" ? ' down' : ''}`}
-                                            onClick={() => {
-                                                this.makeArray();
-                                                /*
-                                                ? Specifies the button that is active for 1. button animations, and 2. Code Visualization  */
-                                                this.setState({ activeButton: "generateArray", activeSortingButton: "", activeAlgorithm: 0 });
-                                            }}
-                                            disabled={isSorting}>Generate New Array</button>
-                                    </div>
-                                    <div className="btn-container">
-                                        <button className={`btn-3d regular${activeSortingButton === "bubbleSort" ? ' down' : ''}`}
-                                            onClick={() => {
-                                                this.bubbleSort()
-                                                this.setState({ activeSortingButton: "bubbleSort", activeAlgorithm: 1 });
-                                            }}
-                                            disabled={sortingInProgress}>Bubble Sort</button>
-                                    </div>
-                                    <div className="btn-container">
-                                        <button className={`btn-3d regular${activeSortingButton === "selectionSort" ? ' down' : ''}`}
-                                            onClick={() => {
-                                                this.selectionSort()
-                                                this.setState({ activeSortingButton: "selectionSort", activeAlgorithm: 2 });
-                                            }}
-                                            disabled={sortingInProgress}>Selection Sort</button>
-                                    </div>
-                                    <div className="btn-container">
-                                        <button className={`btn-3d regular${activeSortingButton === "insertionSort" ? ' down' : ''}`}
-                                            onClick={() => {
-                                                this.insertionSort()
-                                                this.setState({ activeSortingButton: "insertionSort", activeAlgorithm: 3 });
-                                            }}
-                                            disabled={sortingInProgress}>Insertion Sort</button>
-                                    </div>
-                                    <div className="btn-container">
-                                        <button className={`btn-3d regular${activeSortingButton === "mergeSort" ? ' down' : ''}`}
-                                            onClick={() => {
-                                                this.mergeSort()
-                                                this.setState({ activeSortingButton: "mergeSort", activeAlgorithm: 4 });
-                                            }
-                                            } disabled={sortingInProgress}>Merge Sort</button>
-                                    </div>
-                                    <div className="btn-container">
-                                        <button className={`btn-3d regular${activeSortingButton === "heapSort" ? ' down' : ''}`}
-                                            onClick={() => {
-                                                this.heapSort()
-                                                this.setState({ activeSortingButton: "heapSort", activeAlgorithm: 5 });
-                                            }}
-                                            disabled={sortingInProgress}>Heap Sort</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="settings">
-                                <div className="scrollableRangeContainer">
-                                    <label for="customRange3" className="form-label"></label>
-                                    <div className="scrollableRange">
-                                        <input
-                                            type="range"
-                                            className="form-range"
-                                            min="0"
-                                            max="10"
-                                            step="2"
-                                            id="customRange3"
-                                            value={ANIMATION_SPEED_MS}
-                                            onChange={this.handleAnimationSpeedChange}
-                                        ></input>
-                                    </div>
-                                </div>
-                                <button className="btn-3d colorful regular speed">
-                                    Speed
-                                </button>
-                                <div className="scrollableRangeContainer">
-                                    <label for="customRange4" className="form-label"></label>
-                                    <div className="scrollableRange">
-                                        <input
-                                            type="range"
-                                            className="form-range"
-                                            min="5"
-                                            max="20"
-                                            step="1"
-                                            id="customRange4"
-                                            value={BARS}
-                                            onChange={this.handleBarsChange}
-                                        ></input>
-                                    </div>
-                                </div>
-                                <button className="btn-3d colorful regular length">
-                                    Array Length
-                                </button>
-                                <button className="btn-3d regular comparisons">
-                                Comparisions: {comparisons}
-                                </button>
-                                <div className="btn-container">
-                                    <button className={`btn-3d regular pp${activeButton === "pause" ? ' down' : ''}`}
-                                        onClick={() => {
-                                            this.handlePause();
-                                            this.setState({ activeButton: this.state.isPaused ? "" : "pause" });
-                                        }}
-                                        disabled={!this.state.sortingInProgress}>{this.state.isPaused ? "Play" : "Pause"}</button>
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </div>
-                    <div className="codeArea">
-                        <div className="description">
-                            {algorithm.about}
+                    <div class="buttons">
+                        <div className="buttonContainer">
+                            <div className="buttonGroup">
+                                <div className="btn-container">
+                                    <button className={`btn-3d regular${activeButton === "generateArray" ? ' down' : ''}`}
+                                        onClick={() => {
+                                            this.makeArray();
+                                            /*
+                                            ? Specifies the button that is active for 1. button animations, and 2. Code Visualization  */
+                                            this.setState({ activeButton: "generateArray", activeSortingButton: "", activeAlgorithm: 0 });
+                                        }}
+                                        disabled={isSorting}>Generate New Array</button>
+                                </div>
+                                <div className="btn-container">
+                                    <button className={`btn-3d regular${activeSortingButton === "bubbleSort" ? ' down' : ''}`}
+                                        onClick={() => {
+                                            this.bubbleSort()
+                                            this.setState({ activeSortingButton: "bubbleSort", activeAlgorithm: 1 });
+                                        }}
+                                        disabled={sortingInProgress}>Bubble Sort</button>
+                                </div>
+                                <div className="btn-container">
+                                    <button className={`btn-3d regular${activeSortingButton === "selectionSort" ? ' down' : ''}`}
+                                        onClick={() => {
+                                            this.selectionSort()
+                                            this.setState({ activeSortingButton: "selectionSort", activeAlgorithm: 2 });
+                                        }}
+                                        disabled={sortingInProgress}>Selection Sort</button>
+                                </div>
+                                <div className="btn-container">
+                                    <button className={`btn-3d regular${activeSortingButton === "insertionSort" ? ' down' : ''}`}
+                                        onClick={() => {
+                                            this.insertionSort()
+                                            this.setState({ activeSortingButton: "insertionSort", activeAlgorithm: 3 });
+                                        }}
+                                        disabled={sortingInProgress}>Insertion Sort</button>
+                                </div>
+                                <div className="btn-container">
+                                    <button className={`btn-3d regular${activeSortingButton === "mergeSort" ? ' down' : ''}`}
+                                        onClick={() => {
+                                            this.mergeSort()
+                                            this.setState({ activeSortingButton: "mergeSort", activeAlgorithm: 4 });
+                                        }
+                                        } disabled={sortingInProgress}>Merge Sort</button>
+                                </div>
+                                <div className="btn-container">
+                                    <button className={`btn-3d regular${activeSortingButton === "heapSort" ? ' down' : ''}`}
+                                        onClick={() => {
+                                            this.heapSort()
+                                            this.setState({ activeSortingButton: "heapSort", activeAlgorithm: 5 });
+                                        }}
+                                        disabled={sortingInProgress}>Heap Sort</button>
+                                </div>
+                            </div>
                         </div>
-                        <div className="code">
-                            {algorithm.code}
+                        <div className="settings">
+                            <div className="scrollableRangeContainer">
+                                <label for="customRange3" className="form-label"></label>
+                                <div className="scrollableRange">
+                                    <input
+                                        type="range"
+                                        className="form-range"
+                                        min="0"
+                                        max="10"
+                                        step="2"
+                                        id="customRange3"
+                                        value={ANIMATION_SPEED_MS}
+                                        onChange={this.handleAnimationSpeedChange}
+                                    ></input>
+                                </div>
+                            </div>
+                            <button className="btn-3d colorful regular speed">
+                                Speed
+                            </button>
+                            <div className="scrollableRangeContainer">
+                                <label for="customRange4" className="form-label"></label>
+                                <div className="scrollableRange">
+                                    <input
+                                        type="range"
+                                        className="form-range"
+                                        min="5"
+                                        max="20"
+                                        step="1"
+                                        id="customRange4"
+                                        value={BARS}
+                                        onChange={this.handleBarsChange}
+                                    ></input>
+                                </div>
+                            </div>
+                            <button className="btn-3d colorful regular length">
+                                Array Length
+                            </button>
+                            <button className="btn-3d regular comparisons">
+                                Comparisions: {comparisons}
+                            </button>
+                            <div className="btn-container">
+                                <button className={`btn-3d regular pp${activeButton === "pause" ? ' down' : ''}`}
+                                    onClick={() => {
+                                        this.handlePause();
+                                        this.setState({ activeButton: this.state.isPaused ? "" : "pause" });
+                                    }}
+                                    disabled={!this.state.sortingInProgress}>{this.state.isPaused ? "Play" : "Pause"}</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div className="codeArea">
+                    <div className="description">
+                        {algorithm.about}
+                    </div>
+                    <div className="code">
+                        {algorithm.code}
+                    </div>
+                </div>
+                <div>
+                    <footer style={footerStyle}>
+                        <p style={{ margin: 0 }}>
+                            DSAV Copyright @2023
+                        </p>
+                    </footer>
+                </div>
+            </div>
         );
     }
 }
