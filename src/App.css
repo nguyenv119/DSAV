@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,800;1,900&display=swap');
-
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -15,50 +13,19 @@
   overflow-x: hidden;
 }
 
-.footerStyle {
-  background-color: #131313;
-  padding-bottom: 21px;
-  padding-top: 3px;
-  color: #ffffff;
-  text-align: center;
-  position: fixed;
-  left: 0%;
-  bottom: 0.5%;
-  height: 2%;
-  width: 100%;
-  font-size: 13px;
-}
-
 body {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
-  background-color: #1d1d1d;
-}
-
-.about-us{
-  margin: 2% 0 0 5%;
-}
-
-li {
-  margin-bottom: 8px;
+  background-color: #242424;
 }
 
 .btn-container, .container {
-  border-radius: 4px;
-  text-align: center;
-  margin-right: 20px;
-}
-
-.buttonContainer {
-  display: flex;
-  position: relative;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  left: 30px;
+	border-radius: 4px;
+	text-align: center;
+	margin-bottom: 40px;
 }
 
 button[class*="btn"] {border: 1;}
@@ -67,7 +34,8 @@ button[class*="btn"] {border: 1;}
 .btn-3d {
 	position: relative;
 	display: inline-block;
-	padding: 5px 20px 5px 20px;
+	font-size: 16px;
+	padding: 5px 17px 5px 17px;
 	color: white;
   font-weight: 500;
 	text-align: center;
@@ -75,18 +43,6 @@ button[class*="btn"] {border: 1;}
 	text-shadow: 0 1px 0 rgba(0,0,0,0.15);
   border-radius: 8px;
   border: 1px solid transparent;
-}
-
-/* 3D button colors */
-.btn-3d.regular {
-  box-sizing: border-box;
-	background-color: #1a1a1a;
-	box-shadow: 0 0 0 1px #1a1a1a inset,
-        0 0 0 2px rgba(255,255,255,0.15) inset,
-        0 8px 0 0 #1a1a1a,
-        0 8px 0 1px rgba(0,0,0,0.4),
-				0 8px 8px 1px rgba(51, 26, 26, 0.5);
-  margin-right: 20px;
 }
 
 .btn-3d.regular:hover {
@@ -113,10 +69,25 @@ button[class*="btn"] {border: 1;}
   animation: AnimationName 7s ease infinite;
 }
 
+/* 3D button colors */
+.btn-3d.regular {
+  margin:45px 30px 0px 0px;
+	background-color: #1a1a1a;
+	box-shadow: 0 0 0 1px #1a1a1a inset,
+        0 0 0 2px rgba(255,255,255,0.15) inset,
+        0 8px 0 0 #1a1a1a,
+        0 8px 0 1px rgba(0,0,0,0.4),
+				0 8px 8px 1px rgba(51, 26, 26, 0.5);
+}
+
 .btn-3d.regular:active {
 	box-shadow: 0 0 0 1px #1a1a1a inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
+}
+
+.btn-3d.regular.colorful {
+  margin: 0px 300px 0px 0px;
 }
 
 .colorful {
@@ -132,66 +103,16 @@ button[class*="btn"] {border: 1;}
   background: linear-gradient(253deg, var(--gradcolor1), var(--gradcolor2), var(--gradcolor3));
   background-size: 600% 600%;
   animation: AnimationName 7s ease infinite;
+  margin: 3px 80px 0 0; 
   pointer-events: none;
 }
 
 .arrayContainer {
-  /* border: 2px solid white; */
   display: flex;
   flex-direction: column;
-  position: fixed;
-  left: 0%;
-  top: 0%;
-  height: 100vh; /* This value should be 100vh to fill the entire viewport height */
   align-items: center;
   justify-content: center;
-  border-right: solid 1.5px #0c0c0c;
-  width: 80%;
-  width: 80%;
-}
-
-.codeArea {
-  background: #1b1b1b;
-  color: white;
-  position: fixed;
-  left: 79%; /* This value should be set to the width of the .arrayContainer div */
-  top: 0; /* Align to the top of the viewport */
-  bottom: 0; /* Align to the bottom of the viewport */
-  right: 0; /* Align to the right of the viewport */
-  overflow: hidden; /* Add scrollbars if content overflows */
-  width: 21%; /* Updated this value to make the div span 30% of the viewport width */
-}
-
-.description {
-  position: relative;
-  top: 2%;
-  left: 5%;
-  height: 57%;
-  color: white;
-  font-size: 12.5px;
-  overflow: hidden;
-}
-
-.arrayBars {
-  /* border: 2px solid blue; */
-  transform: rotateX(180deg);
-  display: flex;
-  justify-content: left;
-  position: relative;
-  margin-top: -7%;
-  top: 0%;
-  left: -0.3%;
-  height: 75%; /* This value should be 80% to fill 80% of the arrayContainer div */
-  width: 99%; /* Add width of 100% to fill the entire parent div */
-}
-
-.buttons {
-  top: 2%;
-  width: 100%; /* Add width of 100% to fill the entire parent div */
-  height: 14%; /* Add height of 23.3% to fill the remaining space of the arrayContainer div */
-  position: relative;
-  /* border: 2px solid purple; */
-  transform: translateY(15%);
+  margin: -50px 0px 0 20px;
 }
 
 .arrayBar {
@@ -200,71 +121,70 @@ button[class*="btn"] {border: 1;}
   margin: 0 2px 0 0;
 }
 
+.arrayBars {
+  display: flex;
+  justify-content: center;
+  margin: 15px 15px 0 0;
+  height: 600px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: -10px 0px 25px 155px;
+}
+
 .buttonGroup {
   display: flex;
-  flex-wrap: wrap; 
-  margin: 0 30px;
+  margin: -10px 0 -10px 45px;
   justify-content: center;
   align-items: center;
-  font-size: 17px;
   height: 100%;
-  margin-bottom: 0px;
 }
 
 /** Scrolling bar */
 .scrollableRangeContainer {
-  position: relative;
-  top: 0px;
-}
-
-.scrollableRange {
-  display: flex;
-  align-items: center;
-  position: relative;
-  top: -13px;
-  margin-right: 20px;
-}
-
-.scrollableRange input {
-  width: 140px;
+  width: auto;
+  margin: 0 5px 0 0;
 }
 
 .settings {
   display: flex;
   align-items: center;
-  position: relative;
-  bottom: -15px;
-  left: 80px;
-  font-size: 17px;
-  padding: 10px;
+  justify-content: flex-start;
+  width: 100%;
+  margin: -75px 0px -10px 100px;
+  font-size: 15px;
 }
 
-.btn-3d.colorful.regular {
-  min-width: 140px;
-  position: relative;
-  top: -2px;
-  margin-right: 60px;
+.scrollableRange {
+  display: flex;
+  align-items: center;
+  margin: -15px 20px 0 100px; 
+  white-space: nowrap;
+}
+
+.scrollableRange input {
+  width: 100%;
 }
 
 .btn-3d.regular.colorful.speed {
-  min-width: 90px;
-  margin-right: 60px;
+  margin: 0 -10px 0 0;
 }
 
 
 .btn-3d.regular.comparisons {
+  margin: -3px 0px 0px -10px;
+  transform: translateX(-220px);
   pointer-events: none;
-  min-width: 200px;
-  position: relative;
-  top: -2px;
-  margin-right: 20px;
+  width: 200px;
 }
 
 .pp {
-  box-sizing: border-bx;
-  position: relative;
-  width: 100px;
-  top: -2px;
+  width: 80px;
+  transform: translateX(-195px) translateY(-4px);
 }
 
 @keyframes AnimationName {
@@ -278,112 +198,3 @@ button[class*="btn"] {border: 1;}
     background-position: 50% 0%;
   }
 }
-
-@media screen and (max-width: 1110px) {
-  .buttons {
-    height: 30%;
-  }
-  .settings {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px; /* Modified line: increasing padding in smaller screens. */
-  }
-}
-
-
-.wrapper {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.cta {
-  font-family: 'Poppins', sans-serif;
-  margin-top: 8%;
-  margin-left: 3%;
-  display: flex;
-  padding: 5px 20px;
-  text-decoration: none;
-  font-size: 20px;
-  color: rgb(233, 233, 233);
-  background-color: rgb(26, 26, 26);
-  transition: 1s;
-  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.5); 
-  transform: skewX(-7deg);
-  border-top: 3px solid rgb(42, 42, 42); 
-  border-right: 3px solid rgb(22, 22, 22); 
-  border-bottom: 3px solid rgb(12, 12, 12); 
-  border-left: 0.5px solid rgb(32, 32, 32);
-  white-space: nowrap; 
-  font-weight: 900;
-  border-radius: 5px;
-}
-
-.cta.sorting {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 800;
-  margin: 0;
-  font-size: 16px;
-  margin-right: 2.5%;
-  white-space: nowrap; 
-}
-
-.cta.sorting:last-child {
-  margin-right: 0;
-}
-
-.cta:focus {
-   outline: none; 
-}
-
-.cta:hover {
-    transition: 0.5s;
-    box-shadow: 6px 6px 0 #FBC638;
-}
-
-.cta span:nth-child(2) {
-    transition: 0.5s;
-    margin-right: 0px;
-}
-
-.cta:hover  span:nth-child(2) {
-    transition: 0.5s;
-    margin-right: 45px;
-}
-
-button:hover {
-button:hover {
-  background-color: linear-gradient(45deg, #FBC638, #FF6363, #00C6FF, #FF00FF, #FBC638);
-  background-size: 500% 500%;
-  animation: AnimationName 3s ease infinite;
-  -webkit-backgrxound-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.cta:hover path.three {
-    animation: color_anim 1s infinite 0.2s;
-}
-
-.cta:hover path.one {
-    transform: translateX(0%);
-    animation: color_anim 1s infinite 0.6s;
-}
-
-.cta:hover path.two {
-    transform: translateX(0%);
-    animation: color_anim 1s infinite 0.4s;
-}
-
-/* SVG animations */
-
-@keyframes color_anim {
-    0% {
-        fill: white;
-    }
-    50% {
-        fill: #FBC638;
-    }
-    100% {
-        fill: white;
-    }
-}}
