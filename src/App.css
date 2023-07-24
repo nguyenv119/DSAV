@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:900i');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,800;1,900&display=swap');
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -12,6 +13,20 @@
   --gradcolor2: #cd24ff;
   --gradcolor3: #4600a6;
   overflow-x: hidden;
+}
+
+.footerStyle {
+  background-color: #131313;
+  padding-bottom: 21px;
+  padding-top: 3px;
+  color: #ffffff;
+  text-align: center;
+  position: fixed;
+  left: 0%;
+  bottom: 0.5%;
+  height: 2%;
+  width: 100%;
+  font-size: 13px;
 }
 
 body {
@@ -121,6 +136,7 @@ button[class*="btn"] {border: 1;}
 }
 
 .arrayContainer {
+  /* border: 2px solid white; */
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -130,6 +146,7 @@ button[class*="btn"] {border: 1;}
   align-items: center;
   justify-content: center;
   border-right: solid 1.5px #0c0c0c;
+  width: 80%;
   width: 80%;
 }
 
@@ -156,22 +173,22 @@ button[class*="btn"] {border: 1;}
 }
 
 .arrayBars {
+  /* border: 2px solid blue; */
   transform: rotateX(180deg);
   display: flex;
   justify-content: left;
   position: relative;
-  top: -2%;
+  margin-top: -7%;
+  top: 0%;
   left: -0.3%;
-  height: 80%; /* This value should be 80% to fill 80% of the arrayContainer div */
+  height: 75%; /* This value should be 80% to fill 80% of the arrayContainer div */
   width: 99%; /* Add width of 100% to fill the entire parent div */
-  border-top: solid 2px #000000;
-  border-bottom: solid 2px #000000;
-  border-left: solid 2px #000000;
 }
 
 .buttons {
+  top: 2%;
   width: 100%; /* Add width of 100% to fill the entire parent div */
-  height: 20%; /* Add height of 23.3% to fill the remaining space of the arrayContainer div */
+  height: 14%; /* Add height of 23.3% to fill the remaining space of the arrayContainer div */
   position: relative;
   /* border: 2px solid purple; */
   transform: translateY(15%);
@@ -271,67 +288,55 @@ button[class*="btn"] {border: 1;}
     align-items: flex-start;
     padding: 20px; /* Modified line: increasing padding in smaller screens. */
   }
-  
-  .btn-3d.colorful.regular {
-    margin-right: 40px; /* Adjusted margin */
-  }
-  
-  .btn-3d.regular.colorful.speed {
-    flex-basis: 50%;
-    order: 2;
-    margin-right: 40px; /* Adjusted margin */
-  }
-
-  .btn-3d.regular.comparisons {
-    order: -2;
-  }
-  .btn-3d.regular.pp {
-    flex-basis: 50%;
-    order: -1;
-  }
-  .scrollableRangeContainer {
-    flex-basis: 100%;
-    order: 1;
-  }
-  .btn-3d.colorful.regular.length {
-    flex-basis: 50%;
-    order: 2;
-  }
 }
 
 
 .wrapper {
-  margin-top: 8%;
-  margin-left: 3%;
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .cta {
+  font-family: 'Poppins', sans-serif;
+  margin-top: 8%;
+  margin-left: 3%;
   display: flex;
   padding: 5px 20px;
   text-decoration: none;
-  font-family: 'Poppins', sans-serif;
   font-size: 20px;
-  color: rgb(255, 255, 255);
-  background: #222222;
+  color: rgb(233, 233, 233);
+  background-color: rgb(26, 26, 26);
   transition: 1s;
-  box-shadow: 6px 6px 0 black;
+  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.5); 
   transform: skewX(-7deg);
-  /* border: 0; */
-  border-top: 3px solid #555; /* dark gray to simulate shadow */
-  border-left: 3px solid #888; /* medium gray to simulate ambient light */
-  border-bottom: 3px solid #bbb; /* light gray to simulate direct light */
-  border-right: 3px solid #222; /* darkest gray to simulate darkest area */
+  border-top: 3px solid rgb(42, 42, 42); 
+  border-right: 3px solid rgb(22, 22, 22); 
+  border-bottom: 3px solid rgb(12, 12, 12); 
+  border-left: 0.5px solid rgb(32, 32, 32);
+  white-space: nowrap; 
+  font-weight: 900;
+  border-radius: 5px;
 }
 
+.cta.sorting {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  margin: 0;
+  font-size: 16px;
+  margin-right: 2.5%;
+  white-space: nowrap; 
+}
+
+.cta.sorting:last-child {
+  margin-right: 0;
+}
 
 .cta:focus {
    outline: none; 
 }
 
 .cta:hover {
-    color: white;
     transition: 0.5s;
     box-shadow: 6px 6px 0 #FBC638;
 }
@@ -347,10 +352,11 @@ button[class*="btn"] {border: 1;}
 }
 
 button:hover {
-  background: linear-gradient(45deg, #FBC638, #FF6363, #00C6FF, #FF00FF, #FBC638);
+button:hover {
+  background-color: linear-gradient(45deg, #FBC638, #FF6363, #00C6FF, #FF00FF, #FBC638);
   background-size: 500% 500%;
   animation: AnimationName 3s ease infinite;
-  -webkit-background-clip: text;
+  -webkit-backgrxound-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -380,4 +386,4 @@ button:hover {
     100% {
         fill: white;
     }
-}
+}}
