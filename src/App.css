@@ -38,12 +38,8 @@ body {
   background-color: #1d1d1d;
 }
 
-.about-us{
-  margin: 2% 0 0 5%;
-}
-
 li {
-  margin-bottom: 8px;
+  margin-bottom: 3px;
 }
 
 .btn-container, .container {
@@ -147,29 +143,77 @@ button[class*="btn"] {border: 1;}
   justify-content: center;
   border-right: solid 1.5px #0c0c0c;
   width: 80%;
-  width: 80%;
 }
 
 .codeArea {
-  background: #1b1b1b;
+  background: #171717;
   color: white;
   position: fixed;
-  left: 79%; /* This value should be set to the width of the .arrayContainer div */
-  top: 0; /* Align to the top of the viewport */
-  bottom: 0; /* Align to the bottom of the viewport */
-  right: 0; /* Align to the right of the viewport */
-  overflow: hidden; /* Add scrollbars if content overflows */
-  width: 21%; /* Updated this value to make the div span 30% of the viewport width */
+  left: 78.5%; 
+  top: 0;
+  right: 0;
+  overflow: auto;
+  height: 96.5vh;
+  width: 20%; /* changed to original value, as per previous conversation */
+  display: flex;
+  flex-direction: column;
+  margin-left: 1.5%;
+  /* border: 2px solid red; */
 }
 
 .description {
-  position: relative;
-  top: 2%;
-  left: 5%;
-  height: 57%;
+  /* border: 2px solid blue; */
   color: white;
   font-size: 12.5px;
-  overflow: hidden;
+  margin-top: 0;
+  width: 95%;
+  height: 45%;
+  margin-left: 2.5%;
+  margin-top: 5%;
+  overflow: auto; /* Add scrollbars if content overflows */
+}
+
+.description.intro {
+  /* border: 2px solid blue; */
+  height: 84%;
+}
+
+.actualCode {
+  /* border: 2px solid blue; */
+  width: 95%;
+  margin-left: 2.5%;
+  color: white;
+  font-size: 12.5px;
+  height: 31.5%;
+  overflow-y: auto;
+}
+
+.actualCode.noCode {
+  /* border: 2px solid red; */
+  height: 0%;
+}
+
+.explanation {
+  text-align: center;
+  margin-top: 3%;
+  height: 21%;
+  width: 100%;
+  margin-left: 2.5%;
+  width: 95%;
+  /* border: 2px solid purple; */
+  overflow: auto;
+}
+
+.explanation.about-us {
+  height: 10%;
+  margin-top: 2%;
+  flex-grow: 1;
+  overflow: hidden; 
+  /* border: 2px solid purple; */
+}
+
+code {
+  /* border: 2px solid red; */
 }
 
 .arrayBars {
@@ -185,122 +229,37 @@ button[class*="btn"] {border: 1;}
   width: 99%; /* Add width of 100% to fill the entire parent div */
 }
 
-.buttons {
-  top: 2%;
-  width: 100%; /* Add width of 100% to fill the entire parent div */
-  height: 14%; /* Add height of 23.3% to fill the remaining space of the arrayContainer div */
-  position: relative;
-  /* border: 2px solid purple; */
-  transform: translateY(15%);
-}
-
 .arrayBar {
   width: 10.5px;
   display: inline-block;
   margin: 0 2px 0 0;
 }
 
+.buttons {
+  top: 3%;
+  width: 93%; /* Add width of 100% to fill the entire parent div */
+  height: 13%; /* Add height of 23.3% to fill the remaining space of the arrayContainer div */
+  position: relative;
+  /* border: 2px solid white; */
+  transform: translateY(15%);
+}
+
 .buttonGroup {
+  /* border: 2px solid red; */
+  margin-bottom: 1%;
   display: flex;
   flex-wrap: wrap; 
-  margin: 0 30px;
-  justify-content: center;
-  align-items: center;
+  width: 95%;
+  /* justify-content: left; */
   font-size: 17px;
   height: 100%;
-  margin-bottom: 0px;
-}
-
-/** Scrolling bar */
-.scrollableRangeContainer {
-  position: relative;
-  top: 0px;
-}
-
-.scrollableRange {
-  display: flex;
-  align-items: center;
-  position: relative;
-  top: -13px;
-  margin-right: 20px;
-}
-
-.scrollableRange input {
-  width: 140px;
-}
-
-.settings {
-  display: flex;
-  align-items: center;
-  position: relative;
-  bottom: -15px;
-  left: 80px;
-  font-size: 17px;
-  padding: 10px;
-}
-
-.btn-3d.colorful.regular {
-  min-width: 140px;
-  position: relative;
-  top: -2px;
-  margin-right: 60px;
-}
-
-.btn-3d.regular.colorful.speed {
-  min-width: 90px;
-  margin-right: 60px;
-}
-
-
-.btn-3d.regular.comparisons {
-  pointer-events: none;
-  min-width: 200px;
-  position: relative;
-  top: -2px;
-  margin-right: 20px;
-}
-
-.pp {
-  box-sizing: border-bx;
-  position: relative;
-  width: 100px;
-  top: -2px;
-}
-
-@keyframes AnimationName {
-  0% {
-    background-position: 50% 0%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 50% 0%;
-  }
-}
-
-@media screen and (max-width: 1110px) {
-  .buttons {
-    height: 30%;
-  }
-  .settings {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 20px; /* Modified line: increasing padding in smaller screens. */
-  }
-}
-
-
-.wrapper {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
 }
 
 .cta {
+  width: 100%;
   font-family: 'Poppins', sans-serif;
-  margin-top: 8%;
   margin-left: 3%;
+  margin-top: 3%;
   display: flex;
   padding: 5px 20px;
   text-decoration: none;
@@ -317,6 +276,16 @@ button[class*="btn"] {border: 1;}
   white-space: nowrap; 
   font-weight: 900;
   border-radius: 5px;
+  align-items: center; /* aligns the image and the text vertically in the center */
+  justify-content: space-between; /* space out the elements inside the button */
+}
+
+.cta.img {
+  margin-right: 1%; 
+  padding: 5px 6px 6px 7px;
+  transform: skewX(0deg);
+  border-radius: 25%;
+  box-shadow: 0px 0px 3px 0px rgba(17, 17, 17, 0.5);
 }
 
 .cta.sorting {
@@ -339,6 +308,10 @@ button[class*="btn"] {border: 1;}
 .cta:hover {
     transition: 0.5s;
     box-shadow: 6px 6px 0 #FBC638;
+}
+
+.cta.img:hover {
+  box-shadow: 0px 0px 0px 1px #FF00FF;
 }
 
 .cta span:nth-child(2) {
@@ -371,6 +344,95 @@ button:hover {
 .cta:hover path.two {
     transform: translateX(0%);
     animation: color_anim 1s infinite 0.4s;
+}
+
+/** Scrolling bar */
+.scrollableRangeContainer {
+  position: relative;
+  top: 0px;
+}
+
+.scrollableRange {
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: -13px;
+  margin-right: 20px;
+}
+
+.scrollableRange input {
+  width: 140px;
+}
+
+.settings {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 93%;
+  bottom: 2%;
+  left: 5%;
+  font-size: 17px;
+  /* border: 2px solid purple */
+}
+
+.pp {
+  box-sizing: border-bx;
+  position: relative;
+  width: 100px;
+  top: -2px;
+}
+@media screen and (max-width: 1110px) { /* Adjust this breakpoint as needed */
+  .buttonGroup {
+    flex-direction: column;
+  }
+
+  .cta {
+    margin-bottom: 10px; /* Add some space between the buttons when they stack */
+  }
+}
+
+.btn-3d.colorful.regular {
+  min-width: 140px;
+  position: relative;
+  top: -2px;
+  margin-right: 60px;
+}
+
+.btn-3d.regular.colorful.speed {
+  min-width: 90px;
+  margin-right: 60px;
+}
+
+.btn-3d.regular.comparisons {
+  pointer-events: none;
+  min-width: 200px;
+  position: relative;
+  top: -2px;
+  margin-right: 20px;
+}
+
+@keyframes AnimationName {
+  0% {
+    background-position: 50% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 50% 0%;
+  }
+}
+
+.cta-image {
+  height: 40px;
+  width: 40px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: start; /* align items to the start */
+  align-items: center; /* center items vertically */
+  width: 100%;
 }
 
 /* SVG animations */
