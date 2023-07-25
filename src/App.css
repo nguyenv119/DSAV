@@ -234,7 +234,6 @@ code {
 }
 
 .buttons {
-  top: 3.5%; /* adjust as needed */
   left: 20px; /* adjust as needed */
   width: calc(100% - 40px); /* subtract the total left and right margins */
   height: 13%;
@@ -267,7 +266,7 @@ code {
   color: rgb(233, 233, 233);
   background-color: rgb(26, 26, 26);
   transition: 1s;
-  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.5); 
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5); 
   transform: skewX(-7deg);
   border-top: 3px solid rgb(42, 42, 42); 
   border-right: 3px solid rgb(22, 22, 22); 

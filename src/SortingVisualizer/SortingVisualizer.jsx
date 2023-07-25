@@ -10,7 +10,7 @@ import ProgressBar from './ProgressBar';
 const MINVAL = 5;
 const MAXVAL = 620;
 export const GREEN_SPEED = 7;
-export const SMALLER_COLOR = "#f44336";
+export const SMALLER_COLOR = "#ea2c1e";
 export const LARGER_COLOR = "#50af50"
 export const SAMESIZE_COLOR = "#f1cc32";
 export const SMALLEST_SOFAR_COLOR = "#FF006E"
@@ -471,7 +471,6 @@ export default class SortingVisualizer extends React.Component {
              * ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_map3
             */
             <div>
-                <ProgressBar comparisons={comparisons} totalComparisons={totalComparisons} />
                 <div className="arrayContainer">
                     <div className="arrayBars">
                         {array.map((value, index) => (
@@ -484,7 +483,8 @@ export default class SortingVisualizer extends React.Component {
                                 }}
                             ></div>
                             ))}
-                        </div>
+                    </div>
+                    <ProgressBar comparisons={comparisons} totalComparisons={totalComparisons} />
                     <div class="buttons">
                         <div className="buttonContainer">
                             <div className="buttonGroup">

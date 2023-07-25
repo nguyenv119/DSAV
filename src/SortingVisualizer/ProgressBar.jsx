@@ -1,47 +1,51 @@
 import React from 'react';
+import {    PRIMARY_COLOR,
+  SECONDARY_COLOR,
+  LARGER_COLOR,
+  SMALLER_COLOR,
+  DONE_COLOR } from "../SortingVisualizer/SortingVisualizer";
 
 const ProgressBar = ({ comparisons, totalComparisons  }) => {
-  const maxWidth = '69%';
+  const maxWidth = '98.2%';
   const progressWidth = `${(comparisons / totalComparisons) * parseFloat(maxWidth)}%`;
 
   const progressBarStyle = {
     width: progressWidth,
-    position: 'fixed',
-    top: 50,
-    left: 100,
-    height: '10px',
-    backgroundColor: 'green'
+    position: 'relative',
+    top: 0,
+    left: 0,
+    height: '15px',
+    backgroundColor: LARGER_COLOR
   };
   
   const backgroundStyle = {
     width: maxWidth,
-    height: '10px',
-    backgroundColor: 'red',
-    position: 'fixed',
-    top: 50,
-    left: 100,
+    height: '15px',
+    backgroundColor: SMALLER_COLOR,
+    position: 'relative',
+    top: -15,
+    left: 12,
   };
   
   const labelStyle = {
-    position: 'fixed',
-    top: 30,
-    left: 100,
+    position: 'relative',
+    top: 0,
+    left: 10,
     fontSize: '16px',
     color: 'white',
   };
 
   return (
     <div>
-
       <div style={labelStyle}>
-        Estimated Progress
+        {/* Estimated Progress */}
         <br />
-        Current Case: {comparisons} - Worse Case: {totalComparisons}
+        {/* Current Case: {comparisons} - Worse Case: {totalComparisons} */}
       </div>
 
       <div className="progress" style={backgroundStyle}>
         <div
-          className="progress-bar bg-success"
+          className="progress-bar"
           role="progressbar"
           style={progressBarStyle}
           aria-valuenow={comparisons}
