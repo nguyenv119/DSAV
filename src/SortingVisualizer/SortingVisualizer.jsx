@@ -467,7 +467,7 @@ export default class SortingVisualizer extends React.Component {
                         <div className="buttonContainer">
                             <div className="buttonGroup">
                                 <div class="wrapper">
-                                    <button class="cta sorting"
+                                    <button className={`cta sorting`}
                                         onClick={() => {
                                             this.makeArray();
                                             /*
@@ -476,35 +476,35 @@ export default class SortingVisualizer extends React.Component {
                                         }}
                                         disabled={isSorting}>Generate New Array
                                     </button>
-                                    <button class="cta sorting"
+                                    <button className={`cta sorting`}
                                          onClick={() => {
                                             this.bubbleSort()
                                             this.setState({ activeSortingButton: "bubbleSort", activeAlgorithm: 1 });
                                         }}
                                         disabled={sortingInProgress}>Bubble Sort
                                     </button>
-                                    <button class="cta sorting"
+                                    <button className={`cta sorting`}
                                         onClick={() => {
                                             this.selectionSort()
                                             this.setState({ activeSortingButton: "selectionSort", activeAlgorithm: 2 });
                                         }}
                                         disabled={sortingInProgress}>Selection Sort
                                     </button>
-                                    <button class="cta sorting"
+                                    <button className={`cta sorting`}
                                         onClick={() => {
                                             this.insertionSort()
                                             this.setState({ activeSortingButton: "insertionSort", activeAlgorithm: 3 });
                                         }}
                                         disabled={sortingInProgress}>Insertion Sort
                                     </button>
-                                    <button class="cta sorting"
+                                    <button className={`cta sorting`}
                                         onClick={() => {
                                             this.mergeSort()
                                             this.setState({ activeSortingButton: "mergeSort", activeAlgorithm: 4 });
                                         }
                                         } disabled={sortingInProgress}>Merge Sort
                                     </button>
-                                    <button class="cta sorting"
+                                    <button className={`cta sorting`}
                                         onClick={() => {
                                             this.heapSort()
                                             this.setState({ activeSortingButton: "heapSort", activeAlgorithm: 5 });

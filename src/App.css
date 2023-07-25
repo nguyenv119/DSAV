@@ -90,7 +90,7 @@ button[class*="btn"] {border: 1;}
 }
 
 .btn-3d.regular:hover {
-  border-color: #be64ff;
+  /* border-color: #be64ff; */
   cursor: pointer;
 }
 
@@ -352,12 +352,11 @@ button[class*="btn"] {border: 1;}
 }
 
 button:hover {
-button:hover {
   background-color: linear-gradient(45deg, #FBC638, #FF6363, #00C6FF, #FF00FF, #FBC638);
   background-size: 500% 500%;
   animation: AnimationName 3s ease infinite;
   -webkit-backgrxound-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
 }
 
 .cta:hover path.three {
@@ -386,4 +385,4 @@ button:hover {
     100% {
         fill: white;
     }
-}}
+}
