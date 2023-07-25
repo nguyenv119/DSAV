@@ -10,7 +10,7 @@ const ProgressBar = ({ comparisons, totalComparisons  }) => {
     top: 50,
     left: 100,
     height: '10px',
-    backgroundColor: 'green',
+    backgroundColor: 'green'
   };
   
   const backgroundStyle = {
