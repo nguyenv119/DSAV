@@ -56,20 +56,16 @@ export default class SortingVisualizer extends React.Component {
                 "none": {
                     about: [
                         <h6><strong>Data Structure & Algorithm Visualizer</strong></h6>,
-                        <h6><strong>Hey there!</strong></h6>, <br />,
-                        <p> This is DSAV. We're all about helping you learn <br />
-                            those pesky algorithms a little easier. We've got <br />
-                            you covered with cool animations you can play, <br />
-                            pause, and analyze at your own pace.
+                        <br />,
+                        <p> This is DSAV. We're all about helping you learn
+                            a little easier. We've got
+                            you covered with cool animations to visualize what actually
+                            going on behind the algorithms you learn.
 
-                            <br /><br />You can see exactly what's happening in the <br />
-                            code as you go, thanks to the code area just <br />
-                            below the animation. Fancy changing up the <br />
-                            sorting speed or array length? No problem, you <br />
-                            can tweak it till it fits just right.
+                            <br /><br />Learn at your own pace with the tools below. Play, pause,
+                            change the speed, length...etc
 
-                            <br /><br />But, we're not stopping at sorting algorithms. <br />
-                            We've got plans to add more data <br />
+                            <br /><br />We've got plans to add more data
                             structures for you to visualize:
                         </p>,
                         <li> Arrays, Stacks, Queues, Linked Lists</li>,
@@ -78,12 +74,6 @@ export default class SortingVisualizer extends React.Component {
                     ],
                     code: [
                         <div className="about-us">
-                            <h6><strong>Reach out and Contribute!</strong></h6>
-                            <div class="wrapper">
-                                <button class="cta" href="https://github.com/nguyenv119/DSAV" target="_blank">
-                                    Github
-                                </button>
-                            </div>
                         </div>
                     ]
                 },
@@ -117,23 +107,23 @@ export default class SortingVisualizer extends React.Component {
                         <p>O(1) — Bubble Sort sorts the list in place without requiring additional memory.</p>
                     ],
                     code: [
-                        <pre style={{ fontSize: "12px" }}>
-                            <code>
-                                {`
-                                public void bubbleSort(int[] array) {
-                                    boolean didswaps;
-                                    do {
-                                        didswaps = false;
-                                        for (int i = 0; i < array.length - 1; i++) {
-                                            if (array[i] > array[i + 1]) {
-                                                swap(array[i], array[i + 1]);
-                                            }
-                                        }
-                                    } while (didswaps);
-                                }
-                                `}
-                            </code>
-                        </pre>
+<pre style={{ fontSize: "12px" }}>
+    <code>
+{`Bubble-Sort(A, n) {
+    didSwap ← true
+    while (didSwap) {
+        didSwap ← false
+        for i ← 0 to n - 2 {
+            if (A[i] > A[i + 1]) {
+                swap(A[i], A[i + 1]);
+                didSwap ← true
+            }
+        }
+    }
+}
+`}
+    </code>
+</pre>
                     ]
 
                 },
@@ -141,17 +131,17 @@ export default class SortingVisualizer extends React.Component {
                     about: [
                         <p>
                             <h6><strong>Selection Sort:</strong></h6>
-                            An easy-top-implement sorting algorithm that <br />
-                            repeatedly finds the smallest element <br />
-                            from the unsorted part of the list and swaps it <br />
-                            with the first unsorted element. <br /><br />
+                            An easy-top-implement sorting algorithm that 
+                            repeatedly finds the smallest element 
+                            from the unsorted part of the list and swaps it 
+                            with the first unsorted element. <br />
                         </p>,
                         <h6><strong>Time Complexity:</strong></h6>,
                         <ul>
                             <li> All Cases: θ(n<sup>2</sup>)</li>
                             <li>
-                                In every possible iteration, unsorted or <br />
-                                sorted, the the algorithm makes n(n-1)/2  <br />
+                                In every possible iteration, unsorted or
+                                sorted, the the algorithm makes n(n-1)/2 
                                 comparisons, which simplifies to O(n<sup>2</sup>).
                             </li>
                             <li>
@@ -159,10 +149,23 @@ export default class SortingVisualizer extends React.Component {
                             </li>
                         </ul>,
                         <h6><strong>Space Complexity:</strong></h6>,
-                        <p>O(1) — Selection Sort sorts the list in place <br />
+                        <p>O(1) — Selection Sort sorts the list in place
                             without requiring additional memory.</p>
                     ],
-                    code: "",
+                    code: [
+<pre style={{ fontSize: "12px" }}>
+    <code>
+{`Selection-Sort(A, n) 
+    for i ← 0 to n - 2
+          k ← i
+          for j ← (i + 1) to n - 1 
+              if (A[j] < A[k]) then
+                  k ← j
+          if (k != j) then
+              swap(A[i], A[k])
+`}
+    </code>
+</pre>],
                 },
                 "insertionSort": {
                     about: [
@@ -591,18 +594,35 @@ export default class SortingVisualizer extends React.Component {
                     </div>
                 </div>
                 <div className="codeArea">
-                    <div className="description">
+                    <div className={`description${activeAlgorithmKey === "none" ? ' intro' : ''}`}>
                         {algorithm.about}
                     </div>
-                    <div className="code">
+                    <div className={`actualCode${activeAlgorithmKey === "none" ? ' noCode' : ''}`}>
                         {algorithm.code}
+                    </div>
+
+                    {/* if we are at the start page, the explanation section is smaller */}
+                    <div className={`explanation${activeAlgorithmKey === "none" ? ' about-us' : ''}`}>
+                        <h6><strong>Reach out and Contribute!</strong></h6>
+                        <div class="wrapper">
+                            <a class="cta img" href="https://github.com/nguyenv119/DSAV" target="_blank">
+                                <img class="cta-image" src="/github-icon.png" alt="Github"></img>
+                            </a>
+                            <a class="cta img" href="mailto:nguyenv@brandeis.edu" target="_blank">
+                                <img class="cta-image" src="/email-icon.png" alt="Email"></img>
+                            </a>
+                            <a class="cta img" href="https://www.linkedin.com/in/long-nguyen-8b77b7248/" target="_blank">
+                                <img class="cta-image" src="/linkedin-icon.png" alt="Linkedin"></img>
+                            </a>
+                            <a class="cta img" href="https://www.instagram.com/_vinh.long_/" target="_blank">
+                                <img class="cta-image" src="/instagram-icon.png" alt="Instagram"></img>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div>
                     <footer className="footerStyle">
-                        <p>
-                            DSAV Copyright @2023
-                        </p>
+                        <p> DSAV Copyright @2023 </p>
                     </footer>
                 </div>
             </div>
