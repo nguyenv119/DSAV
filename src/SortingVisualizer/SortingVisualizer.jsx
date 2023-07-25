@@ -5,6 +5,7 @@ import { selectionSortExp } from "../SortingAlgos/selectionSort"
 import { insertionSortExp } from "../SortingAlgos/insertionSort"
 import { heapSortExp } from "../SortingAlgos/heapSort"
 import 'bootstrap/dist/css/bootstrap.css';
+import ProgressBar from './ProgressBar';
 
 const MINVAL = 5;
 const MAXVAL = 625;
@@ -438,7 +439,22 @@ export default class SortingVisualizer extends React.Component {
 
         const activeAlgorithmKey = this.state.algorithmKeys[this.state.activeAlgorithm];
         const algorithm = this.state.codeVisualizer[activeAlgorithmKey];
-
+        let totalComparisons;
+        
+        switch (activeSortingButton) {
+            case "bubbleSort":
+            case "selectionSort":
+            case "insertionSort":
+                totalComparisons = Math.round((array.length * (array.length - 1)) / 2);
+                break;
+            case "mergeSort":
+            case "heapSort":
+                totalComparisons = Math.round(array.length * Math.log2(array.length));
+                break;
+            default:
+                totalComparisons = 0;
+        }
+        
         return (
             /* 
             ? Map = go through each num in array, extracting value and index and making it into a bar:
@@ -450,6 +466,7 @@ export default class SortingVisualizer extends React.Component {
              * ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_map3
             */
             <div>
+                <ProgressBar comparisons={comparisons} totalComparisons={totalComparisons} />
                 <div className="arrayContainer">
                     <div className="arrayBars">
                         {array.map((value, index) => (
