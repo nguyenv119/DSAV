@@ -250,13 +250,28 @@ code {
   display: flex;
   flex-wrap: wrap; 
   width: 95%;
-  /* justify-content: left; */
   font-size: 17px;
   height: 100%;
+  overflow-x: auto;
 }
 
+.settings {
+  display: flex;
+  flex-wrap: wrap; 
+  align-items: center;
+  position: relative;
+  width: 93%;
+  height: 6vh; /* adjust this as needed */
+  bottom: 2%;
+  left: 5%;
+  font-size: 17px;
+  /* border: 2px solid purple; */
+  overflow-x: auto;
+}
+
+
 .cta {
-  width: 100%;
+  /* width: 100%; */
   font-family: 'Poppins', sans-serif;
   margin-left: 3%;
   margin-top: 3%;
@@ -294,7 +309,8 @@ code {
   margin: 0;
   font-size: 16px;
   margin-right: 2.5%;
-  white-space: nowrap; 
+  white-space: nowrap;
+  flex: 1 1 auto; /* This allows the buttons to grow and shrink as needed */
 }
 
 .cta.sorting:last-child {
@@ -364,31 +380,11 @@ button:hover {
   width: 140px;
 }
 
-.settings {
-  display: flex;
-  align-items: center;
-  position: relative;
-  width: 93%;
-  bottom: 2%;
-  left: 5%;
-  font-size: 17px;
-  /* border: 2px solid purple */
-}
-
 .pp {
   box-sizing: border-bx;
   position: relative;
   width: 100px;
   top: -2px;
-}
-@media screen and (max-width: 1110px) { /* Adjust this breakpoint as needed */
-  .buttonGroup {
-    flex-direction: column;
-  }
-
-  .cta {
-    margin-bottom: 10px; /* Add some space between the buttons when they stack */
-  }
 }
 
 .btn-3d.colorful.regular {
