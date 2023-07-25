@@ -15,6 +15,10 @@
   overflow-x: hidden;
 }
 
+.hidden {
+  display: none !important
+}
+
 .footerStyle {
   background-color: #131313;
   padding-bottom: 21px;
@@ -235,6 +239,7 @@ code {
 
 .buttons {
   left: 20px; /* adjust as needed */
+  top: -1.5%;
   width: calc(100% - 40px); /* subtract the total left and right margins */
   height: 13%;
   position: relative;
@@ -425,8 +430,8 @@ button:hover {
 }
 
 .cta-image {
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
 }
 
 .wrapper {

@@ -73,8 +73,6 @@ export default class SortingVisualizer extends React.Component {
                         <p> So, stay updated, and we'll keep you covered!</p>
                     ],
                     code: [
-                        <div className="about-us">
-                        </div>
                     ]
                 },
                 "bubbleSort": {
@@ -605,19 +603,20 @@ export default class SortingVisualizer extends React.Component {
 
                     {/* if we are at the start page, the explanation section is smaller */}
                     <div className={`explanation${activeAlgorithmKey === "none" ? ' about-us' : ''}`}>
-                        <h6><strong>Reach out and Contribute!</strong></h6>
+                        <h6 className={`${activeAlgorithmKey !== "none" ? 'hidden' : ''}`}><strong>Reach out and Contribute!</strong></h6>
                         <div class="wrapper">
-                            <a class="cta img" href="https://github.com/nguyenv119/DSAV" target="_blank">
-                                <img class="cta-image" src="/github-icon.png" alt="Github"></img>
+                            {/* If we are in the sorting algorithms, we don't show the social media */}
+                            <a className={`cta img ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://github.com/nguyenv119/DSAV" target="_blank">
+                                <img className="cta-image" src="/github-icon.png" alt="Github"></img>
                             </a>
-                            <a class="cta img" href="mailto:nguyenv@brandeis.edu" target="_blank">
-                                <img class="cta-image" src="/email-icon.png" alt="Email"></img>
+                            <a className={`cta img ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="mailto:nguyenv@brandeis.edu" target="_blank">
+                                <img className="cta-image" src="/email-icon.png" alt="Email"></img>
                             </a>
-                            <a class="cta img" href="https://www.linkedin.com/in/long-nguyen-8b77b7248/" target="_blank">
-                                <img class="cta-image" src="/linkedin-icon.png" alt="Linkedin"></img>
+                            <a className={`cta img ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://www.linkedin.com/in/long-nguyen-8b77b7248/" target="_blank">
+                                <img className="cta-image" src="/linkedin-icon.png" alt="Linkedin"></img>
                             </a>
-                            <a class="cta img" href="https://www.instagram.com/_vinh.long_/" target="_blank">
-                                <img class="cta-image" src="/instagram-icon.png" alt="Instagram"></img>
+                            <a className={`cta img ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://www.instagram.com/_vinh.long_/" target="_blank">
+                                <img className="cta-image" src="/instagram-icon.png" alt="Instagram"></img>
                             </a>
                         </div>
                     </div>

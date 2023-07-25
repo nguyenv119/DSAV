@@ -6,7 +6,7 @@ import {    PRIMARY_COLOR,
   DONE_COLOR } from "../SortingVisualizer/SortingVisualizer";
 
 const ProgressBar = ({ comparisons, totalComparisons  }) => {
-  const maxWidth = '98.2%';
+  const maxWidth = '100%';
   const progressWidth = `${(comparisons / totalComparisons) * parseFloat(maxWidth)}%`;
 
   const progressBarStyle = {
@@ -24,7 +24,7 @@ const ProgressBar = ({ comparisons, totalComparisons  }) => {
     backgroundColor: SMALLER_COLOR,
     position: 'relative',
     top: -15,
-    left: 12,
+    left: 0,
   };
   
   const labelStyle = {
