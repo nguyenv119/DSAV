@@ -139,8 +139,6 @@ button[class*="btn"] {border: 1;}
   left: 0%;
   top: 0%;
   height: 100vh; /* This value should be 100vh to fill the entire viewport height */
-  align-items: center;
-  justify-content: center;
   border-right: solid 1.5px #0c0c0c;
   width: 80%;
 }
@@ -164,7 +162,8 @@ button[class*="btn"] {border: 1;}
 .description {
   /* border: 2px solid blue; */
   color: white;
-  font-size: 12.5px;
+  font-size: 14px;
+  /* font-size: 1vw;  */
   margin-top: 0;
   width: 95%;
   height: 45%;
@@ -222,11 +221,10 @@ code {
   display: flex;
   justify-content: left;
   position: relative;
-  margin-top: -7%;
-  top: 0%;
-  left: -0.3%;
+  top: 1%;
+  left: 1%;
   height: 75%; /* This value should be 80% to fill 80% of the arrayContainer div */
-  width: 99%; /* Add width of 100% to fill the entire parent div */
+  width: 98.2%; /* Add width of 100% to fill the entire parent div */
 }
 
 .arrayBar {
@@ -236,9 +234,10 @@ code {
 }
 
 .buttons {
-  top: 3%;
-  width: 93%; /* Add width of 100% to fill the entire parent div */
-  height: 13%; /* Add height of 23.3% to fill the remaining space of the arrayContainer div */
+  top: 3.5%; /* adjust as needed */
+  left: 20px; /* adjust as needed */
+  width: calc(100% - 40px); /* subtract the total left and right margins */
+  height: 13%;
   position: relative;
   /* border: 2px solid white; */
   transform: translateY(15%);
@@ -246,32 +245,18 @@ code {
 
 .buttonGroup {
   /* border: 2px solid red; */
-  margin-bottom: 1%;
+  margin-left: 0;
+  margin-top: 0;
   display: flex;
-  flex-wrap: wrap; 
-  width: 95%;
-  font-size: 17px;
+  flex-wrap: wrap;
+  padding: 9px; /* Adjust this value to fit your design */
+  width: calc(100% - 50px); /* Subtract double the padding from the width */
   height: 100%;
-  overflow-x: auto;
-}
-
-.settings {
-  display: flex;
-  flex-wrap: wrap; 
-  align-items: center;
-  position: relative;
-  width: 93%;
-  height: 6vh; /* adjust this as needed */
-  bottom: 2%;
-  left: 5%;
   font-size: 17px;
-  /* border: 2px solid purple; */
   overflow-x: auto;
 }
-
 
 .cta {
-  /* width: 100%; */
   font-family: 'Poppins', sans-serif;
   margin-left: 3%;
   margin-top: 3%;
@@ -290,10 +275,30 @@ code {
   border-left: 0.5px solid rgb(32, 32, 32);
   white-space: nowrap; 
   font-weight: 900;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   align-items: center; /* aligns the image and the text vertically in the center */
-  justify-content: space-between; /* space out the elements inside the button */
+  justify-content: center; /* space out the elements inside the button */
 }
+
+.cta:not(:last-child) {
+  margin-right: 3%;
+}
+
+.settings {
+  display: flex;
+  flex-wrap: nowrap;  
+  align-items: center;
+  position: absolute;
+  width: calc(100% - 90px); /* subtract the total left and right margins */
+  height: 5vh;
+  bottom: -3%;  /* adjust as needed */
+  left: 60px;  /* adjust as needed */
+  font-size: 17px;
+  /* border: 2px solid purple; */
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
 
 .cta.img {
   margin-right: 1%; 
@@ -307,10 +312,11 @@ code {
   font-family: 'Poppins', sans-serif;
   font-weight: 800;
   margin: 0;
-  font-size: 16px;
+  text-align: center;
+  font-size: 1vw; 
   margin-right: 2.5%;
   white-space: nowrap;
-  flex: 1 1 auto; /* This allows the buttons to grow and shrink as needed */
+  flex: 1 1 auto;
 }
 
 .cta.sorting:last-child {
@@ -323,7 +329,7 @@ code {
 
 .cta:hover {
     transition: 0.5s;
-    box-shadow: 6px 6px 0 #FBC638;
+    box-shadow: 6px 6px 0px 0px #FBC638;
 }
 
 .cta.img:hover {
@@ -388,7 +394,7 @@ button:hover {
 }
 
 .btn-3d.colorful.regular {
-  min-width: 140px;
+  min-width: 145px;
   position: relative;
   top: -2px;
   margin-right: 60px;
@@ -443,4 +449,10 @@ button:hover {
     100% {
         fill: white;
     }
+}
+
+@media only screen and (max-width: 1200px) {
+  .cta.sorting {
+    font-size: 15px;
+  }
 }
