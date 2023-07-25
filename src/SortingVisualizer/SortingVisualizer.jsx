@@ -5,11 +5,12 @@ import { selectionSortExp } from "../SortingAlgos/selectionSort"
 import { insertionSortExp } from "../SortingAlgos/insertionSort"
 import { heapSortExp } from "../SortingAlgos/heapSort"
 import 'bootstrap/dist/css/bootstrap.css';
+import ProgressBar from './ProgressBar';
 
 const MINVAL = 5;
 const MAXVAL = 620;
 export const GREEN_SPEED = 7;
-export const SMALLER_COLOR = "#f44336";
+export const SMALLER_COLOR = "#ea2c1e";
 export const LARGER_COLOR = "#50af50"
 export const SAMESIZE_COLOR = "#f1cc32";
 export const SMALLEST_SOFAR_COLOR = "#FF006E"
@@ -443,7 +444,22 @@ export default class SortingVisualizer extends React.Component {
 
         const activeAlgorithmKey = this.state.algorithmKeys[this.state.activeAlgorithm];
         const algorithm = this.state.codeVisualizer[activeAlgorithmKey];
-
+        let totalComparisons;
+        
+        switch (activeSortingButton) {
+            case "bubbleSort":
+            case "selectionSort":
+            case "insertionSort":
+                totalComparisons = Math.round((array.length * (array.length - 1)) / 2);
+                break;
+            case "mergeSort":
+            case "heapSort":
+                totalComparisons = Math.round(array.length * Math.log2(array.length));
+                break;
+            default:
+                totalComparisons = 0;
+        }
+        
         return (
             /* 
             ? Map = go through each num in array, extracting value and index and making it into a bar:
@@ -467,7 +483,8 @@ export default class SortingVisualizer extends React.Component {
                                 }}
                             ></div>
                             ))}
-                        </div>
+                    </div>
+                    <ProgressBar comparisons={comparisons} totalComparisons={totalComparisons} />
                     <div class="buttons">
                         <div className="buttonContainer">
                             <div className="buttonGroup">

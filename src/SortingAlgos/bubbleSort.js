@@ -62,7 +62,6 @@ function bubbleSort(array, animations) {
     while (didSwap && i > 0) {
         didSwap = false;
         for (let j = 0; j < i - 1; ++j) {
-
             /** 
             * Pass in 2 indices for bar comparison 
             * Since array[j]> array[j + 1], 1st index green 
