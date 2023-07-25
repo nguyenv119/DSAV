@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import ProgressBar from './ProgressBar';
 
 const MINVAL = 5;
-const MAXVAL = 625;
+const MAXVAL = 620;
 export const GREEN_SPEED = 7;
 export const SMALLER_COLOR = "#f44336";
 export const LARGER_COLOR = "#50af50"
@@ -324,7 +324,9 @@ export default class SortingVisualizer extends React.Component {
             ? Resets the color of array back to PRIMARY, and determines width and length */
             const arrayBars = document.getElementsByClassName("arrayBar");
             for (let i = 0; i < arrayBars.length; i++) {
-                arrayBars[i].style.width = `${1200 / length}px`;
+                /*
+                TODO: To make the bars fill the screen, might have to change later */
+                arrayBars[i].style.width = `${5000 / length}px`;
                 arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
             }
         });
