@@ -103,15 +103,14 @@ export const mergeDescription = () => (
     <>
         <p>
             <h5><strong>Merge Sort:</strong></h5>
-            is a divide and conquer algorithm that divides the
+            A divide and conquer algorithm that divides the
             input array into two halves, sorts them and then merges the two sorted halves. <br /><br />
             <h6><strong>Time Complexity:</strong></h6>
         </p>
         <ul>
             <li> All Cases: Ω(nlog(n))</li>
             <li>
-                In every possible scenario, when the list is sorted,
-                or when it is not, the list always
+                In every scenario, the list
                 performs a linearaithmic number of
                 operations
             </li>
@@ -127,23 +126,20 @@ export const heapDescription = () => (
     <>
         <p>
             <h5><strong>Heap Sort:</strong></h5>
-            A sorting algorithm based on a <br />
-            Max Binary-Heap. We build a max heap, and, <br />
-            swapping the root element with the end element, <br />
-            reduce the heap size by one. <br /><br />
+            Build a max heap, and for 
+            n elements, swap the root with the end & reduce the heap size by 1 each time. 
+            Sorting is done in the swapping. <br /><br />
             <h6><strong>Time Complexity:</strong></h6>
-        </p>,
+        </p>
         <ul>
-            <li> All Cases: θ(n log n)</li>
-            <li> In all scenarios, making a max-heap is θ(n). <br />
-                The subsequent steps swap the end and <br />
-                root for n elements, and HEAPIFY-DOWN <br />
-                for those n elements.
+            <li> All Cases: θ(nlog(n))</li>
+            <li> Making a Max-Heap: θ(n).
+                Swapping ends once, HEAPIFY-DOWN, is O(log(n)), and for n elements, θ(nlog(n)). So,
+                θ(nlog(n) + n) = θ(nlog(n))
             </li>
-        </ul>,
-        <h6><strong>Space Complexity:</strong></h6>,
-        <p>O(1) — Heap Sort is an in-place sorting algorithm <br />
-            since the MAX-HEAP is used from our original <br />
-            array.</p>
+        </ul>
+        <h6><strong>Space Complexity:</strong></h6>
+        <p>O(1) — an in-place algorithm: the MAX-HEAP is our original array.
+        </p>
     </>
 );

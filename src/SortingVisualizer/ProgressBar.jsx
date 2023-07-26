@@ -1,9 +1,8 @@
 import React from 'react';
-import {    PRIMARY_COLOR,
-  SECONDARY_COLOR,
+import {
   LARGER_COLOR,
   SMALLER_COLOR,
-  DONE_COLOR } from "../SortingVisualizer/SortingVisualizer";
+  } from "../SortingVisualizer/SortingVisualizer";
 
 const ProgressBar = ({ comparisons, totalComparisons  }) => {
   const maxWidth = '100%';
