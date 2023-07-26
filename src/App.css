@@ -13,24 +13,11 @@
   --gradcolor2: #cd24ff;
   --gradcolor3: #4600a6;
   overflow-x: hidden;
+  background-color: #171717;
 }
 
 .hidden {
   display: none !important
-}
-
-.footerStyle {
-  background-color: #131313;
-  padding-bottom: 21px;
-  padding-top: 3px;
-  color: #ffffff;
-  text-align: center;
-  position: fixed;
-  left: 0%;
-  bottom: 0.5%;
-  height: 2%;
-  width: 100%;
-  font-size: 13px;
 }
 
 body {
@@ -39,7 +26,11 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  background-color: #1d1d1d;
+}
+
+buttonGroup::-webkit-scrollbar {
+  width: 1px; /* Change width of vertical scrollbar */
+  height: 1px; /* Change height of horizontal scrollbar */
 }
 
 li {
@@ -137,6 +128,7 @@ button[class*="btn"] {border: 1;}
 
 .arrayContainer {
   /* border: 2px solid white; */
+  background-color: #1d1d1d;
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -167,7 +159,6 @@ button[class*="btn"] {border: 1;}
   /* border: 2px solid blue; */
   color: white;
   font-size: 14px;
-  /* font-size: 1vw;  */
   margin-top: 0;
   width: 95%;
   height: 45%;
@@ -211,11 +202,10 @@ button[class*="btn"] {border: 1;}
 .explanation.about-us {
   flex-grow: 1;
   overflow: hidden; 
+  /* font-size: 2vw; */
   /* border: 2px solid purple; */
-  padding-top: 2vh; /* adjust this value as needed */
+  padding-top: 4vh; /* adjust this value as needed */
 }
-
-
 
 code {
   /* border: 2px solid red; */
@@ -256,7 +246,8 @@ code {
   display: flex;
   flex-wrap: wrap;
   padding: 9px; /* Adjust this value to fit your design */
-  width: calc(100% - 50px); /* Subtract double the padding from the width */
+  padding-right: 30px;
+  width: calc(100% - 60px); /* Subtract double the padding from the width */
   height: 100%;
   font-size: 17px;
   overflow-x: auto;
@@ -304,7 +295,6 @@ code {
   overflow-x: auto;
   overflow-y: hidden;
 }
-
 
 .cta.img {
   margin-right: 2%; 
@@ -433,8 +423,25 @@ button:hover {
 }
 
 .cta-image {
+  position: relative;
+  z-index: 2;
   height: 30px;
   width: 30px;
+}
+
+.footerStyle {
+  background-color: #131313;
+  padding-bottom: 25px;
+  padding-top: 5px;
+  color: #ffffff;
+  text-align: center;
+  left: 0%;
+  bottom: 0%;
+  height: 2%;
+  width: 100%;
+  font-size: 13px;
+  position: fixed;
+  z-index: 1;
 }
 
 .wrapper.buttons {
@@ -464,8 +471,11 @@ button:hover {
     }
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1350px) {
   .cta.sorting {
     font-size: 15px;
+  }
+  .explanation.about-us {
+    padding-top: 1vh; /* adjust this value as needed */
   }
 }
