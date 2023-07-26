@@ -178,7 +178,8 @@ button[class*="btn"] {border: 1;}
 
 .description.intro {
   /* border: 2px solid blue; */
-  height: 84%;
+  height: 100%;
+  max-height: 100%;
 }
 
 .actualCode {
@@ -208,12 +209,13 @@ button[class*="btn"] {border: 1;}
 }
 
 .explanation.about-us {
-  height: 10%;
-  margin-top: 2%;
   flex-grow: 1;
   overflow: hidden; 
   /* border: 2px solid purple; */
+  padding-top: 2vh; /* adjust this value as needed */
 }
+
+
 
 code {
   /* border: 2px solid red; */
@@ -305,7 +307,8 @@ code {
 
 
 .cta.img {
-  margin-right: 1%; 
+  margin-right: 2%; 
+  margin-bottom: 1%;
   padding: 5px 6px 6px 7px;
   transform: skewX(0deg);
   border-radius: 25%;
@@ -434,14 +437,20 @@ button:hover {
   width: 30px;
 }
 
-.wrapper {
+.wrapper.buttons {
   display: flex;
   justify-content: start; /* align items to the start */
   align-items: center; /* center items vertically */
   width: 100%;
 }
 
-/* SVG animations */
+.wrapper.noButtons {
+  /* border: 2px solid blue; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+}
 
 @keyframes color_anim {
     0% {

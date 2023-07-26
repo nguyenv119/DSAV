@@ -55,7 +55,7 @@ export default class SortingVisualizer extends React.Component {
             codeVisualizer: {
                 "none": {
                     about: [
-                        <h6><strong>Data Structure & Algorithm Visualizer</strong></h6>,
+                        <h5><strong>Data Structure & Algorithm Visualizer</strong></h5>,
                         <br />,
                         <p> This is DSAV. We're all about helping you learn
                             a little easier. We've got
@@ -486,7 +486,7 @@ export default class SortingVisualizer extends React.Component {
                     <div class="buttons">
                         <div className="buttonContainer">
                             <div className="buttonGroup">
-                                <div class="wrapper">
+                                <div class="wrapper buttons">
                                     <button className={`cta sorting`}
                                         onClick={() => {
                                             this.makeArray();
@@ -603,8 +603,8 @@ export default class SortingVisualizer extends React.Component {
 
                     {/* if we are at the start page, the explanation section is smaller */}
                     <div className={`explanation${activeAlgorithmKey === "none" ? ' about-us' : ''}`}>
-                        <h6 className={`${activeAlgorithmKey !== "none" ? 'hidden' : ''}`}><strong>Reach out and Contribute!</strong></h6>
-                        <div class="wrapper">
+                        <h5 className={`${activeAlgorithmKey !== "none" ? 'hidden' : ''}`}><strong>Reach out and Contribute!</strong></h5>
+                        <div class="wrapper noButtons">
                             {/* If we are in the sorting algorithms, we don't show the social media */}
                             <a className={`cta img ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://github.com/nguyenv119/DSAV" target="_blank">
                                 <img className="cta-image" src="/github-icon.png" alt="Github"></img>
