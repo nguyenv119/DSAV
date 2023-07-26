@@ -63,7 +63,7 @@ export default class SortingVisualizer extends React.Component {
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 0,
+            activeAlgorithm: 4,
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
 
             /*
@@ -120,8 +120,8 @@ export default class SortingVisualizer extends React.Component {
           if (k != j) {
               swap(A[i], A[k])
           }
-        }
     }
+}
 `}
     </code>
 </pre>
@@ -131,13 +131,78 @@ export default class SortingVisualizer extends React.Component {
                     about: [
                         insertionDescription()
                     ],
-                    code: "",
+                    code: [
+<pre style={{ fontSize: "12px" }}>
+    <code>
+{`Insertion-Sort(A, n) {
+    for j ← 1 to n - 1 {
+          k ← A[j]
+          i ← j - 1
+          while (i >= 0) and (A[i] > key) {
+            A[i + 1] ← A[i]
+            i ← i - 1
+          }
+          A[i + 1] ← key
+    }
+}
+`}
+    </code>
+</pre>
+                    ],
                 },
                 "mergeSort": {
                     about: [
                         mergeDescription()
                     ],
-                    code: "",
+                    code: [
+<pre style={{ fontSize: "12px" }}>
+    <code>
+{`Merge-Sort(A, left, right) {
+    if left < right {
+        mid ← ⌊(left + right)/2⌋
+        Merge-Sort(A, left, mid)
+        Merge-Sort(A, mid + 1, right)
+        merge(A, left, mid, right)
+    }
+}
+
+merge(A, left, mid, right) {
+// Determine where to split A
+    split1 ← mid - left + 1
+    split2 ← right - mid
+
+    Create arrays L[0...split1] and R[0...split2] 
+
+// Transfer elements from A to L and R
+    for (i ← 0 to split1 - 1 do) {
+        L[i] ← A[left + i - 1] 
+    }
+    for (j ← 0 to split2 - 1 do) {
+        R[j] ← A[mid + j] 
+    }
+// Avoid checking if subarrays are fully copied
+    L[split1] ← ∞
+    R[split2] ← ∞
+
+    LIdx ← 0
+    RIdx ← 0
+
+// Compare L and R elements and merge into A
+    for (mainIdx ← left to right) {
+        if L[LIdx] ≤ R[RIdx] {
+            A[mainIdx] ← L[LIdx]
+            LIdx ← LIdx + 1 
+        } 
+        else {
+            A[mainIdx] ← R[RIdx] 
+            RIdx ← RIdx + 1
+        }
+    }
+}
+`}
+    </code>
+</pre>
+               ],
                 },
                 "heapSort": {
                     about: [
