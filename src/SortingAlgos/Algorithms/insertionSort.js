@@ -1,8 +1,8 @@
-import {resetAllBarColors, greenify} from "./CommonMethods/commonMethods";
+import {resetAllBarColors, greenify} from "../CommonMethods/commonMethods";
 import {    PRIMARY_COLOR,
             SECONDARY_COLOR,
             SAMESIZE_COLOR,
-            DONE_COLOR } from "../SortingVisualizer/SortingVisualizer";
+            DONE_COLOR } from "../../SortingVisualizer/SortingVisualizer";
 
 const SMALLER_COLOR = "#50af50";
 const LARGER_COLOR = "#f44336";

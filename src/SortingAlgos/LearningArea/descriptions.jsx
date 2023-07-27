@@ -51,7 +51,7 @@ export const selectionDescription = () => (
     <>
         <p>
             <h5><strong>Selection Sort:</strong></h5>
-            This simple algorithm repeatedly <i>selects</i> the smallest element from the unsorted segment of the list, 
+            This algorithm repeatedly <i>selects</i> the smallest element from the unsorted segment of the list, 
             and then swaps it with the first unsorted item. <br />
         </p>
         <h6><strong>Time Complexity:</strong></h6>
@@ -114,8 +114,8 @@ export const mergeDescription = () => (
             </li>
         </ul>
         <h6><strong>Space Complexity:</strong></h6>
-        <p>O(n) — Merge Sort is not an in-place algorithm
-            and requires extra space: our auxiliary array is of
+        <p>O(n) — This is not in-place,
+            and requires extra space: the auxiliary array of
             n elements.</p>
     </>
 );

@@ -1,11 +1,11 @@
-import {resetAllBarColors, greenify} from "./CommonMethods/commonMethods";
+import {resetAllBarColors, greenify} from "../CommonMethods/commonMethods";
 import {    PRIMARY_COLOR,
             SECONDARY_COLOR,
             LARGER_COLOR,
             SMALLER_COLOR,
             SAMESIZE_COLOR,
             DONE_COLOR
-        } from "../SortingVisualizer/SortingVisualizer";
+        } from "../../SortingVisualizer/SortingVisualizer";
 
 const GOOD_COLOR = "#9706ff";
 

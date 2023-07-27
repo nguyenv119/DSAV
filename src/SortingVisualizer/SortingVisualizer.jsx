@@ -10,19 +10,19 @@ import {
          mergeDescription,
          heapDescription } from "../SortingAlgos/LearningArea/descriptions";    
 import {
-         bubbleSortCode,
-         selectionSortCode,
-         insertionSortCode,
-         mergeSortCode,
-         heapSortCode } from "../SortingAlgos/LearningArea/code";    
+         bubbleSortCodeComment,
+         selectionSortCodeComment,
+         insertionSortCodeComment,
+         mergeSortCodeComment,
+         heapSortCodeComment } from "../SortingAlgos/LearningArea/code";    
 
 /*
 ? Importing the actual sorting algos */
-import { mergeSortExp } from "../SortingAlgos/mergeSort"
-import { bubbleSortExp } from "../SortingAlgos/bubbleSort"
-import { selectionSortExp } from "../SortingAlgos/selectionSort"
-import { insertionSortExp } from "../SortingAlgos/insertionSort"
-import { heapSortExp } from "../SortingAlgos/heapSort"
+import { bubbleSortExp } from "../SortingAlgos/Algorithms/bubbleSort"
+import { selectionSortExp } from "../SortingAlgos/Algorithms/selectionSort"
+import { insertionSortExp } from "../SortingAlgos/Algorithms/insertionSort"
+import { mergeSortExp } from "../SortingAlgos/Algorithms/mergeSort"
+import { heapSortExp } from "../SortingAlgos/Algorithms/heapSort"
 import 'bootstrap/dist/css/bootstrap.css';
 
 /*
@@ -30,7 +30,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import ProgressBar from './ProgressBar';
 import { left } from "@popperjs/core";
 
-const MINVAL = 5;
+const MINVAL = 10;
 const MAXVAL = 620;
 export const GREEN_SPEED = 7;
 export const SMALLER_COLOR = "#ea2c1e";
@@ -84,23 +84,23 @@ export default class SortingVisualizer extends React.Component {
                     /*
                     ? Renders an array of JSX components */
                     about: [ bubbleDescription() ],
-                    code: [ bubbleSortCode() ]
+                    code: [ bubbleSortCodeComment() ]
                 },
                 "selectionSort": {
                     about: [ selectionDescription() ],
-                    code: [ selectionSortCode() ]
+                    code: [ selectionSortCodeComment() ]
                 },
                 "insertionSort": {
                     about: [ insertionDescription() ],
-                    code: [ insertionSortCode() ]
+                    code: [ insertionSortCodeComment() ]
                 },
                 "mergeSort": {
                     about: [ mergeDescription() ],
-                    code: [ mergeSortCode() ]
+                    code: [ mergeSortCodeComment() ]
                 },
                 "heapSort": {
                     about: [ heapDescription() ],
-                    code: [ heapSortCode() ]
+                    code: [ heapSortCodeComment() ]
                 },
             }
         };
