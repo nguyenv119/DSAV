@@ -75,21 +75,20 @@ export const insertionDescription = () => (
     <>
         <p>
             <h5><strong>Insertion Sort:</strong></h5>
-            Each iteration removes one element from
+            Each iteration removes elements from
             the unsorted array, finds the location it belongs
             within the sorted part, and inserts it there. <br /><br />
             <h6><strong>Time Complexity:</strong></h6>
         </p>
         <ul>
-            <li> Best Case: Ω(n) — a sorted list:
-                the algorithm only passes through the list 
-                once, n times for n elements.
+            <li> Best Case: Ω(n) — a sorted list: each element is
+                already in its correct spot. The algorithm only passes the list 
+                n times for n elements, and sees no swaps.
             </li>
             <li> Average-case: θ(n<sup>2</sup>) — the algorithm makes quadratic number of comparisons.
             </li>
-            <li> Worst-case: θ(n<sup>2</sup>) — The list is in reverse order, the
-                algorithm makes a quadratic
-                number of comparisons.
+            <li> Worst-case: θ(n<sup>2</sup>) — The list is in reverse order: going through
+            the list and swapping each consecutive element 1, 2...n - 1, n times: a quadratic number of comparisons.
             </li>
         </ul>
         <h6><strong>Space Complexity:</strong></h6>
@@ -98,27 +97,26 @@ export const insertionDescription = () => (
 );
 
 export const mergeDescription = () => (
-    <>
+    <div style={{ lineHeight: "1.2" }}>
         <p>
             <h5><strong>Merge Sort:</strong></h5>
             A divide and conquer algorithm that divides the
-            input array into two halves, sorts them and then merges the two sorted halves. <br /><br />
-            <h6><strong>Time Complexity:</strong></h6>
+            input array into two halves, sorts them and then merges the two sorted halves.
         </p>
-        <ul>
-            <li> All Cases: Ω(nlog(n))</li>
-            <li>
-                In every scenario, the list
+        <h6 style={{ marginBottom: "0.5em" }}><strong>Time Complexity:</strong></h6>
+        <ul style={{ marginTop: "0.5em" }}>
+            <li>All Cases: θ(nlog(n)) — the list
                 performs a linearaithmic number of
                 operations
             </li>
         </ul>
         <h6><strong>Space Complexity:</strong></h6>
-        <p>O(n) — This is not in-place,
-            and requires extra space: the auxiliary array of
+        <p>θ(n) — Requires extra space: auxiliary array of
             n elements.</p>
-    </>
+    </div>
 );
+
+
 
 export const heapDescription = () => (
     <>

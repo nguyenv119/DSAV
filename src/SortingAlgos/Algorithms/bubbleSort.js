@@ -13,11 +13,11 @@ const GOOD_COLOR = "#9706ff";
 ? The bubbleSort function we are exporting with the animation array */
 export function bubbleSortExp(array, 
                               arrayBars, 
-                              highlightLine,
                               getSpeedCallback, 
                               comparisons, 
                               updateComparisons,
-                              isPausedCallback) {
+                              isPausedCallback,
+                              updateHighlight) {
 
     return new Promise((resolve) => {
         resetAllBarColors(arrayBars, PRIMARY_COLOR);        
@@ -26,7 +26,7 @@ export function bubbleSortExp(array,
         ? We need to pass in () => resolve(arr) to
         ? 1. The parameter of arr lets the promise know what to return, the actual sorted array
         ? 2. The callback function requires for the "animate" function to be completed before returning. If we removed the "() =>" JS asynchronous nature would return it immedientally */
-        animate(lines, 0, highlightLine, animations, arrayBars, 0, array.length - 1, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, () => resolve(arr));
+        animate(lines, 0, animations, arrayBars, 0, array.length - 1, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, () => resolve(arr));
     });
 }
 
@@ -58,20 +58,16 @@ function getBubbleSortArrays(arr) {
  * sorted parts green as we move along down
 */
 function bubbleSort(array, lines, animations) {
-    lines.push([5]);
     let didSwap = true;
-
-    lines.push([8]);
+    lines.push(["YES", 3]);
     let i = array.length;
-
-    lines.push([10]);
+    lines.push(["YES", 5]);
     while (didSwap && i > 0) {
-
-        lines.push([11]);
+        lines.push(["YES", 7]);
         didSwap = false;
-
-        lines.push([12]);
+        lines.push(["YES", 8]);
         for (let j = 0; j < i - 1; ++j) {
+            lines.push(["YES", 9]);
             /** 
             * Pass in 2 indices for bar comparison 
             * Since array[j]> array[j + 1], 1st index green 
@@ -84,25 +80,29 @@ function bubbleSort(array, lines, animations) {
             animations.push([j, j + 1])
             animations.push([array[j], array[j + 1]]);
             animations.push([]);
-            lines.push([15]); /** Stage 0 and 1, comparing indices */
             if (array[j] > array[j + 1]) {
+                lines.push(["YES", 11]); /** Stage 0 comparing indices */
+                lines.push(["YES", 11]) /** Stage 1 comparing values  */
 
-                lines.push([16, 18]); /** Stage 2, swapping*/
                 didSwap = true;
                 [array[j], array[j + 1]] = [array[j + 1], array[j]];
+                lines.push(["YES", 13, 14]); /** Stage 2, swapping*/
+            /** Stage 2: If its no switch, just keep highlighting the if statement*/
+            } else {
+                lines.push(["YES", 11]);
+                lines.push(["YES", 11]);
+                lines.push(["NO", 11]);
             }
         }
         i--;
     }
-    console.log(array);
-    console.log(lines);
 }
 
 /*
 ? Animates bubbleSort */
-function animate(lines,
+function animate(
+                lines,
                 linesIdx,
-                highlightLine,
                 animations, 
                 arrayBars, 
                 animationsIdx, 
@@ -110,39 +110,38 @@ function animate(lines,
                 getSpeedCallback, 
                 comparisons, 
                 updateComparisons, 
+                updateHighlight,
                 isPausedCallback,
                 resolveCallback) {
 
-    if (animationsIdx >= lines.length) {
-        /*
-        ? Resolves promise when animation is finished */
-        greenify(animationsIdx, lines, arrayBars);
-        resolveCallback(animations) 
-        return;
-    }    
     /*
     ! If we are paused, we keep calling it. Eventually, when it is unpaused, we will skip this if statement and go
     ! forward. Whenever we pause again, the parameters will be updated. */
     if (isPausedCallback()) {
         setTimeout(() => {
-            animate(lines, linesIdx, highlightLine, animations, arrayBars, animationsIdx, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback);
+            animate(lines, linesIdx, animations, arrayBars, animationsIdx, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback);
         }, 1);
         return;
     };
-
-    highlightLine([1]);
+    
+    if (linesIdx >= lines.length) {
+        /*
+        ? Resolves promise when animation is finished */
+        greenify(linesIdx, lines, arrayBars);
+        resolveCallback(animations) 
+        return;
+    }    
 
     let nextStepTimeout = 0;
     const stage = animationsIdx % 3;
-    const highlightedLine = lines[linesIdx][0];
-
+    const highlightedLine = lines[linesIdx];
     /** If we compare/swap, swap and then highlight line, or else just highlight line */
-    if (highlightedLine === 14 || highlightedLine === 15) {
+    if (highlightedLine.includes(11)) {
         if (stage === 0) {
             const [barOneIdx, barTwoIdx] = animations[animationsIdx];
             const barOneStyle = arrayBars[barOneIdx].style;
             const barTwoStyle = arrayBars[barTwoIdx].style;
-    
+
             barOneStyle.backgroundColor = SECONDARY_COLOR;
             barTwoStyle.backgroundColor = SECONDARY_COLOR;
             nextStepTimeout = getSpeedCallback(); 
@@ -150,11 +149,11 @@ function animate(lines,
         } else if (stage === 1) {
             const [indexJ, indexJ1] = animations[animationsIdx - 1];
             const [indexJVal, indexJ1Val] = animations[animationsIdx];
-    
+
             if (indexJVal === indexJ1Val) {
                 const barOneStyle = arrayBars[indexJ].style;
                 const barTwoStyle = arrayBars[indexJ1].style;
-    
+
                 barOneStyle.backgroundColor = SAMESIZE_COLOR;
                 barTwoStyle.backgroundColor = SAMESIZE_COLOR;
                 updateComparisons(comparisons + 1);
@@ -164,7 +163,7 @@ function animate(lines,
                 const largerBarIndex = (smallerBarIndex === indexJ) ? indexJ1 : indexJ;
                 const barOneStyle = arrayBars[smallerBarIndex].style;
                 const barTwoStyle = arrayBars[largerBarIndex].style;
-    
+
                 barOneStyle.backgroundColor = SMALLER_COLOR;
                 barTwoStyle.backgroundColor = LARGER_COLOR;
                 updateComparisons(comparisons + 1);
@@ -172,24 +171,15 @@ function animate(lines,
             }
             nextStepTimeout = getSpeedCallback(); 
             animationsIdx++;
+        /*
+        ? This is when both are purple or the same */
         } else {
             const [indexJ, indexJ1] = animations[animationsIdx - 2];
-            const [indexJVal, indexJ1Val] = animations[animationsIdx - 1];
             
-            const [smallerBarIndex, largerBarIndex] = indexJVal < indexJ1Val ? [indexJ, indexJ1] : [indexJ1, indexJ];
-            const barOneStyle = arrayBars[smallerBarIndex].style;
-            const barTwoStyle = arrayBars[largerBarIndex].style;
-            
-            const [smallerHeight, largerHeight] = indexJVal < indexJ1Val ? [indexJVal, indexJ1Val] : [indexJ1Val, indexJVal];        
-    
-            if (indexJVal > indexJ1Val) {
-                [barOneStyle.height, barTwoStyle.height] = [`${largerHeight}px`, `${smallerHeight}px`];
-                [barOneStyle.backgroundColor, barTwoStyle.backgroundColor] = [LARGER_COLOR, SMALLER_COLOR];
-            } else {
-                /*
-                ? No switching */
-                [barOneStyle.backgroundColor, barTwoStyle.backgroundColor] = [GOOD_COLOR, GOOD_COLOR];
-            }
+            const barOneStyle = arrayBars[indexJ].style;
+            const barTwoStyle = arrayBars[indexJ1].style;
+                
+            [barOneStyle.backgroundColor, barTwoStyle.backgroundColor] = [GOOD_COLOR, GOOD_COLOR];
             
             setTimeout(() => {
                 barOneStyle.backgroundColor = PRIMARY_COLOR;
@@ -199,12 +189,42 @@ function animate(lines,
                     toBeSortedIndex--;
                 }
             }, getSpeedCallback())
-            highlightLine(lines[linesIdx][1]);
+            nextStepTimeout = getSpeedCallback(); 
+            animationsIdx++;
+        }
+    
+    /*
+    ? Guaranteed switching */
+    } else if (highlightedLine.includes(13)) {
+        if (stage === 2) {
+            const [indexJ, indexJ1] = animations[animationsIdx - 2];
+            const [indexJVal, indexJ1Val] = animations[animationsIdx - 1];
+            
+            const [smallerBarIndex, largerBarIndex] = indexJVal < indexJ1Val ? [indexJ, indexJ1] : [indexJ1, indexJ];
+            const barOneStyle = arrayBars[smallerBarIndex].style;
+            const barTwoStyle = arrayBars[largerBarIndex].style;
+            
+            const [smallerHeight, largerHeight] = indexJVal < indexJ1Val ? [indexJVal, indexJ1Val] : [indexJ1Val, indexJVal];        
+    
+            [barOneStyle.height, barTwoStyle.height] = [`${largerHeight}px`, `${smallerHeight}px`];
+            [barOneStyle.backgroundColor, barTwoStyle.backgroundColor] = [LARGER_COLOR, SMALLER_COLOR];
+
+            
+            setTimeout(() => {
+                barOneStyle.backgroundColor = PRIMARY_COLOR;
+                barTwoStyle.backgroundColor = PRIMARY_COLOR;
+                if (indexJ1 === toBeSortedIndex) {
+                    arrayBars[indexJ1].style.backgroundColor = DONE_COLOR;
+                    toBeSortedIndex--;
+                }
+            }, getSpeedCallback())
             nextStepTimeout = getSpeedCallback(); 
             animationsIdx++;
         }
     }
-    // console.log(highlightedLine);
+
+    nextStepTimeout = getSpeedCallback(); 
+    updateHighlight(highlightedLine);
     linesIdx++;
-    setTimeout(() => animate(lines, linesIdx, highlightLine, animations, arrayBars, animationsIdx, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback), nextStepTimeout);
+    setTimeout(() => animate(lines, linesIdx, animations, arrayBars, animationsIdx, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback), nextStepTimeout);
 }

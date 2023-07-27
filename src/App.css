@@ -150,10 +150,12 @@ button[class*="btn"] {border: 1;}
   top: 0;
   right: 0;
   overflow: auto;
-  height: 96.5vh;
-  width: 20%; /* changed to original value, as per previous conversation */
+  height: 100vh;
+  width: 20%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  display: flex;
   margin-left: 1.5%;
   /* border: 2px solid red; */
 }
@@ -162,84 +164,130 @@ button[class*="btn"] {border: 1;}
   /* border: 2px solid red; */
   color: white;
   font-size: 12.5px;
-  width: 95%;
-  height: 48%;
-  max-height: 100%;
-  margin-left: 3.5%;
-  margin-top: 5%;
-  overflow: auto; /* Add scrollbars if content overflows */
+  width: 92%;
+  height: 47%;
+  max-height: 47%;
+  min-height: 5%; 
+  margin-left: 4%;
+  padding-top: 5%;
+  overflow: auto;
+  resize: vertical;
+  flex-grow: 0;
+  flex-shrink: 0; /* Prevents 'description' from shrinking if 'actualCode' needs more space */
 }
 
 .description.intro {
   /* border: 2px solid blue; */
   font-size: 14px;
-  height: 80%;
-  max-height: 80%;
+  height: 76%;
+  max-height: 76%;
+  min-height: 76%;
+  resize: none;
+}
+
+.description.insertion {
+  /* border: 2px solid blue; */
+  height: 56.5%;
+  max-height: 56.5%;
+  /* resize: vertical; */
 }
 
 .description.merge {
   /* border: 2px solid blue; */
-  font-size: 12.5px;
-  height: 63%;
-  max-height: 63%;
+  height: 30%; 
+  max-height: 30%; 
 }
 
 .description.heap {
   /* border: 2px solid blue; */
-  font-size: 12.5px;
-  height: 73%;
-  max-height: 73%;
+  height: 40.5%; 
+  max-height: 40.5%; 
 }
 
 .actualCode {
   border: 2px solid black;
-  background-color: rgb(25, 25, 25);
+  background-color: #1B1B1B;
   border-radius: 10px;
   width: 91.8%;
-  margin-top: 3%;
+  margin-top: -10%;
   margin-left: 3.5%;
   font-size: 12.5px;
   height: 43%;
-  overflow: auto;
+  max-height: calc(100vh - 56vh - 5vh);
+  min-height: 43%;
   padding-top: 3%;
+  resize: none;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: auto;
+  z-index: 0;
 }
 
 .actualCode.noCode {
-  /* border: 2px solid red; */
-  border: none;
-  height: 0%;
+  resize:none;
+  display: none;
+}
+
+.actualCode.insertion {
+  margin-top: -15%;
+  max-height: 33vh;
+  min-height: 33vh;
+  height: 33vh;
+  /* border: 2px solid purple; */
 }
 
 .actualCode.merge {
   /* border: 2px solid purple; */
-  padding-top: 0;
-  height: 90vh;
+  margin-top: 14%;
+  height: 0vh; /* set starting height */
+  max-height: 88vh; /* adjust as needed */
+  overflow: auto; /* enable scroll if content is larger */
+  position: relative;
+  transform: translateY(-6%);
 }
 
+.actualCode.heap {
+  /* border: 2px solid purple; */
+  margin-top: 15%;
+  height: 0vh; /* set starting height */
+  max-height: 78vh; /* adjust as needed */
+  overflow: auto; /* enable scroll if content is larger */
+  transform: translateY(-10%);
+}
+
+
 .explanation {
+  resize: none;
   text-align: center;
-  height: 7%;
+  position: static;
+  height: 5vh;
+  max-height: 5vh;
+  min-height: 5vh;
+  transform: translateY(-80%);
+  z-index: 0;
   width: 100%;
-  margin-left: 2.5%;
-  width: 95%;
   /* border: 2px solid purple; */
   overflow: auto;
+  flex-grow: 0;
+  flex-shrink: 0; 
 }
 
 .explanation.about-us {
+  height: 13vh;
+  max-height: 13vh;
+  min-height: 13vh;
+  transform: translateY(-30%);
   flex-grow: 1;
   overflow: hidden; 
   /* border: 2px solid purple; */
-  padding-top: 4vh; 
+  /* padding-top: 8vh;  */
 }
 
 .explanation.merge {
+/* position: static; */
   margin-top: 0vh; 
-  height: 12%;
-  /* border: 2px solid red; */
-}
-
-code {
+  flex-shrink: 0;
+  z-index: 0;
   /* border: 2px solid red; */
 }
 
@@ -462,9 +510,9 @@ button:hover {
 }
 
 .footerStyle {
-  background-color: #131313;
+  background-color: black;
   padding-bottom: 25px;
-  padding-top: 5px;
+  padding-top: 3px;
   color: #ffffff;
   text-align: center;
   left: 0%;
@@ -508,6 +556,14 @@ button:hover {
     font-size: 15px;
   }
   .explanation.about-us {
-    padding-top: 1vh; /* adjust this value as needed */
+    transform: translateY(-40%);
+  }
+}
+@media only screen and (max-width: 1200px) {
+  .explanation.about-us {
+    height: 16vh;
+    max-height: 16vh;
+    min-height: 16vh;
+    transform: translateY(-20%);
   }
 }
