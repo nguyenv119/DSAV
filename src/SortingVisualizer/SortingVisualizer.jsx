@@ -6,6 +6,7 @@ import { insertionSortExp } from "../SortingAlgos/insertionSort"
 import { heapSortExp } from "../SortingAlgos/heapSort"
 import 'bootstrap/dist/css/bootstrap.css';
 import ProgressBar from './ProgressBar';
+import { left } from "@popperjs/core";
 
 const MINVAL = 5;
 const MAXVAL = 620;
@@ -444,6 +445,8 @@ export default class SortingVisualizer extends React.Component {
 
         const activeAlgorithmKey = this.state.algorithmKeys[this.state.activeAlgorithm];
         const algorithm = this.state.codeVisualizer[activeAlgorithmKey];
+        
+        //Code for determining what formula to use when calculating worse case
         let totalComparisons;
         
         switch (activeSortingButton) {
@@ -459,7 +462,7 @@ export default class SortingVisualizer extends React.Component {
             default:
                 totalComparisons = 0;
         }
-        
+
         return (
             /* 
             ? Map = go through each num in array, extracting value and index and making it into a bar:
@@ -544,7 +547,7 @@ export default class SortingVisualizer extends React.Component {
                                 </div> */}
                             </div>
                         </div>
-                        <div className="settings">
+                        <div className="settings" style={{ height: '100%' ,top: '40px'}}>
                             <div className="scrollableRangeContainer">
                                 <label for="customRange3" className="form-label"></label>
                                 <div className="scrollableRange">
@@ -581,8 +584,13 @@ export default class SortingVisualizer extends React.Component {
                             <button className="btn-3d colorful regular length">
                                 Array Length
                             </button>
-                            <button className="btn-3d regular comparisons">
-                                Comparisions: {comparisons}
+                            <button
+                                className="btn-3d regular comparisons"
+                                style={{ fontSize: '16px', height: '60px', left: '-18px'}}
+                            >
+                                <span style={{ color: LARGER_COLOR }}>Current Case: {comparisons}</span>
+                                <br />
+                                <span style={{ color: SMALLER_COLOR  }}>Worse Case: {totalComparisons}</span>
                             </button>
                             <div className="btn-container">
                                 <button className={`btn-3d regular pp${activeButton === "pause" ? ' down' : ''}`}
