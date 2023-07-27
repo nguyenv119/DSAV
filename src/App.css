@@ -135,7 +135,7 @@ button[class*="btn"] {border: 1;}
   left: 0%;
   top: 0%;
   height: 100vh; /* This value should be 100vh to fill the entire viewport height */
-  border-right: solid 1.5px #0c0c0c;
+  border-right: solid 3px #0c0c0c;
   width: 80%;
 }
 
@@ -159,11 +159,10 @@ button[class*="btn"] {border: 1;}
   /* border: 2px solid red; */
   color: white;
   font-size: 12.5px;
-  margin-top: 0;
   width: 95%;
-  height: 61%;
+  height: 48%;
   max-height: 100%;
-  margin-left: 2.5%;
+  margin-left: 3.5%;
   margin-top: 5%;
   overflow: auto; /* Add scrollbars if content overflows */
 }
@@ -171,8 +170,8 @@ button[class*="btn"] {border: 1;}
 .description.intro {
   /* border: 2px solid blue; */
   font-size: 14px;
-  height: 100%;
-  max-height: 100%;
+  height: 80%;
+  max-height: 80%;
 }
 
 .description.merge {
@@ -190,30 +189,32 @@ button[class*="btn"] {border: 1;}
 }
 
 .actualCode {
-  /* border: 2px solid blue; */
-  width: 95%;
-  margin-left: 2.5%;
-  color: white;
+  border: 2px solid black;
+  background-color: rgb(25, 25, 25);
+  border-radius: 10px;
+  width: 91.8%;
+  margin-top: 3%;
+  margin-left: 3.5%;
   font-size: 12.5px;
-  height: 31.5%;
+  height: 43%;
   overflow-y: auto;
 }
 
 .actualCode.noCode {
   /* border: 2px solid red; */
+  border: none;
   height: 0%;
 }
 
 .actualCode.merge {
   /* border: 2px solid purple; */
-  padding-top: 3.5vh;
-  height: 85vh;
+  padding-top: 0;
+  height: 90vh;
 }
 
 .explanation {
   text-align: center;
-  margin-top: 3%;
-  height: 21%;
+  height: 7%;
   width: 100%;
   margin-left: 2.5%;
   width: 95%;
@@ -247,7 +248,7 @@ code {
   top: 1%;
   left: 1%;
   height: 75%; /* This value should be 80% to fill 80% of the arrayContainer div */
-  width: 98.2%; /* Add width of 100% to fill the entire parent div */
+  width: 98%; /* Add width of 100% to fill the entire parent div */
 }
 
 .arrayBar {

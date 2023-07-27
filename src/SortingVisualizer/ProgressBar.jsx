@@ -19,7 +19,8 @@ const ProgressBar = ({ comparisons, totalComparisons  }) => {
   
   const backgroundStyle = {
     width: maxWidth,
-    height: '15px',
+    height: '10px',
+    borderRadius: '0',
     backgroundColor: SMALLER_COLOR,
     position: 'relative',
     top: 0,
