@@ -1,12 +1,11 @@
 import React from 'react';
-import {    PRIMARY_COLOR,
-  SECONDARY_COLOR,
+import {
   LARGER_COLOR,
   SMALLER_COLOR,
-  DONE_COLOR } from "../SortingVisualizer/SortingVisualizer";
+  } from "../SortingVisualizer/SortingVisualizer";
 
 const ProgressBar = ({ comparisons, totalComparisons  }) => {
-  const maxWidth = '98.2%';
+  const maxWidth = '100%';
   const progressWidth = `${(comparisons / totalComparisons) * parseFloat(maxWidth)}%`;
 
   const progressBarStyle = {
@@ -24,23 +23,31 @@ const ProgressBar = ({ comparisons, totalComparisons  }) => {
     backgroundColor: SMALLER_COLOR,
     position: 'relative',
     top: -15,
-    left: 12,
+    left: 0,
   };
   
   const labelStyle = {
     position: 'relative',
-    top: 0,
+    top: 25,
     left: 10,
     fontSize: '16px',
+    color: LARGER_COLOR,
+
+  };
+
+  const spanGreen = {
+    color: SMALLER_COLOR,
+  };
+
+  const spanWhite = {
     color: 'white',
   };
 
   return (
     <div>
-      <div style={labelStyle}>
-        {/* Estimated Progress */}
-        <br />
-        {/* Current Case: {comparisons} - Worse Case: {totalComparisons} */}
+      <div style={labelStyle}> Current Case: {comparisons} 
+        <span style={spanWhite}> ---</span>
+        <span style={spanGreen}> Worse Case: {totalComparisons} </span> 
       </div>
 
       <div className="progress" style={backgroundStyle}>
