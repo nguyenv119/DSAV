@@ -22,7 +22,7 @@ const ProgressBar = ({ comparisons, totalComparisons  }) => {
     height: '15px',
     backgroundColor: SMALLER_COLOR,
     position: 'relative',
-    top: -15,
+    top: 0,
     left: 0,
   };
   
@@ -45,10 +45,10 @@ const ProgressBar = ({ comparisons, totalComparisons  }) => {
 
   return (
     <div>
-      <div style={labelStyle}> Current Case: {comparisons} 
+      {/* <div style={labelStyle}> Current Case: {comparisons} 
         <span style={spanWhite}> ---</span>
         <span style={spanGreen}> Worse Case: {totalComparisons} </span> 
-      </div>
+      </div> */}
 
       <div className="progress" style={backgroundStyle}>
         <div
