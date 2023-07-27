@@ -258,7 +258,7 @@ code {
 
 .buttons {
   left: 20px; /* adjust as needed */
-  top: -1.5%;
+  top: 0%;
   width: calc(100% - 40px); /* subtract the total left and right margins */
   height: 13%;
   position: relative;
@@ -269,7 +269,6 @@ code {
 .buttonGroup {
   /* border: 2px solid red; */
   margin-left: 0;
-  margin-top: -0.5%;
   display: flex;
   flex-wrap: wrap;
   padding: 9px; /* Adjust this value to fit your design */
@@ -312,10 +311,9 @@ code {
   display: flex;
   flex-wrap: nowrap;  
   align-items: center;
-  position: absolute;
+  position: relative;
   width: calc(100% - 90px); /* subtract the total left and right margins */
-  height: 5vh;
-  bottom: -3%;  /* adjust as needed */
+  bottom: -10%;  /* adjust as needed */
   left: 60px;  /* adjust as needed */
   font-size: 17px;
   /* border: 2px solid purple; */

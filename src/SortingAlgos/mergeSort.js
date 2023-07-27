@@ -192,3 +192,59 @@ function animate(animations, arrayBars, completedAnimations, getSpeedCallback, c
     }
     setTimeout(() => animate(animations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback), nextStepTimeout);
 }
+
+//Worse Case Calculation Errors
+    /*
+        | Current Case | Worse Case | Error |
+        |--------------|------------|-------|
+        | 12           | 12         | 0     |
+        | 24           | 24         | 0     |
+        | 34           | 33         | 1     |
+        | 44           | 43         | 1     |
+        | 64           | 64         | 0     |
+        | 118          | 116        | 2     |
+        | 148          | 147        | 1     |
+        | 286          | 282        | 4     |
+        | 512          | 506        | 6     |
+        | 672          | 664        | 8     |
+        | 832          | 829        | 3     |
+        | 1094         | 1084       | 10    |
+        | 1364         | 1349       | 15    |
+        | 1544         | 1529       | 15    |
+        | 1904         | 1898       | 6     |
+        | 2488         | 2469       | 19    |
+
+        ***Zach's Thinking***
+        Seems to be linear relationship between size of the array and error size. This leads me to believe this might have something to
+        do with rounding. Lets say somewhere in the merge sort algo we round from 0.99 -> 1. Initally this isnt a big deal as 1.1 will
+        round down to 1 as an int. However, if we compound this 10 -> 100 -> 1000 -> etc  the error will grow bigger and bigger in a 
+        linear fashion. There are some flaws in this theory because we see some outiers to my thinking such as 832 829 3. We would 
+        expect the error to be larger than the previous one if it was truly compounding but it is less so it makes me reconsider my
+        hypothesis.
+
+        ***Chat GPT***
+        Input Data Characteristics:
+            The worst-case scenario for merge sort occurs when the input data is in the reverse order. In such cases, the algorithm 
+            performs the maximum number of comparisons. However, in real-world data or random data, the input might have certain 
+            characteristics that make it easier to sort. For example, if the input data is partially sorted or has some patterns, merge 
+            sort may perform better than the worst-case scenario.
+
+        Merge Sort Implementation:
+            The number of comparisons made during merge sort can vary based on the specific implementation. Different implementations 
+            might have slightly different comparison patterns, leading to variations in the number of comparisons for a given input.
+
+        Overhead from Animation:
+            It appears that the provided merge sort implementation also includes code for animation and visualization. The additional 
+            operations required for visualization might cause some variations in the number of comparisons, especially for smaller input 
+            sizes, as the animation overhead could be relatively more significant for smaller arrays.
+
+        Precision and Rounding Errors:
+            The error values (current case - worst case) are relatively small, and some of them are in single digits. It's possible that
+            some of these differences could be due to precision errors or rounding issues, especially if the comparison count is being 
+            tracked with floating-point numbers or if there's some small variation in the implementation.
+
+        Small Sample Size:
+            The dataset provided has a limited number of data points. With a small sample size, the observations might not fully 
+            represent the overall trend, and occasional variations may occur due to random fluctuations.
+        
+    */
