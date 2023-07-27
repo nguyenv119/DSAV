@@ -30,11 +30,10 @@ import ProgressBar from './ProgressBar';
 import { left } from "@popperjs/core";
 
 const MINVAL = 10;
-const MAXVAL = 620;
+const MAXVAL = 645;
 const SPEED_THRESHOLD = 6;
 
 export const PRIMARY_COLOR = '#3a85ffb2';
-export const SUPER_PRIMARY_COLOR = '#3A86FF';
 export const SECONDARY_COLOR = '#FB5607';
 export const GREEN_SPEED = 7;
 export const SMALLER_COLOR = "#ea2c1e";
@@ -223,9 +222,7 @@ export default class SortingVisualizer extends React.Component {
         let length = this.determineBars();
 
         for (let i = 0; i < length; i++) {
-            if (this.state.activeAlgorithm === 4) {
-                array.push(randomIntFrom(MINVAL, MAXVAL / 2));
-            } else array.push(randomIntFrom(MINVAL, MAXVAL));
+            array.push(randomIntFrom(MINVAL, MAXVAL));
         }
 
         /* 
@@ -242,16 +239,6 @@ export default class SortingVisualizer extends React.Component {
                 TODO: To make the bars fill the screen, might have to change later */
                 arrayBars[i].style.width = `${5000 / length}px`;
                 arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
-            }
-
-            if (this.state.activeAlgorithm === 4) {
-                const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
-                for (let i = 0; i < arrayBarsUp.length; i++) {
-                    /*
-                    TODO: To make the bars fill the screen, might have to change later */
-                    arrayBarsUp[i].style.width = `${5000 / length}px`;
-                    arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
-                }
             }
         });
     }
@@ -325,8 +312,7 @@ export default class SortingVisualizer extends React.Component {
                 algorithmKeys,
                 codeVisualizer,
                 activeAlgorithm,
-                highlightedLine
-              } = this.state;
+                highlightedLine } = this.state;
 
         /*
         ! Determine codeArea rendering */
@@ -387,10 +373,10 @@ export default class SortingVisualizer extends React.Component {
             */
             <div>
                 <div className="arrayContainer">
-                <div className={`arrayBarsUp ${activeAlgorithmKey === "mergeSort" ? '' : ' hidden'}`}>
+                    <div className="arrayBars">
                         {array.map((value, index) => (
                             <div
-                                className="arrayBarUp hidden"
+                                className="arrayBar"
                                 key={index}
                                 style={{
                                     backgroundColor: PRIMARY_COLOR,
@@ -398,20 +384,6 @@ export default class SortingVisualizer extends React.Component {
                                 }}
                             ></div>
                             ))}
-                    </div>
-                    <div 
-                        className="arrayBars"
-                        style={{height: activeAlgorithmKey === "mergeSort" ? '39%' : '77%'}}>
-                            {array.map((value, index) => (
-                                <div
-                                    className="arrayBar"
-                                    key={index}
-                                    style={{
-                                        backgroundColor: PRIMARY_COLOR,
-                                        height: `${value}px`
-                                    }}
-                                ></div>
-                                ))}
                     </div>
                     <ProgressBar comparisons={comparisons} totalComparisons={totalComparisons} />
                     <div class="buttons">

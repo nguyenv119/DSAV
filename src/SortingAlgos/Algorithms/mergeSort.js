@@ -1,6 +1,5 @@
 import {resetAllBarColors, greenify} from "../CommonMethods/commonMethods";
 import {    PRIMARY_COLOR,
-            SUPER_PRIMARY_COLOR,
             SECONDARY_COLOR,
             LARGER_COLOR,
             SMALLER_COLOR,
@@ -81,7 +80,7 @@ function mergeSort(array, l, r, copy, lines, animations) {
 
     function merge(mainArr, l, m, r, copy, lines, animations) {
         if (mainArr == null) return null;
-        animations.push(["PART", l, r]); /* Highlight all from l to r SUPER_PRIMARY */
+        animations.push(["PART", l, r]); /* Highlight all from l to r SECONDARY */
         let index = l;
         let i = l; 
         let j = m + 1;
@@ -89,8 +88,8 @@ function mergeSort(array, l, r, copy, lines, animations) {
         lines.push(["YES", 17]);
         lines.push(["YES", 18]);
         lines.push(["YES", 19]);
-        lines.push(["YES", 20, 24]); /* Copy arrayBars to arrayBarsUp halfway up the screen. Set heights of actual to 0px */
-        animations.push(["SPLIT", l, m, r]); /* array[m] margin right */
+        lines.push(["YES", 20, 24]); /* Split the subarrays based on margin */
+        animations.push(["SPLIT", l, m, r]); /* array[l] margin left, array[m] margin right, array[r] margin right */
         lines.push(["YES", 29]);
         lines.push(["YES", 30]);
     
@@ -98,11 +97,10 @@ function mergeSort(array, l, r, copy, lines, animations) {
             /** When we compare two indices, we will
              * change the color of the bars to another color. */
             lines.push(["YES", 32]);
-            animations.push([i, j]);  /* Stage 0: compare bars */
+            animations.push([i, j]);    
             if (copy[i] <= copy[j]) {
-                lines.push(["YES", 33]); 
-                lines.push(["YES", 33]); 
-                lines.push(["YES", 34]); 
+                lines.push(["YES", 33]); /* */
+                lines.push(["YES", 34]);
                 lines.push(["YES", 35]);
                 /** We have guaranteed that the i'th element
                  * is smaller than the j'th. Therefore we are
@@ -120,12 +118,11 @@ function mergeSort(array, l, r, copy, lines, animations) {
                  * readded
                  * 
                  */
-                animations.push([i, j]); /* Stage 1: compare values */
-                animations.push([index, copy[i]]); /* Stage 2: put values back, and pink */
+                animations.push([i, j]);
+                animations.push([index, copy[i]]);
                 mainArr[index++] = copy[i++];
             }
             else {
-                lines.push(["YES", 36]);
                 lines.push(["YES", 36]);
                 lines.push(["YES", 37]);
                 lines.push(["YES", 38]);
@@ -138,7 +135,6 @@ function mergeSort(array, l, r, copy, lines, animations) {
     
         while (i <= m) {
             lines.push(["YES", 33]);
-            lines.push(["YES", 33]);
             lines.push(["YES", 34]);
             lines.push(["YES", 35]);
 
@@ -149,7 +145,6 @@ function mergeSort(array, l, r, copy, lines, animations) {
         }
         while (j <= r) {
             lines.push(["YES", 36]);
-            lines.push(["YES", 36]);
             lines.push(["YES", 37]);
             lines.push(["YES", 38]);
 
@@ -158,7 +153,7 @@ function mergeSort(array, l, r, copy, lines, animations) {
             animations.push([index, copy[j]])
             mainArr[index++] = copy[j++];
         }
-        lines.push(["NO", 32]) /* if this specific line, turn back to primary */
+        lines.push(["NO", 32]);
     }
 }
 
@@ -189,7 +184,7 @@ function animate(lines, linesIdx, animations, arrayBars, animationsIdx, getSpeed
 
         barOneStyle.backgroundColor = SECONDARY_COLOR;
         barTwoStyle.backgroundColor = SECONDARY_COLOR;
-        animationsIdx++;
+        animationsIdx ++;
 
         /*
         ? We have to use the latest speed changed in the animation due to some delay */
