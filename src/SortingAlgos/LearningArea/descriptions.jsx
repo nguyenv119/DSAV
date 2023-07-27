@@ -24,10 +24,8 @@ export const bubbleDescription = () => (
     <>
         <p>
             <h5><strong>Bubble Sort:</strong></h5>
-            A straightforward sorting algorithm that 
-            repeatedly compares adjacent elements in a list 
-            and swaps them if they are in the wrong order. 
-            This process continues until the list is sorted.<br /><br />
+            Algorithm that repeatedly compares adjacent elements
+            and swaps them if they are in the wrong order until the list is sorted.<br /><br />
             <h6><strong>Time Complexity:</strong></h6>
         </p>
         <ul>
