@@ -1,22 +1,19 @@
 import '../../Styles/App.css';
 export const introDescription = () => (
     <>
-        <h5><strong>Data Structure & Algorithm Visualizer</strong></h5>
+        <h5 style={{ textAlign: "left", margin: "5% 0 0 0"}}><strong>Data Structure & Algorithm Visualizer</strong></h5>
         <br />
-        <p> This is DSAV. We're all about helping you learn
-            a little easier. We've got
-            you covered with cool animations to visualize what actually
-            going on behind the algorithms you learn.
+            <p style={{margin: "1% 0 0 0"}}> 
+                Hey there! Are you struggling to understand concepts in class? <br /><br />
+                I'm Long Nguyen '26 studying CS & Applied Math, and I've got
+                you with cool visualizations of whats actually
+                going on behind these algorithms.
 
-            <br /><br />Learn at your own pace with the tools below. Play, pause,
-            change the speed, length...etc
-
-            <br /><br />We've got plans to add more data
-            structures for you to visualize:
-        </p>
-        <li> Arrays, Stacks, Queues, Linked Lists</li>
-        <li> Trees, Heaps, Graphs </li> <br />
-        <p> So, stay updated, and we'll keep you covered!</p>
+                <br /><br /><li>play/pause, change speed, length...etc</li>
+                <br />I've got plans to add more data
+                structures and concepts to help you to understand better.
+                Reach out to me — we'll get a cookie from Einsteins (on you)!
+            </p>
     </>
 );
 

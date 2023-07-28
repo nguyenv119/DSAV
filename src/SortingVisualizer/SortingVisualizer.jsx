@@ -304,13 +304,8 @@ export default class SortingVisualizer extends React.Component {
         }));
     }
 
-
     /* Updated handleReset */
     handleReset = () => {
-        // if (this.state.sortingInProgress) {
-        //     this.handlePause();
-        // }
-
         /* Reset styles */
         const arrayBars = document.getElementsByClassName("arrayBar");
         const array = this.state.array;
@@ -322,39 +317,7 @@ export default class SortingVisualizer extends React.Component {
             arrayBars[i].style.height = `${array[i]}px`;
             arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
         }
-
-        /* Generate new array */
-        // console.log(this.state.tArray)
-        
-        /* Reset remaining state */
-        // this.setState({
-        //     array: this.state.tArray,
-        //     comparisons: 0,
-        //     sortingAlgorithm: null,
-        //     isSorting: false,
-        //     buttonsDisabled: false,
-        //     sortingInProgress: false,
-        //     isPaused: true
-        // });
     }
-
-    /*
-        //Stops the Sorting
-        stopSorting = () => {
-            // Clear timeouts
-            clearTimeout(this.state.sortingTimeout);
-
-            // Reject any promises
-            if (this.currentSortPromise) {
-                this.currentSortPromise.cancel();
-            }
-                
-            // Cleanup
-            cancelAnimationFrame(this.animationFrame);
-        }
-    */
-    
-
     /* 
     ? Updates the number of bars and their width */
     handleBarsChange = (e) => {
@@ -568,23 +531,7 @@ export default class SortingVisualizer extends React.Component {
                                         }}
                                         disabled={sortingInProgress}><span>Heap Sort</span><div class="back"></div>
                                     </button>
-                                    
-                                    {/* Reset Button */}
-                                    {/* <button 
-                                        className="button _1"
-                                        onClick={this.handleReset}
-                                    >
-                                        Reset
-                                    </button> */}
                                 </div>
-                                {/* <div className="btn-container">
-                                    <button className={`btn-3d regular${activeSortingButton === "heapSort" ? ' down' : ''}`}
-                                        onClick={() => {
-                                            this.heapSort()
-                                            this.setState({ activeSortingButton: "heapSort", activeAlgorithm: 5 });
-                                        }}
-                                        disabled={sortingInProgress}>Heap Sort</button>
-                                </div> */}
                             </div>
                         </div>
                         <div className="settings">
@@ -706,7 +653,7 @@ export default class SortingVisualizer extends React.Component {
                 </div>
                 <div>
                     <footer className="footerStyle">
-                        <p> DSAV Copyright @2023 </p>
+                        <p> Long Nguyen @2023 </p>
                     </footer>
                 </div>
             </div>
