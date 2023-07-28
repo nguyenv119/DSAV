@@ -112,15 +112,15 @@ button[class*="btn"] {border: 1;}
 
 .colorful {
   text-align: center;
-  border-radius: 8px;
-  border: 1px solid transparent;
+  /* border-radius: 8px;
+  border: 1px solid transparent; */
   font-size: 1em;
   font-weight: 500;
   background-color: #1a1a1a;
-  transition: border-color 0.25s;
-  color: white;
+  /* transition: border-color 0.25s;
+  color: white; */
   /** Animations */
-  background: linear-gradient(253deg, var(--gradcolor1), var(--gradcolor2), var(--gradcolor3));
+  /* background: linear-gradient(253deg, var(--gradcolor1), var(--gradcolor2), var(--gradcolor3)); */
   background-size: 600% 600%;
   animation: AnimationName 7s ease infinite;
   pointer-events: none;
@@ -326,7 +326,8 @@ code {
 
 .cta:hover {
     transition: 0.5s;
-    box-shadow: 6px 6px 0px 0px #FBC638;
+    background-color: rgb(255, 255, 255);
+    color: black;
 }
 
 .cta.img:hover {
