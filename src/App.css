@@ -245,9 +245,9 @@ code {
   display: flex;
   justify-content: left;
   position: relative;
-  top: 1%;
+  top: 0%;
   left: 1%;
-  height: 75%; /* This value should be 80% to fill 80% of the arrayContainer div */
+  height: 78%; /* This value should be 80% to fill 80% of the arrayContainer div */
   width: 98%; /* Add width of 100% to fill the entire parent div */
 }
 
@@ -259,9 +259,9 @@ code {
 
 .buttons {
   left: 20px; /* adjust as needed */
-  top: 0%;
+  top: -2.5%;
   width: calc(100% - 40px); /* subtract the total left and right margins */
-  height: 13%;
+  height: 16%;
   position: relative;
   /* border: 2px solid white; */
   transform: translateY(15%);

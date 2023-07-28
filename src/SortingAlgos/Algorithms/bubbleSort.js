@@ -1,4 +1,4 @@
-import {resetAllBarColors, greenify} from "../CommonMethods/commonMethods";
+import { resetAllBarColors, greenify } from "../CommonMethods/commonMethods";
 import {    PRIMARY_COLOR,
             SECONDARY_COLOR,
             LARGER_COLOR,
@@ -6,6 +6,8 @@ import {    PRIMARY_COLOR,
             SAMESIZE_COLOR,
             DONE_COLOR,
         } from "../../SortingVisualizer/SortingVisualizer";
+
+import { bubbleSortCodeComment } from "../LearningArea/code";
 
 const GOOD_COLOR = "#9706ff";
 
@@ -102,6 +104,10 @@ function animate(animations,
         resolveCallback(animations) 
         return;
     }
+
+    /*
+    ? When will we be at didSwap <- true, lastSortedIdx <- lenght(A) - 1, and at the while statements 
+    TODO: we can have another array having which line of the code we will be on, and always add it in the actualBubbleSort function, then in this function, depending on which stage we're on, */
 
     /*
     ! If we are paused, we keep calling it. Eventually, when it is unpaused, we will skip this if statement and go

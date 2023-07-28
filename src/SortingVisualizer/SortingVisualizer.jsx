@@ -31,7 +31,7 @@ import ProgressBar from './ProgressBar';
 import { left } from "@popperjs/core";
 
 const MINVAL = 10;
-const MAXVAL = 620;
+const MAXVAL = 645;
 export const GREEN_SPEED = 7;
 export const SMALLER_COLOR = "#ea2c1e";
 export const LARGER_COLOR = "#50af50"
@@ -81,8 +81,6 @@ export default class SortingVisualizer extends React.Component {
                     code: []
                 },
                 "bubbleSort": {
-                    /*
-                    ? Renders an array of JSX components */
                     about: [ bubbleDescription() ],
                     code: [ bubbleSortCodeComment() ]
                 },

@@ -25,9 +25,18 @@ const myCustomStyle = {
     'class-name': { color: '#F4DD64' },
 };
 
-
-export const bubbleSortCodeComment = () => (
-    <SyntaxHighlighter language="java" style={myCustomStyle}>
+export const bubbleSortCodeComment = (highlightLine) => (
+    <SyntaxHighlighter 
+        language="java" 
+        style={myCustomStyle} 
+        wrapLines={true} 
+        lineProps={lineNumber => {
+            let style = {};
+            if (lineNumber === highlightLine) {
+                style = {background: '#f5f5f5', color: 'white'};
+            }
+            return {style};
+        }}>
 {`!! @param A: the array
 !! @param n: the array length
 bubbleSort(A, n) {
@@ -43,7 +52,6 @@ bubbleSort(A, n) {
             /* We swap if an element is smaller than the next element */
             if (A[i] > A[i + 1]) {
                 swap(A[i], A[i + 1]);
-                /* We have swapped, so continue loop!*/
                 didSwap ← true
             }
         }
@@ -52,6 +60,7 @@ bubbleSort(A, n) {
 `}
   </SyntaxHighlighter>
 );
+
 
 export const selectionSortCodeComment = () => (
     <SyntaxHighlighter language="java" style={myCustomStyle}>
