@@ -7,8 +7,6 @@ import {    PRIMARY_COLOR,
             DONE_COLOR,
         } from "../../SortingVisualizer/SortingVisualizer";
 
-import { bubbleSortCodeComment } from "../LearningArea/code";
-
 const GOOD_COLOR = "#9706ff";
 
 /*

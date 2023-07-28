@@ -112,15 +112,15 @@ button[class*="btn"] {border: 1;}
 
 .colorful {
   text-align: center;
-  border-radius: 8px;
-  border: 1px solid transparent;
+  /* border-radius: 8px;
+  border: 1px solid transparent; */
   font-size: 1em;
   font-weight: 500;
   background-color: #1a1a1a;
-  transition: border-color 0.25s;
-  color: white;
+  /* transition: border-color 0.25s;
+  color: white; */
   /** Animations */
-  background: linear-gradient(253deg, var(--gradcolor1), var(--gradcolor2), var(--gradcolor3));
+  /* background: linear-gradient(253deg, var(--gradcolor1), var(--gradcolor2), var(--gradcolor3)); */
   background-size: 600% 600%;
   animation: AnimationName 7s ease infinite;
   pointer-events: none;
@@ -259,12 +259,12 @@ code {
 
 .buttons {
   left: 20px; /* adjust as needed */
-  top: -2.5%;
+  top: 1%;
   width: calc(100% - 40px); /* subtract the total left and right margins */
   height: 16%;
   position: relative;
-  /* border: 2px solid white; */
-  transform: translateY(15%);
+  /* border: 2px solid white;
+  transform: translateY(15%); */
 }
 
 .buttonGroup {
@@ -314,8 +314,9 @@ code {
   align-items: center;
   position: relative;
   width: calc(100% - 90px); /* subtract the total left and right margins */
-  bottom: -10%;  /* adjust as needed */
-  left: 60px;  /* adjust as needed */
+  bottom: 0%;
+  left: 60px;
+  top: 4%;
   font-size: 17px;
   /* border: 2px solid purple; */
   overflow-x: auto;
@@ -352,7 +353,8 @@ code {
 
 .cta:hover {
     transition: 0.5s;
-    box-shadow: 6px 6px 0px 0px #FBC638;
+    background-color: rgb(255, 255, 255);
+    color: black;
 }
 
 .cta.img:hover {

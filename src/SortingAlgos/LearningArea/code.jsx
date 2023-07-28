@@ -52,6 +52,7 @@ bubbleSort(A, n) {
             /* We swap if an element is smaller than the next element */
             if (A[i] > A[i + 1]) {
                 swap(A[i], A[i + 1]);
+                /* We have swapped, so continue loop!*/
                 didSwap ← true
             }
         }
@@ -60,7 +61,6 @@ bubbleSort(A, n) {
 `}
   </SyntaxHighlighter>
 );
-
 
 export const selectionSortCodeComment = () => (
     <SyntaxHighlighter language="java" style={myCustomStyle}>
