@@ -435,44 +435,48 @@ resetArrayAndComparisons() {
     this.setState({ comparisons: 0 });
 }
 
-// Add a new method to handle the reset button click
+// Updated handleReset
 handleReset = () => {
-    // Check if sorting is in progress
+
     if (this.state.sortingInProgress) {
-        // Sorting is in progress, stop the current sorting
-        // and reset the sorting state
-        // You need to implement the stopSorting method to stop the current sorting algorithm
-        this.stopSorting(); // Assuming this function stops the sorting algorithm properly
+      this.stopSorting();
     }
-
-    // Reset the state to the initial values
-    this.setState({
-        array: [],
-        sortingAlgorithm: null,
-        isSorting: false,
-        buttonsDisabled: false,
-        sortingInProgress: false,
-        comparisons: 0,
-        isPaused: true,
-    });
-
-    // Generate a new array
+    
+    // Reset comparisons
+    this.setState({comparisons: 0});
+  
+    // Reset styles
+    const arrayBars = document.getElementsByClassName("arrayBar");
+    for(let i = 0; i < arrayBars.length; i++) {
+      arrayBars[i].style.backgroundColor = PRIMARY_COLOR; 
+    }
+    
+    // Generate new array
     this.makeArray();
-};
+    
+    // Reset remaining state
+    this.setState({
+      sortingAlgorithm: null,
+      isSorting: false,
+      buttonsDisabled: false,  
+      sortingInProgress: false,
+      isPaused: true
+    });
+  }
 
-stopSorting = () => {
-    // Assuming you have a sortingTimeout property in the component state that holds the current timeout ID
-    const { sortingTimeout } = this.state;
+  stopSorting = () => {
 
-    // If sortingTimeout is not null, it means sorting is in progress and we need to stop it
-    if (sortingTimeout !== null) {
-        // Clear the timeout to stop the sorting process
-        clearTimeout(sortingTimeout);
-
-        // Set the sortingTimeout back to null to indicate that sorting is no longer in progress
-        this.setState({ sortingTimeout: null });
+    // Clear timeouts
+    clearTimeout(this.state.sortingTimeout);
+    
+    // Reject any promises
+    if (this.currentSortPromise) {
+      this.currentSortPromise.cancel(); 
     }
-};
+    
+    // Cleanup
+    cancelAnimationFrame(this.animationFrame);
+  }
 
     /* 
     ? Renders components UI */
