@@ -13,20 +13,11 @@
   --gradcolor2: #cd24ff;
   --gradcolor3: #4600a6;
   overflow-x: hidden;
+  background-color: #171717;
 }
 
-.footerStyle {
-  background-color: #131313;
-  padding-bottom: 21px;
-  padding-top: 3px;
-  color: #ffffff;
-  text-align: center;
-  position: fixed;
-  left: 0%;
-  bottom: 0.5%;
-  height: 2%;
-  width: 100%;
-  font-size: 13px;
+.hidden {
+  display: none !important
 }
 
 body {
@@ -35,7 +26,11 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  background-color: #1d1d1d;
+}
+
+buttonGroup::-webkit-scrollbar {
+  width: 1px; /* Change width of vertical scrollbar */
+  height: 1px; /* Change height of horizontal scrollbar */
 }
 
 li {
@@ -117,15 +112,15 @@ button[class*="btn"] {border: 1;}
 
 .colorful {
   text-align: center;
-  border-radius: 8px;
-  border: 1px solid transparent;
+  /* border-radius: 8px;
+  border: 1px solid transparent; */
   font-size: 1em;
   font-weight: 500;
   background-color: #1a1a1a;
-  transition: border-color 0.25s;
-  color: white;
+  /* transition: border-color 0.25s;
+  color: white; */
   /** Animations */
-  background: linear-gradient(253deg, var(--gradcolor1), var(--gradcolor2), var(--gradcolor3));
+  /* background: linear-gradient(253deg, var(--gradcolor1), var(--gradcolor2), var(--gradcolor3)); */
   background-size: 600% 600%;
   animation: AnimationName 7s ease infinite;
   pointer-events: none;
@@ -133,13 +128,14 @@ button[class*="btn"] {border: 1;}
 
 .arrayContainer {
   /* border: 2px solid white; */
+  background-color: #1d1d1d;
   display: flex;
   flex-direction: column;
   position: fixed;
   left: 0%;
   top: 0%;
   height: 100vh; /* This value should be 100vh to fill the entire viewport height */
-  border-right: solid 1.5px #0c0c0c;
+  border-right: solid 3px #0c0c0c;
   width: 80%;
 }
 
@@ -160,42 +156,65 @@ button[class*="btn"] {border: 1;}
 }
 
 .description {
-  /* border: 2px solid blue; */
+  /* border: 2px solid red; */
   color: white;
-  font-size: 14px;
-  /* font-size: 1vw;  */
-  margin-top: 0;
+  font-size: 12.5px;
   width: 95%;
-  height: 45%;
-  margin-left: 2.5%;
+  height: 48%;
+  max-height: 100%;
+  margin-left: 3.5%;
   margin-top: 5%;
   overflow: auto; /* Add scrollbars if content overflows */
 }
 
 .description.intro {
   /* border: 2px solid blue; */
-  height: 84%;
+  font-size: 14px;
+  height: 80%;
+  max-height: 80%;
+}
+
+.description.merge {
+  /* border: 2px solid blue; */
+  font-size: 12.5px;
+  height: 63%;
+  max-height: 63%;
+}
+
+.description.heap {
+  /* border: 2px solid blue; */
+  font-size: 12.5px;
+  height: 73%;
+  max-height: 73%;
 }
 
 .actualCode {
-  /* border: 2px solid blue; */
-  width: 95%;
-  margin-left: 2.5%;
-  color: white;
+  border: 2px solid black;
+  background-color: rgb(25, 25, 25);
+  border-radius: 10px;
+  width: 91.8%;
+  margin-top: 3%;
+  margin-left: 3.5%;
   font-size: 12.5px;
-  height: 31.5%;
+  height: 43%;
   overflow-y: auto;
 }
 
 .actualCode.noCode {
   /* border: 2px solid red; */
+  border: none;
   height: 0%;
+}
+
+.actualCode.merge {
+  /* border: 2px solid purple; */
+  padding-top: 0;
+  height: 90vh;
 }
 
 .explanation {
   text-align: center;
-  margin-top: 3%;
-  height: 21%;
+  height: 7%;
   width: 100%;
   margin-left: 2.5%;
   width: 95%;
@@ -204,11 +223,16 @@ button[class*="btn"] {border: 1;}
 }
 
 .explanation.about-us {
-  height: 10%;
-  margin-top: 2%;
   flex-grow: 1;
   overflow: hidden; 
   /* border: 2px solid purple; */
+  padding-top: 4vh; 
+}
+
+.explanation.merge {
+  margin-top: 0vh; 
+  height: 12%;
+  /* border: 2px solid red; */
 }
 
 code {
@@ -221,10 +245,10 @@ code {
   display: flex;
   justify-content: left;
   position: relative;
-  top: 1%;
+  top: 0%;
   left: 1%;
-  height: 75%; /* This value should be 80% to fill 80% of the arrayContainer div */
-  width: 98.2%; /* Add width of 100% to fill the entire parent div */
+  height: 78%; /* This value should be 80% to fill 80% of the arrayContainer div */
+  width: 98%; /* Add width of 100% to fill the entire parent div */
 }
 
 .arrayBar {
@@ -235,21 +259,22 @@ code {
 
 .buttons {
   left: 20px; /* adjust as needed */
+  top: 1%;
   width: calc(100% - 40px); /* subtract the total left and right margins */
-  height: 13%;
+  height: 16%;
   position: relative;
-  /* border: 2px solid white; */
-  transform: translateY(15%);
+  /* border: 2px solid white;
+  transform: translateY(15%); */
 }
 
 .buttonGroup {
   /* border: 2px solid red; */
   margin-left: 0;
-  margin-top: 0;
   display: flex;
   flex-wrap: wrap;
   padding: 9px; /* Adjust this value to fit your design */
-  width: calc(100% - 50px); /* Subtract double the padding from the width */
+  padding-right: 30px;
+  width: calc(100% - 60px); /* Subtract double the padding from the width */
   height: 100%;
   font-size: 17px;
   overflow-x: auto;
@@ -287,20 +312,20 @@ code {
   display: flex;
   flex-wrap: nowrap;  
   align-items: center;
-  position: absolute;
+  position: relative;
   width: calc(100% - 90px); /* subtract the total left and right margins */
-  height: 5vh;
-  bottom: -3%;  /* adjust as needed */
-  left: 60px;  /* adjust as needed */
+  bottom: 0%;
+  left: 60px;
+  top: 4%;
   font-size: 17px;
   /* border: 2px solid purple; */
   overflow-x: auto;
   overflow-y: hidden;
 }
 
-
 .cta.img {
-  margin-right: 1%; 
+  margin-right: 2%; 
+  margin-bottom: 1%;
   padding: 5px 6px 6px 7px;
   transform: skewX(0deg);
   border-radius: 25%;
@@ -328,7 +353,8 @@ code {
 
 .cta:hover {
     transition: 0.5s;
-    box-shadow: 6px 6px 0px 0px #FBC638;
+    background-color: rgb(255, 255, 255);
+    color: black;
 }
 
 .cta.img:hover {
@@ -425,18 +451,41 @@ button:hover {
 }
 
 .cta-image {
-  height: 40px;
-  width: 40px;
+  position: relative;
+  z-index: 2;
+  height: 30px;
+  width: 30px;
 }
 
-.wrapper {
+.footerStyle {
+  background-color: #131313;
+  padding-bottom: 25px;
+  padding-top: 5px;
+  color: #ffffff;
+  text-align: center;
+  left: 0%;
+  bottom: 0%;
+  height: 2%;
+  width: 100%;
+  font-size: 13px;
+  position: fixed;
+  z-index: 1;
+}
+
+.wrapper.buttons {
   display: flex;
   justify-content: start; /* align items to the start */
   align-items: center; /* center items vertically */
   width: 100%;
 }
 
-/* SVG animations */
+.wrapper.noButtons {
+  /* border: 2px solid blue; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+}
 
 @keyframes color_anim {
     0% {
@@ -450,8 +499,11 @@ button:hover {
     }
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1350px) {
   .cta.sorting {
     font-size: 15px;
+  }
+  .explanation.about-us {
+    padding-top: 1vh; /* adjust this value as needed */
   }
 }
