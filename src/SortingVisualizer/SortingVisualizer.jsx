@@ -331,6 +331,8 @@ export default class SortingVisualizer extends React.Component {
                 arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
             }
         });
+
+        
     }
 
     /*
@@ -427,6 +429,51 @@ export default class SortingVisualizer extends React.Component {
         }));
     }
 
+   //Resets Comparisons and generates a new array
+resetArrayAndComparisons() {
+    this.makeArray();
+    this.setState({ comparisons: 0 });
+}
+
+// Add a new method to handle the reset button click
+handleReset = () => {
+    // Check if sorting is in progress
+    if (this.state.sortingInProgress) {
+        // Sorting is in progress, stop the current sorting
+        // and reset the sorting state
+        // You need to implement the stopSorting method to stop the current sorting algorithm
+        this.stopSorting(); // Assuming this function stops the sorting algorithm properly
+    }
+
+    // Reset the state to the initial values
+    this.setState({
+        array: [],
+        sortingAlgorithm: null,
+        isSorting: false,
+        buttonsDisabled: false,
+        sortingInProgress: false,
+        comparisons: 0,
+        isPaused: true,
+    });
+
+    // Generate a new array
+    this.makeArray();
+};
+
+stopSorting = () => {
+    // Assuming you have a sortingTimeout property in the component state that holds the current timeout ID
+    const { sortingTimeout } = this.state;
+
+    // If sortingTimeout is not null, it means sorting is in progress and we need to stop it
+    if (sortingTimeout !== null) {
+        // Clear the timeout to stop the sorting process
+        clearTimeout(sortingTimeout);
+
+        // Set the sortingTimeout back to null to indicate that sorting is no longer in progress
+        this.setState({ sortingTimeout: null });
+    }
+};
+
     /* 
     ? Renders components UI */
     render() {
@@ -488,7 +535,7 @@ export default class SortingVisualizer extends React.Component {
                             ))}
                     </div>
                     <ProgressBar comparisons={comparisons} totalComparisons={totalComparisons} />
-                    <div class="buttons">
+                    <div class="buttons">                    
                         <div className="buttonContainer">
                             <div className="buttonGroup">
                                 <div class="wrapper">
@@ -536,7 +583,18 @@ export default class SortingVisualizer extends React.Component {
                                         }}
                                         disabled={sortingInProgress}>Heap Sort
                                     </button>
+                                    
+                                    {/* Reset Button */}
+                                    <button style={{
+                                        color: 'black'
+                                    }}
+                                        className="btn-3d sorting"
+                                        onClick={this.handleReset}
+                                    >
+                                        Reset
+                                    </button>
                                 </div>
+
                                 {/* <div className="btn-container">
                                     <button className={`btn-3d regular${activeSortingButton === "heapSort" ? ' down' : ''}`}
                                         onClick={() => {
