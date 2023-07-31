@@ -5,12 +5,12 @@
     line-height: 1rem !important;
     font-size: 11px;
     border-radius: 0px !important;
-    transform: translateY(40%);
+    /* transform: translateY(35%); */
+    /* border: 2px solid red; */
 }
 
 
 .codeContainer {
     /* border: 2px solid red; */
     background-color: rgb(27, 27, 27);
-  }
-  
+}

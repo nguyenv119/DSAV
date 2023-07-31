@@ -9,7 +9,11 @@ import {
          insertionDescription,
          mergeDescription,
          heapDescription } from "../SortingAlgos/LearningArea/descriptions";    
-import { BubbleSortCode } from "../SortingAlgos/LearningArea/code";    
+import { BubbleSortCode,
+        SelectionSortCode,
+        InsertionSortCode,
+        MergeSortCode,
+        HeapSortCode } from "../SortingAlgos/LearningArea/code";    
 
 /*
 ? Importing the actual sorting algos */
@@ -65,7 +69,7 @@ export default class SortingVisualizer extends React.Component {
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 1,
+            activeAlgorithm: 5,
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
 
             /*
@@ -77,23 +81,23 @@ export default class SortingVisualizer extends React.Component {
                 },
                 "bubbleSort": {
                     about: [ bubbleDescription() ],
-                    code: [ <BubbleSortCode highlightLine={3} /> ]
+                    code: [ <BubbleSortCode highlightLine={2} /> ]
                 },
                 "selectionSort": {
                     about: [ selectionDescription() ],
-                    // code: [ selectionSortCode() ]
+                    code: [ <SelectionSortCode highlightLine={2} /> ]
                 },
                 "insertionSort": {
                     about: [ insertionDescription() ],
-                    // code: [ insertionSortCode() ]
+                    code: [ <InsertionSortCode highlightLine={2} /> ]
                 },
                 "mergeSort": {
                     about: [ mergeDescription() ],
-                    // code: [ mergeSortCode() ]
+                    code: [ <MergeSortCode highlightLine={3} /> ]
                 },
                 "heapSort": {
                     about: [ heapDescription() ],
-                    // code: [ heapSortCode() ]
+                    code: [ <HeapSortCode highlightLine={1} /> ]
                 },
             }
         };

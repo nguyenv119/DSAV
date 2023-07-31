@@ -89,8 +89,7 @@ const displayCode = (lines, highlightLine) => {
 };
 
 export function BubbleSortCode({ highlightLine }) {
-    const bubbleSort = `
-!! @param A: the array
+    const bubbleSort = `!! @param A: the array
 !! @param n: the array length
 bubbleSort(A, n) {
     didSwap ← true
@@ -113,17 +112,14 @@ bubbleSort(A, n) {
     return displayCode(lines, highlightLine);
 };
 
-export const selectionSortCode = () => (
-    <SyntaxHighlighter language="java" style={defaultStyle}>
-{`!! @param A: the array
+export function SelectionSortCode({ highlightLine }) {
+    const selectionSort = `!! @param A: the array
 !! @param n: the array length
 selectionSort(A, n) {
-
-    /* From the start to the 2nd last element.
-    Not the last: we have guaranteed it will be sorted */
+    /* From the start to the 2nd last element. */
+    /* Not the last: we have guaranteed it will be sorted */
     for (i ← 0 to n - 2) {
         smallestIdx ← i
-
         /* Loop and find the smallest element */
         for (j ← (i + 1) to n - 1) {
             /* If this element < smallest_so_far, update it */
@@ -136,61 +132,54 @@ selectionSort(A, n) {
             swap(A[i], A[smallestIdx])
         }
     }
-}
-`}
-    </SyntaxHighlighter>
-);
+}`;
+    const lines = selectionSort.split("\n");
+    return displayCode(lines, highlightLine)
+};
 
-export const insertionSortCode = () => (
-    <SyntaxHighlighter language="java" style={defaultStyle}>
-{`!! @param A: the array
+export function InsertionSortCode ({highlightLine}) {
+    const insertionSort = `!! @param A: the array
 !! @param n: the array length
 insertionSort(A, n) {
-
     /* Loop until the last element */
     for (idx ← 1 to n - 1) {
         prevIdx ← idx - 1
         prevVal ← A[prevIdx]
         currVal ← A[idx]
-
-        /* While the found element is larger than the previous, and we haven't reached the end, keep moving it back */
+        /* While the found element is larger than the previous */
+        /* And, we haven't reached the end, keep moving it back */
         while (prevIdx >= 0 and currVal > prevVal) {
             swap(currVal, prevVal)
             prevIdx ← prevIdx - 1
         }
     }
-}
-`}
-    </SyntaxHighlighter>
-);
+}`;
+    const lines = insertionSort.split("\n");
+    return displayCode(lines, highlightLine)
+};
 
-export const mergeSortCode = () => (
-<SyntaxHighlighter language="java" style={defaultStyle}>
-{`!! @param A: the array
+export function MergeSortCode ({highlightLine}) {
+    const mergeSort = `!! @param A: the array
 !! @param left: the subarray's leftmost index 
 !! @param right: the subarray's rightmost index 
-
 mergeSort(A, left, right) {
     /* While our subarray is still larger than 1, split into 2 more subarrays*/
     if left < right {
-        mid ← ⌊(left + right)/2⌋
+        mid ← [(left + right)/2]
         mergeSort(A, left, mid)
         mergeSort(A, mid + 1, right)
         merge(A, left, mid, right)
     }
 }
-
 !! @param A: the array
 !! @param left: the subarray's leftmost index 
 !! @param right: the subarray's rightmost index 
 !! @param mid: the subarray's middle index
-
 merge(A, left, mid, right) {
     /* Determine where to split A */
     split1 ← mid - left + 1
     split2 ← right - mid
     Create arrays L[0...split1] and R[0...split2]
-
     /* Transfer elements from A to L and R */
     for (i ← 0 to split1 - 1 do) {
         L[i] ← A[left + i - 1]
@@ -198,13 +187,11 @@ merge(A, left, mid, right) {
     for (j ← 0 to split2 - 1 do) {
         R[j] ← A[mid + j]
     }
-
     /* Avoid checking if subarrays are fully copied */
     L[split1] ← ∞
     R[split2] ← ∞
     LIdx ← 0
     RIdx ← 0
-
     /* Compare L and R elements and merge into A */
     for (mainIdx ← left to right) {
         if L[LIdx] ≤ R[RIdx] {
@@ -216,53 +203,47 @@ merge(A, left, mid, right) {
             RIdx ← RIdx + 1
         }
     }
+}`
+    const lines = mergeSort.split("\n");
+    return displayCode(lines, highlightLine)
 }
-`}
-</SyntaxHighlighter>
-);
 
-export const heapSortCode = () => (
-<SyntaxHighlighter language="java" style={defaultStyle}>
-{`!! @param A: the array
+export function HeapSortCode ({highlightLine}) {
+    const heapSort = `!! @param A: the array
 HEAPSORT(A) {
     BUILD_MAX_HEAP(A)
     /* Swap n elements */
     for (i ← length(A) downto 2) {
         swap(A[1], A[i])
         heap-size(A) ← heap-size(A) - 1
-
         /* HEAPIFY_DOWN the swapped element */
         HEAPIFY_DOWN(A, 1)
     }
 }
-
 !! @param A: the array 
 !! @param idx: the index of the element being HEAPIFY_DOWNED
 HEAPIFY_DOWN(A, idx) {
     /* Determine children of node */
     LChild ← 2i
     RChild ← 2i + 1
-
     /* Determine max of node and children */
     largestIdx ← max(A[i], A[LChild], A[RChild])
     /* If the i'th node isn't the largest, we swap */
     if (largest != i) {
         swap(A[i], A[largestIdx])
-
         /* Continue to HEAPIFY_DOWN until larger than all its children */
         HEAPIFY_DOWN(A, largestIdx)
     }
 }
-
 !! @param A: the array 
 BUILD_MAX_HEAP(A) {
     heap-size(A) ← length(A)
-
     /* Only HEAPIFY_DOWN the 1st half of the array: top 50% of the tree*/
     for (i ← length(A)/2 downto 1) {
         HEAPIFY_DOWN(A, i)
     }
 }
-`}
-</SyntaxHighlighter>
-);
+`;
+    const lines = heapSort.split("\n");
+    return displayCode(lines, highlightLine);
+}
