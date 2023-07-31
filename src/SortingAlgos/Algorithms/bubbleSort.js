@@ -13,11 +13,11 @@ const GOOD_COLOR = "#9706ff";
 ? The bubbleSort function we are exporting with the animation array */
 export function bubbleSortExp(array, 
                               arrayBars, 
-                              highlightLine,
                               getSpeedCallback, 
                               comparisons, 
                               updateComparisons,
-                              isPausedCallback) {
+                              isPausedCallback,
+                              updateHighlight) {
 
     return new Promise((resolve) => {
         resetAllBarColors(arrayBars, PRIMARY_COLOR);        
@@ -26,7 +26,7 @@ export function bubbleSortExp(array,
         ? We need to pass in () => resolve(arr) to
         ? 1. The parameter of arr lets the promise know what to return, the actual sorted array
         ? 2. The callback function requires for the "animate" function to be completed before returning. If we removed the "() =>" JS asynchronous nature would return it immedientally */
-        animate(lines, 0, highlightLine, animations, arrayBars, 0, array.length - 1, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, () => resolve(arr));
+        animate(lines, 0, animations, arrayBars, 0, array.length - 1, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, () => resolve(arr));
     });
 }
 
@@ -100,9 +100,9 @@ function bubbleSort(array, lines, animations) {
 
 /*
 ? Animates bubbleSort */
-function animate(lines,
+function animate(
+                lines,
                 linesIdx,
-                highlightLine,
                 animations, 
                 arrayBars, 
                 animationsIdx, 
@@ -110,6 +110,7 @@ function animate(lines,
                 getSpeedCallback, 
                 comparisons, 
                 updateComparisons, 
+                updateHighlight,
                 isPausedCallback,
                 resolveCallback) {
 
@@ -125,12 +126,10 @@ function animate(lines,
     ! forward. Whenever we pause again, the parameters will be updated. */
     if (isPausedCallback()) {
         setTimeout(() => {
-            animate(lines, linesIdx, highlightLine, animations, arrayBars, animationsIdx, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback);
+            animate(lines, linesIdx, animations, arrayBars, animationsIdx, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback);
         }, 1);
         return;
     };
-
-    highlightLine([1]);
 
     let nextStepTimeout = 0;
     const stage = animationsIdx % 3;
@@ -206,5 +205,5 @@ function animate(lines,
     }
     // console.log(highlightedLine);
     linesIdx++;
-    setTimeout(() => animate(lines, linesIdx, highlightLine, animations, arrayBars, animationsIdx, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback), nextStepTimeout);
+    setTimeout(() => animate(lines, linesIdx, animations, arrayBars, animationsIdx, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback), nextStepTimeout);
 }

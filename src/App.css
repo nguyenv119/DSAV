@@ -212,7 +212,6 @@ button[class*="btn"] {border: 1;}
 
 .actualCode.merge {
   /* border: 2px solid purple; */
-  padding-top: 0;
   height: 90vh;
 }
 

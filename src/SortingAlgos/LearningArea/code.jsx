@@ -52,7 +52,7 @@ const highlightStyle = {
     'class-name': { color: '#3A86FF' },
 };
 
-const displayCode = (lines, highlightLine) => {
+const displayCode = (lines, highlightLines) => {
     /* 
     !Calculate the length of the longest line */
     const longestLineLength = lines.reduce((max, line) => Math.max(max, line.length), 0);
@@ -64,7 +64,8 @@ const displayCode = (lines, highlightLine) => {
         <div className="codeContainer" style={{ overflow: 'auto', backgroundColor: 'rgb(27, 27, 27)' }}>
             <pre style={{ display: 'inline', width: '100%' }}>
                 {lines.map((line, index) => {
-                    const highlighted = index === highlightLine;
+                    console.log(highlightLines);
+                    const highlighted = highlightLines.includes(index);
                     const customStyle = highlighted ? highlightStyle : defaultStyle;
 
                     /* 
@@ -88,7 +89,11 @@ const displayCode = (lines, highlightLine) => {
     );
 };
 
-export function BubbleSortCode({ highlightLine }) {
+/*
+TODO: DYNAMICALLY SET THE HGIHLIGHTLINE TO INITIALLY SET, DEPENDING ON THE ACTIVEALGORITHM WE ARE IN
+TODO: UPDATE ACCORDING TO HIGHLIGHT LINE */
+
+export function BubbleSortCode({ highlightLines }) {
     const bubbleSort = `!! @param A: the array
 !! @param n: the array length
 bubbleSort(A, n) {
@@ -109,10 +114,10 @@ bubbleSort(A, n) {
     }
 }`;
     const lines = bubbleSort.split("\n");
-    return displayCode(lines, highlightLine);
+    return displayCode(lines, highlightLines);
 };
 
-export function SelectionSortCode({ highlightLine }) {
+export function SelectionSortCode({ highlightLine = []}) {
     const selectionSort = `!! @param A: the array
 !! @param n: the array length
 selectionSort(A, n) {
@@ -137,7 +142,7 @@ selectionSort(A, n) {
     return displayCode(lines, highlightLine)
 };
 
-export function InsertionSortCode ({highlightLine}) {
+export function InsertionSortCode ({ highlightLines }) {
     const insertionSort = `!! @param A: the array
 !! @param n: the array length
 insertionSort(A, n) {
@@ -155,10 +160,10 @@ insertionSort(A, n) {
     }
 }`;
     const lines = insertionSort.split("\n");
-    return displayCode(lines, highlightLine)
+    return displayCode(lines, highlightLines)
 };
 
-export function MergeSortCode ({highlightLine}) {
+export function MergeSortCode ({ highlightLines }) {
     const mergeSort = `!! @param A: the array
 !! @param left: the subarray's leftmost index 
 !! @param right: the subarray's rightmost index 
@@ -205,10 +210,10 @@ merge(A, left, mid, right) {
     }
 }`
     const lines = mergeSort.split("\n");
-    return displayCode(lines, highlightLine)
+    return displayCode(lines, highlightLines)
 }
 
-export function HeapSortCode ({highlightLine}) {
+export function HeapSortCode ({ highlightLines }) {
     const heapSort = `!! @param A: the array
 HEAPSORT(A) {
     BUILD_MAX_HEAP(A)
@@ -245,5 +250,5 @@ BUILD_MAX_HEAP(A) {
 }
 `;
     const lines = heapSort.split("\n");
-    return displayCode(lines, highlightLine);
+    return displayCode(lines, highlightLines);
 }

@@ -69,7 +69,8 @@ export default class SortingVisualizer extends React.Component {
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 5,
+            activeAlgorithm: 1,
+            highlightedLine: [0],
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
 
             /*
@@ -81,23 +82,23 @@ export default class SortingVisualizer extends React.Component {
                 },
                 "bubbleSort": {
                     about: [ bubbleDescription() ],
-                    code: [ <BubbleSortCode highlightLine={2} /> ]
+                    code: [ <BubbleSortCode highlightLines={[2]} /> ]
                 },
                 "selectionSort": {
                     about: [ selectionDescription() ],
-                    code: [ <SelectionSortCode highlightLine={2} /> ]
+                    code: [ <SelectionSortCode highlightLines={[2]} /> ]
                 },
                 "insertionSort": {
                     about: [ insertionDescription() ],
-                    code: [ <InsertionSortCode highlightLine={2} /> ]
+                    code: [ <InsertionSortCode highlightLines={[2]} /> ]
                 },
                 "mergeSort": {
                     about: [ mergeDescription() ],
-                    code: [ <MergeSortCode highlightLine={3} /> ]
+                    code: [ <MergeSortCode highlightLines={[3]} /> ]
                 },
                 "heapSort": {
                     about: [ heapDescription() ],
-                    code: [ <HeapSortCode highlightLine={1} /> ]
+                    code: [ <HeapSortCode highlightLines={[1]} /> ]
                 },
             }
         };
@@ -201,7 +202,7 @@ export default class SortingVisualizer extends React.Component {
     bubbleSort() {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
-        bubbleSortExp(array, arrayBars, bubbleSortCode, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused())
+        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), () => this.updateHighlightedLine())
             .then((arr) => {
                 this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
             })
@@ -211,7 +212,8 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
 
-        selectionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
+        selectionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), () => this.updateHighlightedLine())
+        .then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
     }
@@ -220,7 +222,8 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
 
-        insertionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
+        insertionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), () => this.updateHighlightedLine())
+        .then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
     }
@@ -229,7 +232,8 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
 
-        mergeSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
+        mergeSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), () => this.updateHighlightedLine())
+        .then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
     }
@@ -238,7 +242,8 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
 
-        heapSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
+        heapSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), () => this.updateHighlightedLine())
+        .then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
     }
@@ -267,11 +272,18 @@ export default class SortingVisualizer extends React.Component {
 
     /* 
     ? Callback function to update comparisons. We have to pass in the function, 
-    ? not just the varibale comparisons, because it will create a local copy of comparisons
+    ? not just the variable comparisons, because it will create a local copy of comparisons
     ? in the sorting JS file */
     updateComparisons = (newComparisons) => {
         this.setState({ comparisons: newComparisons });
     };
+
+    /*
+    ? Callbackfunction to update the highlightedLine we are on.
+    ? Called in the animate function */
+    updateHighlightedLine = (newLine) => {
+        this.setState({ highlightedLine: newLine });
+    }
 
     /*
     ? Handles the pause/play action*/
