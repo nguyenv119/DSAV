@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,800;1,900&display=swap');
 
+::-webkit-scrollbar {
+  display: none;
+}
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -29,8 +32,8 @@ body {
 }
 
 buttonGroup::-webkit-scrollbar {
-  width: 1px; /* Change width of vertical scrollbar */
-  height: 1px; /* Change height of horizontal scrollbar */
+  width: 1px; 
+  height: 1px;
 }
 
 li {
@@ -128,7 +131,7 @@ button[class*="btn"] {border: 1;}
 
 .arrayContainer {
   /* border: 2px solid white; */
-  background-color: #1d1d1d;
+  background-color: #181818;
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -140,7 +143,7 @@ button[class*="btn"] {border: 1;}
 }
 
 .codeArea {
-  background: #171717;
+  background: #101010;
   color: white;
   position: fixed;
   left: 78.5%; 
@@ -197,7 +200,7 @@ button[class*="btn"] {border: 1;}
   margin-left: 3.5%;
   font-size: 12.5px;
   height: 43%;
-  overflow-y: auto;
+  overflow: auto;
 }
 
 .actualCode.noCode {

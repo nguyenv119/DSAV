@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import "./styles/SortingStyles.css";
 
-const myCustomStyle = {
+const defaultStyle = {
     ...oneDark,
     'pre[class*="language-"]': {
         ...oneDark['pre[class*="language-"]'],
-        backgroundColor: 'rgb(25, 25, 25)',  
-        color: 'white',
+        backgroundColor: 'rgb(27, 27, 27)',  
+        color: 'white',minWidth: 'max-content'
     },
     'code[class*="language-"]': {
         ...oneDark['code[class*="language-"]'],
-        backgroundColor: 'rgb(25, 25, 25)', 
+        backgroundColor: 'rgb(27, 27, 27)', 
         color: 'white',
+        minWidth: 'max-content'
     },
     'operator': { color: '#F92672' },
     'punctuation': { color: '#8A888E' },
@@ -25,30 +27,79 @@ const myCustomStyle = {
     'class-name': { color: '#F4DD64' },
 };
 
-export const bubbleSortCodeComment = (highlightLine) => (
-    <SyntaxHighlighter 
-        language="java" 
-        style={myCustomStyle} 
-        wrapLines={true} 
-        lineProps={lineNumber => {
-            let style = {};
-            if (lineNumber === highlightLine) {
-                style = {background: '#f5f5f5', color: 'white'};
-            }
-            return {style};
-        }}>
-{`!! @param A: the array
+const highlightStyle = {
+    ...defaultStyle,
+    'code[class*="language-"]': {
+      ...defaultStyle['code[class*="language-"]'],
+      color: '#3A86FF',
+      backgroundColor: 'black',
+      minWidth: 'max-content'
+    },
+    'pre[class*="language-"]': {
+      ...defaultStyle['pre[class*="language-"]'],
+      color: '#3A86FF',
+      backgroundColor: 'black',
+      minWidth: 'max-content'
+    },
+    'operator': { color: '#3A86FF' },
+    'punctuation': { color: '#3A86FF' },
+    'comment': { color: '#3A86FF' },
+    'keyword': { color: '#3A86FF' },
+    'function': {  color: '#3A86FF' },
+    'number': {color: '#3A86FF' },
+    'boolean': { color: '#3A86FF' },
+    'variable': {  color: '#3A86FF' },
+    'class-name': { color: '#3A86FF' },
+};
+
+const displayCode = (lines, highlightLine) => {
+    /* 
+    !Calculate the length of the longest line */
+    const longestLineLength = lines.reduce((max, line) => Math.max(max, line.length), 0);
+    const characterWidthEm = 0.63;
+    /* Multiply by em to estimate width */
+    const longestLineWidth = longestLineLength * characterWidthEm + 'em';
+
+    return (
+        <div className="codeContainer" style={{ overflow: 'auto', backgroundColor: 'rgb(27, 27, 27)' }}>
+            <pre style={{ display: 'inline', width: '100%' }}>
+                {lines.map((line, index) => {
+                    const highlighted = index === highlightLine;
+                    const customStyle = highlighted ? highlightStyle : defaultStyle;
+
+                    /* 
+                    !If the line is highlighted, set its width to the longest line width */
+                    const divStyle = highlighted ? { width: longestLineWidth} : {};
+
+                    return (
+                        <div key={index} style={divStyle}>
+                            <SyntaxHighlighter
+                                language="java"
+                                style={customStyle}
+                                className="lineSpacing"
+                                wrapLines={true}>
+                                    {line}  
+                            </SyntaxHighlighter>
+                        </div>
+                    );
+                })}
+            </pre>
+        </div>
+    );
+};
+
+export function BubbleSortCode({ highlightLine }) {
+    const bubbleSort = `
+!! @param A: the array
 !! @param n: the array length
 bubbleSort(A, n) {
     didSwap ← true
-
     /* Every time we sort, this goes down by 1*/
     lastSortedIdx ← length(A) - 1
     /* Continue while we swap (still unsorted)*/
     while (didSwap and lastSortedIdx > 0) {
         didSwap ← false
         for i ← 0 to lastSortedIdx {
-            
             /* We swap if an element is smaller than the next element */
             if (A[i] > A[i + 1]) {
                 swap(A[i], A[i + 1]);
@@ -57,13 +108,13 @@ bubbleSort(A, n) {
             }
         }
     }
-}
-`}
-  </SyntaxHighlighter>
-);
+}`;
+    const lines = bubbleSort.split("\n");
+    return displayCode(lines, highlightLine);
+};
 
-export const selectionSortCodeComment = () => (
-    <SyntaxHighlighter language="java" style={myCustomStyle}>
+export const selectionSortCode = () => (
+    <SyntaxHighlighter language="java" style={defaultStyle}>
 {`!! @param A: the array
 !! @param n: the array length
 selectionSort(A, n) {
@@ -90,8 +141,8 @@ selectionSort(A, n) {
     </SyntaxHighlighter>
 );
 
-export const insertionSortCodeComment = () => (
-    <SyntaxHighlighter language="java" style={myCustomStyle}>
+export const insertionSortCode = () => (
+    <SyntaxHighlighter language="java" style={defaultStyle}>
 {`!! @param A: the array
 !! @param n: the array length
 insertionSort(A, n) {
@@ -113,8 +164,8 @@ insertionSort(A, n) {
     </SyntaxHighlighter>
 );
 
-export const mergeSortCodeComment = () => (
-<SyntaxHighlighter language="java" style={myCustomStyle}>
+export const mergeSortCode = () => (
+<SyntaxHighlighter language="java" style={defaultStyle}>
 {`!! @param A: the array
 !! @param left: the subarray's leftmost index 
 !! @param right: the subarray's rightmost index 
@@ -170,8 +221,8 @@ merge(A, left, mid, right) {
 </SyntaxHighlighter>
 );
 
-export const heapSortCodeComment = () => (
-<SyntaxHighlighter language="java" style={myCustomStyle}>
+export const heapSortCode = () => (
+<SyntaxHighlighter language="java" style={defaultStyle}>
 {`!! @param A: the array
 HEAPSORT(A) {
     BUILD_MAX_HEAP(A)
