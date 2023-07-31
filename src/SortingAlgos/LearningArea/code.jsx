@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import "./styles/SortingStyles.css";
@@ -87,10 +87,6 @@ const displayCode = (lines, highlightLines) => {
         </div>
     );
 };
-
-/*
-TODO: DYNAMICALLY SET THE HGIHLIGHTLINE TO INITIALLY SET, DEPENDING ON THE ACTIVEALGORITHM WE ARE IN
-TODO: UPDATE ACCORDING TO HIGHLIGHT LINE */
 
 export function BubbleSortCode({ highlightLines }) {
     const bubbleSort = `!! @param A: the array

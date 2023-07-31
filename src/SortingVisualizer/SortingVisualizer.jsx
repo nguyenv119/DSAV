@@ -215,8 +215,8 @@ export default class SortingVisualizer extends React.Component {
             sortingAlgorithm: null,
             isSorting: false,
             buttonsDisabled: false,
-            ANIMATION_SPEED_MS: 6,
-            BARS: 14,
+            ANIMATION_SPEED_MS: 2, //6
+            BARS: 8, // 14
             sortingInProgress: false,
             activeButton: "",
             activeSortingButton: "",
