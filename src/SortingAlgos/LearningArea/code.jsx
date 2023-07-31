@@ -64,7 +64,6 @@ const displayCode = (lines, highlightLines) => {
         <div className="codeContainer" style={{ overflow: 'auto', backgroundColor: 'rgb(27, 27, 27)' }}>
             <pre style={{ display: 'inline', width: '100%' }}>
                 {lines.map((line, index) => {
-                    console.log(highlightLines);
                     const highlighted = highlightLines.includes(index);
                     const customStyle = highlighted ? highlightStyle : defaultStyle;
 
@@ -106,8 +105,8 @@ bubbleSort(A, n) {
         for i ← 0 to lastSortedIdx {
             /* We swap if an element is smaller than the next element */
             if (A[i] > A[i + 1]) {
-                swap(A[i], A[i + 1]);
                 /* We have swapped, so continue loop!*/
+                swap(A[i], A[i + 1]);
                 didSwap ← true
             }
         }

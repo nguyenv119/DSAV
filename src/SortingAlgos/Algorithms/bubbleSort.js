@@ -58,19 +58,19 @@ function getBubbleSortArrays(arr) {
  * sorted parts green as we move along down
 */
 function bubbleSort(array, lines, animations) {
-    lines.push([5]);
+    lines.push([3]);
     let didSwap = true;
 
-    lines.push([8]);
+    lines.push([5]);
     let i = array.length;
 
-    lines.push([10]);
+    lines.push([7]);
     while (didSwap && i > 0) {
 
-        lines.push([11]);
+        lines.push([8]);
         didSwap = false;
 
-        lines.push([12]);
+        lines.push([9]);
         for (let j = 0; j < i - 1; ++j) {
             /** 
             * Pass in 2 indices for bar comparison 
@@ -84,18 +84,24 @@ function bubbleSort(array, lines, animations) {
             animations.push([j, j + 1])
             animations.push([array[j], array[j + 1]]);
             animations.push([]);
-            lines.push([15]); /** Stage 0 and 1, comparing indices */
+
+            lines.push([11]); /** Stage 0 comparing indices */
+            lines.push([11]) /** Stage 1 comparing values  */
             if (array[j] > array[j + 1]) {
 
-                lines.push([16, 18]); /** Stage 2, swapping*/
+                lines.push([13, 14]); /** Stage 2, swapping*/
                 didSwap = true;
                 [array[j], array[j + 1]] = [array[j + 1], array[j]];
+
+            /** Stage 2: If its no switch, just keep highlighting the if statement */
+            } else {
+                lines.push([11]);
             }
         }
         i--;
     }
-    console.log(array);
-    console.log(lines);
+    // console.log(array);
+    // console.log(lines);
 }
 
 /*
@@ -114,10 +120,10 @@ function animate(
                 isPausedCallback,
                 resolveCallback) {
 
-    if (animationsIdx >= lines.length) {
+    if (linesIdx >= lines.length) {
         /*
         ? Resolves promise when animation is finished */
-        greenify(animationsIdx, lines, arrayBars);
+        greenify(linesIdx, lines, arrayBars);
         resolveCallback(animations) 
         return;
     }    
@@ -133,15 +139,15 @@ function animate(
 
     let nextStepTimeout = 0;
     const stage = animationsIdx % 3;
-    const highlightedLine = lines[linesIdx][0];
+    const highlightedLine = lines[linesIdx];
 
     /** If we compare/swap, swap and then highlight line, or else just highlight line */
-    if (highlightedLine === 14 || highlightedLine === 15) {
+    if (highlightedLine.includes(11)) {
         if (stage === 0) {
             const [barOneIdx, barTwoIdx] = animations[animationsIdx];
             const barOneStyle = arrayBars[barOneIdx].style;
             const barTwoStyle = arrayBars[barTwoIdx].style;
-    
+
             barOneStyle.backgroundColor = SECONDARY_COLOR;
             barTwoStyle.backgroundColor = SECONDARY_COLOR;
             nextStepTimeout = getSpeedCallback(); 
@@ -149,11 +155,11 @@ function animate(
         } else if (stage === 1) {
             const [indexJ, indexJ1] = animations[animationsIdx - 1];
             const [indexJVal, indexJ1Val] = animations[animationsIdx];
-    
+
             if (indexJVal === indexJ1Val) {
                 const barOneStyle = arrayBars[indexJ].style;
                 const barTwoStyle = arrayBars[indexJ1].style;
-    
+
                 barOneStyle.backgroundColor = SAMESIZE_COLOR;
                 barTwoStyle.backgroundColor = SAMESIZE_COLOR;
                 updateComparisons(comparisons + 1);
@@ -163,7 +169,7 @@ function animate(
                 const largerBarIndex = (smallerBarIndex === indexJ) ? indexJ1 : indexJ;
                 const barOneStyle = arrayBars[smallerBarIndex].style;
                 const barTwoStyle = arrayBars[largerBarIndex].style;
-    
+
                 barOneStyle.backgroundColor = SMALLER_COLOR;
                 barTwoStyle.backgroundColor = LARGER_COLOR;
                 updateComparisons(comparisons + 1);
@@ -171,7 +177,9 @@ function animate(
             }
             nextStepTimeout = getSpeedCallback(); 
             animationsIdx++;
-        } else {
+        }
+    } else if (highlightedLine.includes(13)) {
+        if (stage === 2) {
             const [indexJ, indexJ1] = animations[animationsIdx - 2];
             const [indexJVal, indexJ1Val] = animations[animationsIdx - 1];
             
@@ -198,12 +206,13 @@ function animate(
                     toBeSortedIndex--;
                 }
             }, getSpeedCallback())
-            highlightLine(lines[linesIdx][1]);
             nextStepTimeout = getSpeedCallback(); 
             animationsIdx++;
         }
     }
-    // console.log(highlightedLine);
+
+    nextStepTimeout = getSpeedCallback(); 
+    updateHighlight(highlightedLine);
     linesIdx++;
     setTimeout(() => animate(lines, linesIdx, animations, arrayBars, animationsIdx, toBeSortedIndex, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback), nextStepTimeout);
 }

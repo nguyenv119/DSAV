@@ -2,8 +2,7 @@ import React from "react";
 
 /*
 ? Imports the descriptions and code for the algos */
-import { 
-         introDescription,
+import { introDescription,
          bubbleDescription,
          selectionDescription,
          insertionDescription,
@@ -22,6 +21,7 @@ import { selectionSortExp } from "../SortingAlgos/Algorithms/selectionSort"
 import { insertionSortExp } from "../SortingAlgos/Algorithms/insertionSort"
 import { mergeSortExp } from "../SortingAlgos/Algorithms/mergeSort"
 import { heapSortExp } from "../SortingAlgos/Algorithms/heapSort"
+import { randomIntFrom } from "../SortingAlgos/CommonMethods/commonMethods";
 import 'bootstrap/dist/css/bootstrap.css';
 
 /*
@@ -31,6 +31,7 @@ import { left } from "@popperjs/core";
 
 const MINVAL = 10;
 const MAXVAL = 645;
+const SPEED_THRESHOLD = 6;
 
 export const PRIMARY_COLOR = '#3A86FF';
 export const SECONDARY_COLOR = '#FB5607';
@@ -44,65 +45,6 @@ export const DONE_COLOR = "#FF006E";
 /*
 ? export default class defines the class we want to have as a tag*/
 export default class SortingVisualizer extends React.Component {
-
-    /* 
-    ? Called when react component is created 
-     * props = properties, passed down from parent comp 
-     * (component where this component is called):
-    */
-    constructor(props) {
-        /* 
-        ? Gets data */
-        super(props);
-
-        /* 
-        ? Init the initial state of component */
-        this.state = {
-            array: [],
-            sortingAlgorithm: null,
-            isSorting: false,
-            buttonsDisabled: false,
-            ANIMATION_SPEED_MS: 6,
-            BARS: 14,
-            sortingInProgress: false,
-            activeButton: "",
-            activeSortingButton: "",
-            comparisons: 0,
-            isPaused: false,
-            activeAlgorithm: 1,
-            highlightedLine: [0],
-            algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
-
-            /*
-            ? This is the component that will be chosen dependant on the sorting algo */
-            codeVisualizer: {
-                "none": {
-                    about: [ introDescription() ],
-                    code: []
-                },
-                "bubbleSort": {
-                    about: [ bubbleDescription() ],
-                    code: [ <BubbleSortCode highlightLines={[2]} /> ]
-                },
-                "selectionSort": {
-                    about: [ selectionDescription() ],
-                    code: [ <SelectionSortCode highlightLines={[2]} /> ]
-                },
-                "insertionSort": {
-                    about: [ insertionDescription() ],
-                    code: [ <InsertionSortCode highlightLines={[2]} /> ]
-                },
-                "mergeSort": {
-                    about: [ mergeDescription() ],
-                    code: [ <MergeSortCode highlightLines={[3]} /> ]
-                },
-                "heapSort": {
-                    about: [ heapDescription() ],
-                    code: [ <HeapSortCode highlightLines={[1]} /> ]
-                },
-            }
-        };
-    };
 
     /* 
     ? Lifecycle method in React class component 
@@ -126,7 +68,7 @@ export default class SortingVisualizer extends React.Component {
     ? Gets the speed of the animation */
     getSpeed(ANIMATION_SPEED_MS) {
         const speed = ANIMATION_SPEED_MS === 10 ?
-            1 : ANIMATION_SPEED_MS === 8 ?
+            0 : ANIMATION_SPEED_MS === 8 ?
                 10 : ANIMATION_SPEED_MS === 6 ?
                     20 : ANIMATION_SPEED_MS === 4 ?
                         200 : ANIMATION_SPEED_MS === 2 ?
@@ -194,25 +136,11 @@ export default class SortingVisualizer extends React.Component {
         return this.state.isPaused;
     }
 
-    /* 
-     * For all sorting algos, we are returned an animation array, and a copy
-     * of the sorted array. At the end of every animation, we set the state
-     * to be the sorted array, as to not redo the animations on the unsorted array
-     * if it were not replaced with the sorted array */
-    bubbleSort() {
-        let [array, arrayBars] = this.makeProps();
-        let comparisons = 0;
-        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), () => this.updateHighlightedLine())
-            .then((arr) => {
-                this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
-            })
-    }
-
     selectionSort() {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
 
-        selectionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), () => this.updateHighlightedLine())
+        selectionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
         .then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
@@ -222,7 +150,7 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
 
-        insertionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), () => this.updateHighlightedLine())
+        insertionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
         .then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
@@ -232,7 +160,7 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
 
-        mergeSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), () => this.updateHighlightedLine())
+        mergeSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
         .then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
@@ -242,10 +170,105 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
 
-        heapSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), () => this.updateHighlightedLine())
+        heapSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
         .then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
+    }
+
+    /* 
+    ? Changes the state of the button that is being pressed down */
+    buttonDown = (buttonName) => {
+        this.setState({ activeButton: buttonName });
+    };
+
+    /* 
+    ? Callback function to update comparisons. We have to pass in the function, 
+    ? not just the variable comparisons, because it will create a local copy of comparisons
+    ? in the sorting JS file */
+    updateComparisons = (newComparisons) => {
+        this.setState({ comparisons: newComparisons });
+    };
+
+     /*
+    ? Handles the pause/play action*/
+    handlePause = () => {
+        this.setState(prevState => ({
+            isPaused: !prevState.isPaused
+        }));
+    }
+
+    /* 
+    ? Called when react component is created 
+     * props = properties, passed down from parent comp 
+     * (component where this component is called):
+    */
+    constructor(props) {
+        /* 
+        ? Gets data */
+        super(props);
+
+        /* 
+        ? Init the initial state of component */
+        this.state = {
+            array: [],
+            sortingAlgorithm: null,
+            isSorting: false,
+            buttonsDisabled: false,
+            ANIMATION_SPEED_MS: 6,
+            BARS: 14,
+            sortingInProgress: false,
+            activeButton: "",
+            activeSortingButton: "",
+            comparisons: 0,
+            isPaused: false,
+            activeAlgorithm: 1,
+            highlightedLine: [0],
+            algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
+
+            /*
+            ? This is the component that will be chosen dependant on the sorting algo */
+            codeVisualizer: {
+                "none": {
+                    about: [ introDescription() ],
+                    code: []
+                },
+                "bubbleSort": {
+                    about: [ bubbleDescription() ],
+                    code: [ <BubbleSortCode highlightLines={[2]} /> ]
+                },
+                "selectionSort": {
+                    about: [ selectionDescription() ],
+                    code: [ <SelectionSortCode highlightLines={[2]} /> ]
+                },
+                "insertionSort": {
+                    about: [ insertionDescription() ],
+                    code: [ <InsertionSortCode highlightLines={[2]} /> ]
+                },
+                "mergeSort": {
+                    about: [ mergeDescription() ],
+                    code: [ <MergeSortCode highlightLines={[3]} /> ]
+                },
+                "heapSort": {
+                    about: [ heapDescription() ],
+                    code: [ <HeapSortCode highlightLines={[1]} /> ]
+                },
+            }
+        };
+    };
+
+    /* 
+     * For all sorting algos, we are returned an animation array, and a copy
+     * of the sorted array. At the end of every animation, we set the state
+     * to be the sorted array, as to not redo the animations on the unsorted array
+     * if it were not replaced with the sorted array */
+    bubbleSort() {
+        let [array, arrayBars] = this.makeProps();
+        let comparisons = 0;
+        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
+            .then((arr) => {
+                this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+            })
     }
 
     /* 
@@ -264,34 +287,13 @@ export default class SortingVisualizer extends React.Component {
         this.setState({ ANIMATION_SPEED_MS: parseInt(e.target.value) });
     };
 
-    /* 
-    ? Changes the state of the button that is being pressed down */
-    buttonDown = (buttonName) => {
-        this.setState({ activeButton: buttonName });
-    };
-
-    /* 
-    ? Callback function to update comparisons. We have to pass in the function, 
-    ? not just the variable comparisons, because it will create a local copy of comparisons
-    ? in the sorting JS file */
-    updateComparisons = (newComparisons) => {
-        this.setState({ comparisons: newComparisons });
-    };
-
     /*
     ? Callbackfunction to update the highlightedLine we are on.
-    ? Called in the animate function */
-    updateHighlightedLine = (newLine) => {
-        this.setState({ highlightedLine: newLine });
-    }
+    ? Called in the animate function, and rerenders the code when we update */
+    updateHighlightedLine = (newHighlightedLine) => {
+        this.setState({ highlightedLine: newHighlightedLine });
+    };
 
-    /*
-    ? Handles the pause/play action*/
-    handlePause = () => {
-        this.setState(prevState => ({
-            isPaused: !prevState.isPaused
-        }));
-    }
 
     /* 
     ? Renders components UI */
@@ -301,20 +303,49 @@ export default class SortingVisualizer extends React.Component {
          * We need the {}, won't work with just array
         */
         const { array,
-            activeButton,
-            activeSortingButton,
-            sortingInProgress,
-            isSorting,
-            ANIMATION_SPEED_MS,
-            BARS,
-            comparisons } = this.state;
+                activeButton,
+                activeSortingButton,
+                sortingInProgress,
+                isSorting,
+                ANIMATION_SPEED_MS,
+                BARS,
+                comparisons,
+                algorithmKeys,
+                codeVisualizer,
+                activeAlgorithm,
+                highlightedLine } = this.state;
 
-        const activeAlgorithmKey = this.state.algorithmKeys[this.state.activeAlgorithm];
-        const algorithm = this.state.codeVisualizer[activeAlgorithmKey];
+        /*
+        ! Determine codeArea rendering */
+        const activeAlgorithmKey = algorithmKeys[activeAlgorithm];
+        const algorithm = codeVisualizer[activeAlgorithmKey];
+        let algorithmCode;
         
-        //Code for determining what formula to use when calculating worse case
+        if (ANIMATION_SPEED_MS <= SPEED_THRESHOLD) {
+            switch (activeAlgorithmKey) {
+                case "bubbleSort":
+                    algorithmCode = <BubbleSortCode highlightLines={ isSorting ?  highlightedLine : [2] } />;
+                    break;
+                case "selectionSort":
+                    algorithmCode = <SelectionSortCode highlightLines={ isSorting ?  highlightedLine : [2] } />;
+                    break;
+                case "insertionSort":
+                    algorithmCode = <InsertionSortCode highlightLines={ isSorting ?  highlightedLine : [2] } />;
+                    break;
+                case "mergeSort":
+                    algorithmCode = <MergeSortCode highlightLines={ isSorting ?  highlightedLine : [3] } />;
+                    break;
+                case "heapSort":
+                    algorithmCode = <HeapSortCode highlightLines={ isSorting ?  highlightedLine : [1] } />;
+                    break;
+                default:
+                    algorithmCode = "";
+            }
+        } else algorithmCode = algorithm.code;
+    
+        /* 
+        !Code for determining what formula to use when calculating worse case */
         let totalComparisons;
-        
         switch (activeSortingButton) {
             case "bubbleSort":
             case "selectionSort":
@@ -482,7 +513,7 @@ export default class SortingVisualizer extends React.Component {
                         className={`actualCode${
                             activeAlgorithmKey === "none" ? ' noCode' : 
                             (activeAlgorithmKey === "mergeSort") || (activeAlgorithmKey === "heapSort") ? ' merge' : ' '}`}>
-                        {algorithm.code}
+                        {algorithmCode}
                     </div>
 
                     {/* if we are at the start page, the explanation section is smaller */}
@@ -517,10 +548,4 @@ export default class SortingVisualizer extends React.Component {
             </div>
         );
     }
-}
-
-/*
-? Generates random int from min to max */
-function randomIntFrom(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
 }
