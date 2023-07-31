@@ -185,6 +185,8 @@ export default class SortingVisualizer extends React.Component {
                 arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
             }
         });
+
+        
     }
 
     /*
@@ -281,6 +283,55 @@ export default class SortingVisualizer extends React.Component {
         }));
     }
 
+   //Resets Comparisons and generates a new array
+resetArrayAndComparisons() {
+    this.makeArray();
+    this.setState({ comparisons: 0 });
+}
+
+// Updated handleReset
+handleReset = () => {
+
+    if (this.state.sortingInProgress) {
+      this.stopSorting();
+    }
+    
+    // Reset comparisons
+    this.setState({comparisons: 0});
+  
+    // Reset styles
+    const arrayBars = document.getElementsByClassName("arrayBar");
+    for(let i = 0; i < arrayBars.length; i++) {
+      arrayBars[i].style.backgroundColor = PRIMARY_COLOR; 
+    }
+    
+    // Generate new array
+    this.makeArray();
+    
+    // Reset remaining state
+    this.setState({
+      sortingAlgorithm: null,
+      isSorting: false,
+      buttonsDisabled: false,  
+      sortingInProgress: false,
+      isPaused: true
+    });
+  }
+
+  stopSorting = () => {
+
+    // Clear timeouts
+    clearTimeout(this.state.sortingTimeout);
+    
+    // Reject any promises
+    if (this.currentSortPromise) {
+      this.currentSortPromise.cancel(); 
+    }
+    
+    // Cleanup
+    cancelAnimationFrame(this.animationFrame);
+  }
+
     /* 
     ? Renders components UI */
     render() {
@@ -342,7 +393,7 @@ export default class SortingVisualizer extends React.Component {
                             ))}
                     </div>
                     <ProgressBar comparisons={comparisons} totalComparisons={totalComparisons} />
-                    <div class="buttons">
+                    <div class="buttons">                    
                         <div className="buttonContainer">
                             <div className="buttonGroup">
                                 <div class="wrapper buttons">
@@ -390,7 +441,18 @@ export default class SortingVisualizer extends React.Component {
                                         }}
                                         disabled={sortingInProgress}>Heap Sort
                                     </button>
+                                    
+                                    {/* Reset Button */}
+                                    <button style={{
+                                        color: 'black'
+                                    }}
+                                        className="btn-3d sorting"
+                                        onClick={this.handleReset}
+                                    >
+                                        Reset
+                                    </button>
                                 </div>
+
                                 {/* <div className="btn-container">
                                     <button className={`btn-3d regular${activeSortingButton === "heapSort" ? ' down' : ''}`}
                                         onClick={() => {
