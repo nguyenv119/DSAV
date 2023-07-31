@@ -1,0 +1,16 @@
+.lineSpacing {
+    padding: 1px !important; 
+    margin: 0px !important;
+    padding-left: 11px !important;
+    line-height: 1rem !important;
+    font-size: 11px;
+    border-radius: 0px !important;
+    /* transform: translateY(35%); */
+    /* border: 2px solid red; */
+}
+
+
+.codeContainer {
+    /* border: 2px solid red; */
+    background-color: rgb(27, 27, 27);
+}

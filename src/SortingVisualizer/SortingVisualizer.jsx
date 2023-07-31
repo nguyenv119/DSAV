@@ -9,12 +9,11 @@ import {
          insertionDescription,
          mergeDescription,
          heapDescription } from "../SortingAlgos/LearningArea/descriptions";    
-import {
-         bubbleSortCodeComment,
-         selectionSortCodeComment,
-         insertionSortCodeComment,
-         mergeSortCodeComment,
-         heapSortCodeComment } from "../SortingAlgos/LearningArea/code";    
+import { BubbleSortCode,
+        SelectionSortCode,
+        InsertionSortCode,
+        MergeSortCode,
+        HeapSortCode } from "../SortingAlgos/LearningArea/code";    
 
 /*
 ? Importing the actual sorting algos */
@@ -32,15 +31,15 @@ import { left } from "@popperjs/core";
 
 const MINVAL = 10;
 const MAXVAL = 645;
+
+export const PRIMARY_COLOR = '#3A86FF';
+export const SECONDARY_COLOR = '#FB5607';
 export const GREEN_SPEED = 7;
 export const SMALLER_COLOR = "#ea2c1e";
 export const LARGER_COLOR = "#50af50"
 export const SAMESIZE_COLOR = "#f1cc32";
 export const SMALLEST_SOFAR_COLOR = "#FF006E"
 export const DONE_COLOR = "#FF006E";
-
-export const PRIMARY_COLOR = '#3A86FF';
-export const SECONDARY_COLOR = '#FB5607';
 
 /*
 ? export default class defines the class we want to have as a tag*/
@@ -70,7 +69,7 @@ export default class SortingVisualizer extends React.Component {
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 1,
+            activeAlgorithm: 5,
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
 
             /*
@@ -82,23 +81,23 @@ export default class SortingVisualizer extends React.Component {
                 },
                 "bubbleSort": {
                     about: [ bubbleDescription() ],
-                    code: [ bubbleSortCodeComment() ]
+                    code: [ <BubbleSortCode highlightLine={2} /> ]
                 },
                 "selectionSort": {
                     about: [ selectionDescription() ],
-                    code: [ selectionSortCodeComment() ]
+                    code: [ <SelectionSortCode highlightLine={2} /> ]
                 },
                 "insertionSort": {
                     about: [ insertionDescription() ],
-                    code: [ insertionSortCodeComment() ]
+                    code: [ <InsertionSortCode highlightLine={2} /> ]
                 },
                 "mergeSort": {
                     about: [ mergeDescription() ],
-                    code: [ mergeSortCodeComment() ]
+                    code: [ <MergeSortCode highlightLine={3} /> ]
                 },
                 "heapSort": {
                     about: [ heapDescription() ],
-                    code: [ heapSortCodeComment() ]
+                    code: [ <HeapSortCode highlightLine={1} /> ]
                 },
             }
         };
@@ -204,7 +203,7 @@ export default class SortingVisualizer extends React.Component {
     bubbleSort() {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
-        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused())
+        bubbleSortExp(array, arrayBars, bubbleSortCode, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused())
             .then((arr) => {
                 this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
             })
@@ -350,7 +349,6 @@ stopSorting = () => {
         
         //Code for determining what formula to use when calculating worse case
         let totalComparisons;
-        console.log(activeAlgorithmKey);
         
         switch (activeSortingButton) {
             case "bubbleSort":
