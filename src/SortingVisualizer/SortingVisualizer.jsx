@@ -63,14 +63,14 @@ export default class SortingVisualizer extends React.Component {
             sortingAlgorithm: null,
             isSorting: false,
             buttonsDisabled: false,
-            ANIMATION_SPEED_MS: 3, //6
-            BARS: 10, // 14
+            ANIMATION_SPEED_MS: 6, //6
+            BARS: 14, // 14
             sortingInProgress: false,
             activeButton: "",
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 2,
+            activeAlgorithm: 3,
             highlightedLine: [0],
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
 

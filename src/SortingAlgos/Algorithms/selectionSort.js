@@ -63,35 +63,34 @@ function selectionSort(array, lines, animations) {
 
     for (let i = 0; i < array.length - 1; i++) {
         lines.push(["YES", 5]);
-
         let min = i;
         lines.push(["YES", 6]);
-
         for (let j = i + 1; j < array.length; j++) {
             lines.push(["YES", 8]); /** Will be stage 4: ignore */
-
             /** Initial comparison between smallestSoFar and j*/
             animations.push([min, j]);
-
             /** Pass these indices into arrayBars to see which one larger, then switch COLORS */
             if (array[j] < array[min]) {
-                lines.push(["YES", 10]); /** Stage 0, compare indices */
-                lines.push(["YES", 10]); /** Stage 2, compare values */
-
+                /*
+                ? Stage 0, compare indices */
+                lines.push(["YES", 10]); 
+                /*
+                ? Stage 2, compare values */
+                lines.push(["YES", 10]); 
                 animations.push([j, min]);
                 animations.push([array[j], array[min]]);
                 animations.push([array[i], array[j]]);
-
                 min = j;
-                lines.push(["YES", 11]); /** Stage 3, highlight min */
+                /*
+                ? Stage 3, highlight min */
+                lines.push(["YES", 11]);
             } else {
                 animations.push([min, j]);
                 animations.push([array[min], array[j]]);
                 animations.push([array[i], array[min]]);
-
-                lines.push(["YES", 10]); /** Stage 0, compare indices */
-                lines.push(["YES", 10]); /** Stage 2, compare values */
-                lines.push(["NO", 10]); /** Stage 3, highlight min */
+                lines.push(["YES", 10]); 
+                lines.push(["YES", 10]);
+                lines.push(["NO", 10]);
             }
             animations.push([i, min]);
         }
@@ -103,10 +102,10 @@ function selectionSort(array, lines, animations) {
         if (min != i) {
             lines.push(["YES", 15]); 
             [array[min], array[i]] = [array[i], array[min]];
-            lines.push(["YES", 16]); /** Stage 4: swap values */
+            lines.push(["YES", 16]); /* swap values */
         } else {
             lines.push(["YES", 15]);
-            lines.push(["NO", 15]); /** Stage 4: dont swap values */
+            lines.push(["NO", 15]); /* dont swap values */
         }
     }
     /** Final element of animation to highlight the last index as
@@ -115,8 +114,7 @@ function selectionSort(array, lines, animations) {
 }
 
 /** Animates the selectionSort */
-function animate(
-                 lines,
+function animate(lines,
                  linesIdx,
                  animations,
                  arrayBars, 
@@ -157,7 +155,6 @@ function animate(
     } 
     else {
         const stage = animationsIdx % 5;
-        console.log(stage, highlightedLine);
 
         /** Always highlight the min */
         if (stage === 3) {

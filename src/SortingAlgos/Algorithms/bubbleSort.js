@@ -60,16 +60,12 @@ function getBubbleSortArrays(arr) {
 function bubbleSort(array, lines, animations) {
     let didSwap = true;
     lines.push(["YES", 3]);
-
     let i = array.length;
     lines.push(["YES", 5]);
-
     while (didSwap && i > 0) {
         lines.push(["YES", 7]);
-
         didSwap = false;
         lines.push(["YES", 8]);
-
         for (let j = 0; j < i - 1; ++j) {
             lines.push(["YES", 9]);
             /** 
@@ -84,7 +80,6 @@ function bubbleSort(array, lines, animations) {
             animations.push([j, j + 1])
             animations.push([array[j], array[j + 1]]);
             animations.push([]);
-
             if (array[j] > array[j + 1]) {
                 lines.push(["YES", 11]); /** Stage 0 comparing indices */
                 lines.push(["YES", 11]) /** Stage 1 comparing values  */
@@ -92,7 +87,6 @@ function bubbleSort(array, lines, animations) {
                 didSwap = true;
                 [array[j], array[j + 1]] = [array[j + 1], array[j]];
                 lines.push(["YES", 13, 14]); /** Stage 2, swapping*/
-
             /** Stage 2: If its no switch, just keep highlighting the if statement*/
             } else {
                 lines.push(["YES", 11]);

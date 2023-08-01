@@ -96,7 +96,6 @@ const displayCode = (lines, highlightLines) => {
     );
 };
 
-
 export function BubbleSortCode({ highlightLines }) {
     const bubbleSort = `!! @param A: the array
 !! @param n: the array length
@@ -153,12 +152,10 @@ insertionSort(A, n) {
     /* Loop until the last element */
     for (idx ← 1 to n - 1) {
         prevIdx ← idx - 1
-        prevVal ← A[prevIdx]
-        currVal ← A[idx]
         /* While the found element is larger than the previous */
-        /* And, we haven't reached the end, keep moving it back */
-        while (prevIdx >= 0 and currVal > prevVal) {
-            swap(currVal, prevVal)
+        /* And, we haven't reached the end, keep shifting it back by 1 */
+        while (prevIdx >= 0 and A[i] < A[prevIdx]) {
+            swap(A[i], A[prevIdx])
             prevIdx ← prevIdx - 1
         }
     }
