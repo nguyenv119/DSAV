@@ -177,16 +177,20 @@ button[class*="btn"] {border: 1;}
   max-height: 76%;
 }
 
+.description.insertion {
+  /* border: 2px solid blue; */
+  height: 56%;
+  max-height: 56%;
+}
+
 .description.merge {
   /* border: 2px solid blue; */
-  font-size: 12.5px;
   height: 63%;
   max-height: 63%;
 }
 
 .description.heap {
   /* border: 2px solid blue; */
-  font-size: 12.5px;
   height: 73%;
   max-height: 73%;
 }
@@ -206,6 +210,11 @@ button[class*="btn"] {border: 1;}
 
 .actualCode.noCode {
   display: none;
+}
+
+.actualCode.insertion {
+  height: 33%;
+  /* border: 2px solid purple; */
 }
 
 .actualCode.merge {

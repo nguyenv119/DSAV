@@ -70,7 +70,7 @@ export default class SortingVisualizer extends React.Component {
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 3,
+            activeAlgorithm: 0,
             highlightedLine: [0],
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
 
@@ -504,6 +504,7 @@ export default class SortingVisualizer extends React.Component {
                     <div 
                         className={`description${
                             activeAlgorithmKey === "none" ? ' intro' : 
+                            activeAlgorithmKey === "insertionSort" ? ' insertion' :
                             activeAlgorithmKey === "mergeSort" ? ' merge' : 
                             activeAlgorithmKey === "heapSort" ? ' heap' : ' '}`}>
                         {algorithm.about}
@@ -511,6 +512,7 @@ export default class SortingVisualizer extends React.Component {
                     <div 
                         className={`actualCode${
                             activeAlgorithmKey === "none" ? ' noCode' : 
+                            activeAlgorithmKey === "insertionSort" ? ' insertion' :
                             (activeAlgorithmKey === "mergeSort") || (activeAlgorithmKey === "heapSort") ? ' merge' : ' '}`}>
                         {algorithmCode}
                     </div>
