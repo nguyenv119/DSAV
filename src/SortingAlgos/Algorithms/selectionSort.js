@@ -186,15 +186,15 @@ function animate(
         } else if (highlightedLine.includes(15)) {
             const [indexToBeSwapped, indexEnd] = animations[animationsIdx];
             const barSwap = arrayBars[indexToBeSwapped].style;
+            const barEnd = arrayBars[indexEnd].style;
             
             /** Highlight bars to be switched if we are on the 1st 15 */
-            if (lines[linesIdx - 3].includes(10)) {
-                const barEnd = arrayBars[indexEnd].style;
+            if (lines[linesIdx][0] === "YES") {
                 barSwap.backgroundColor = "white";
                 barEnd.backgroundColor = "white";
                 nextStepTimeout = getSpeedCallback();
             /** If not, highlight it to be pink */
-            } else {
+            } else if (lines[linesIdx][0] === "NO") {
                 barSwap.backgroundColor = DONE_COLOR;
                 animationsIdx++;
             }
@@ -212,10 +212,8 @@ function animate(
             * --> Makes most recently sorted index DONE_COLOR
             * --> Revert the other swapped value back to PRIMARY
             */
-            if (indexToBeSwapped !== indexSmallestFound) {
-                [swapBar.height, smallestFoundBar.height] = [`${smallestFound}px`, `${toBeSwappedVal}px`];
-                smallestFoundBar.backgroundColor = PRIMARY_COLOR;
-            }
+            [swapBar.height, smallestFoundBar.height] = [`${smallestFound}px`, `${toBeSwappedVal}px`];
+            smallestFoundBar.backgroundColor = PRIMARY_COLOR;
             swapBar.backgroundColor = DONE_COLOR;
             nextStepTimeout = getSpeedCallback();
             animationsIdx++;
