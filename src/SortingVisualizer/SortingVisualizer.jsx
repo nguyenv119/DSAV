@@ -47,6 +47,65 @@ export const DONE_COLOR = "#FF006E";
 export default class SortingVisualizer extends React.Component {
 
     /* 
+    ? Called when react component is created 
+     * props = properties, passed down from parent comp 
+     * (component where this component is called):
+    */
+    constructor(props) {
+        /* 
+        ? Gets data */
+        super(props);
+
+        /* 
+        ? Init the initial state of component */
+        this.state = {
+            array: [],
+            sortingAlgorithm: null,
+            isSorting: false,
+            buttonsDisabled: false,
+            ANIMATION_SPEED_MS: 6, //6
+            BARS: 14, // 14
+            sortingInProgress: false,
+            activeButton: "",
+            activeSortingButton: "",
+            comparisons: 0,
+            isPaused: false,
+            activeAlgorithm: 0,
+            highlightedLine: [0],
+            algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
+
+            /*
+            ? This is the component that will be chosen dependant on the sorting algo */
+            codeVisualizer: {
+                "none": {
+                    about: [ introDescription() ],
+                    code: []
+                },
+                "bubbleSort": {
+                    about: [ bubbleDescription() ],
+                    code: [ <BubbleSortCode highlightLines={[2]} /> ]
+                },
+                "selectionSort": {
+                    about: [ selectionDescription() ],
+                    code: [ <SelectionSortCode highlightLines={[2]} /> ]
+                },
+                "insertionSort": {
+                    about: [ insertionDescription() ],
+                    code: [ <InsertionSortCode highlightLines={[2]} /> ]
+                },
+                "mergeSort": {
+                    about: [ mergeDescription() ],
+                    code: [ <MergeSortCode highlightLines={[3]} /> ]
+                },
+                "heapSort": {
+                    about: [ heapDescription() ],
+                    code: [ <HeapSortCode highlightLines={[1]} /> ]
+                },
+            }
+        };
+    };
+
+    /* 
     ? Lifecycle method in React class component 
      * invoked immedientally after a component is 
      * mounted (inserted into DOM tree), rendered for the first time
@@ -62,6 +121,60 @@ export default class SortingVisualizer extends React.Component {
         const arrayBars = document.getElementsByClassName("arrayBar");
         const { array } = this.state;
         return [array, arrayBars];
+    }
+
+
+    /* 
+     * For all sorting algos, we are returned an animation array, and a copy
+     * of the sorted array. At the end of every animation, we set the state
+     * to be the sorted array, as to not redo the animations on the unsorted array
+     * if it were not replaced with the sorted array */
+    bubbleSort() {
+        let [array, arrayBars] = this.makeProps();
+        let comparisons = 0;
+        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
+            .then((arr) => {
+                this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+            })
+    }
+
+    selectionSort() {
+        let [array, arrayBars] = this.makeProps();
+        let comparisons = 0;
+        selectionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
+        .then((arr) => {
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+        })
+    }
+
+    insertionSort() {
+        let [array, arrayBars] = this.makeProps();
+        let comparisons = 0;
+
+        insertionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
+        .then((arr) => {
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+        })
+    }
+
+    mergeSort() {
+        let [array, arrayBars] = this.makeProps();
+        let comparisons = 0;
+
+        mergeSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
+        .then((arr) => {
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+        })
+    }
+
+    heapSort() {
+        let [array, arrayBars] = this.makeProps();
+        let comparisons = 0;
+
+        heapSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
+        .then((arr) => {
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+        })
     }
 
     /*
@@ -136,46 +249,6 @@ export default class SortingVisualizer extends React.Component {
         return this.state.isPaused;
     }
 
-    selectionSort() {
-        let [array, arrayBars] = this.makeProps();
-        let comparisons = 0;
-
-        selectionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
-        .then((arr) => {
-            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
-        })
-    }
-
-    insertionSort() {
-        let [array, arrayBars] = this.makeProps();
-        let comparisons = 0;
-
-        insertionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
-        .then((arr) => {
-            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
-        })
-    }
-
-    mergeSort() {
-        let [array, arrayBars] = this.makeProps();
-        let comparisons = 0;
-
-        mergeSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
-        .then((arr) => {
-            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
-        })
-    }
-
-    heapSort() {
-        let [array, arrayBars] = this.makeProps();
-        let comparisons = 0;
-
-        heapSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
-        .then((arr) => {
-            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
-        })
-    }
-
     /* 
     ? Changes the state of the button that is being pressed down */
     buttonDown = (buttonName) => {
@@ -196,79 +269,6 @@ export default class SortingVisualizer extends React.Component {
         this.setState(prevState => ({
             isPaused: !prevState.isPaused
         }));
-    }
-
-    /* 
-    ? Called when react component is created 
-     * props = properties, passed down from parent comp 
-     * (component where this component is called):
-    */
-    constructor(props) {
-        /* 
-        ? Gets data */
-        super(props);
-
-        /* 
-        ? Init the initial state of component */
-        this.state = {
-            array: [],
-            sortingAlgorithm: null,
-            isSorting: false,
-            buttonsDisabled: false,
-            ANIMATION_SPEED_MS: 6, //6
-            BARS: 14, // 14
-            sortingInProgress: false,
-            activeButton: "",
-            activeSortingButton: "",
-            comparisons: 0,
-            isPaused: false,
-            activeAlgorithm: 1,
-            highlightedLine: [0],
-            algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
-
-            /*
-            ? This is the component that will be chosen dependant on the sorting algo */
-            codeVisualizer: {
-                "none": {
-                    about: [ introDescription() ],
-                    code: []
-                },
-                "bubbleSort": {
-                    about: [ bubbleDescription() ],
-                    code: [ <BubbleSortCode highlightLines={[2]} /> ]
-                },
-                "selectionSort": {
-                    about: [ selectionDescription() ],
-                    code: [ <SelectionSortCode highlightLines={[2]} /> ]
-                },
-                "insertionSort": {
-                    about: [ insertionDescription() ],
-                    code: [ <InsertionSortCode highlightLines={[2]} /> ]
-                },
-                "mergeSort": {
-                    about: [ mergeDescription() ],
-                    code: [ <MergeSortCode highlightLines={[3]} /> ]
-                },
-                "heapSort": {
-                    about: [ heapDescription() ],
-                    code: [ <HeapSortCode highlightLines={[1]} /> ]
-                },
-            }
-        };
-    };
-
-    /* 
-     * For all sorting algos, we are returned an animation array, and a copy
-     * of the sorted array. At the end of every animation, we set the state
-     * to be the sorted array, as to not redo the animations on the unsorted array
-     * if it were not replaced with the sorted array */
-    bubbleSort() {
-        let [array, arrayBars] = this.makeProps();
-        let comparisons = 0;
-        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
-            .then((arr) => {
-                this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
-            })
     }
 
     /* 
@@ -293,7 +293,6 @@ export default class SortingVisualizer extends React.Component {
     updateHighlightedLine = (newHighlightedLine) => {
         this.setState({ highlightedLine: newHighlightedLine });
     };
-
 
     /* 
     ? Renders components UI */

@@ -150,7 +150,7 @@ button[class*="btn"] {border: 1;}
   top: 0;
   right: 0;
   overflow: auto;
-  height: 96.5vh;
+  height: 100vh;
   width: 20%; /* changed to original value, as per previous conversation */
   display: flex;
   flex-direction: column;
@@ -163,9 +163,9 @@ button[class*="btn"] {border: 1;}
   color: white;
   font-size: 12.5px;
   width: 95%;
-  height: 48%;
+  height: 46%;
   max-height: 100%;
-  margin-left: 3.5%;
+  margin-left: 4%;
   margin-top: 5%;
   overflow: auto; /* Add scrollbars if content overflows */
 }
@@ -173,8 +173,8 @@ button[class*="btn"] {border: 1;}
 .description.intro {
   /* border: 2px solid blue; */
   font-size: 14px;
-  height: 80%;
-  max-height: 80%;
+  height: 76%;
+  max-height: 76%;
 }
 
 .description.merge {
@@ -205,9 +205,7 @@ button[class*="btn"] {border: 1;}
 }
 
 .actualCode.noCode {
-  /* border: 2px solid red; */
-  border: none;
-  height: 0%;
+  display: none;
 }
 
 .actualCode.merge {
@@ -229,7 +227,7 @@ button[class*="btn"] {border: 1;}
   flex-grow: 1;
   overflow: hidden; 
   /* border: 2px solid purple; */
-  padding-top: 4vh; 
+  padding-top: 6vh; 
 }
 
 .explanation.merge {
@@ -461,9 +459,9 @@ button:hover {
 }
 
 .footerStyle {
-  background-color: #131313;
+  background-color: black;
   padding-bottom: 25px;
-  padding-top: 5px;
+  padding-top: 3px;
   color: #ffffff;
   text-align: center;
   left: 0%;

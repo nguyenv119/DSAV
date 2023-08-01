@@ -59,19 +59,19 @@ function getBubbleSortArrays(arr) {
 */
 function bubbleSort(array, lines, animations) {
     let didSwap = true;
-    lines.push([3]);
+    lines.push(["YES", 3]);
 
     let i = array.length;
-    lines.push([5]);
+    lines.push(["YES", 5]);
 
     while (didSwap && i > 0) {
-        lines.push([7]);
+        lines.push(["YES", 7]);
 
         didSwap = false;
-        lines.push([8]);
+        lines.push(["YES", 8]);
 
         for (let j = 0; j < i - 1; ++j) {
-            lines.push([9]);
+            lines.push(["YES", 9]);
             /** 
             * Pass in 2 indices for bar comparison 
             * Since array[j]> array[j + 1], 1st index green 
@@ -86,23 +86,22 @@ function bubbleSort(array, lines, animations) {
             animations.push([]);
 
             if (array[j] > array[j + 1]) {
-                lines.push([11]); /** Stage 0 comparing indices */
-                lines.push([11]) /** Stage 1 comparing values  */
+                lines.push(["YES", 11]); /** Stage 0 comparing indices */
+                lines.push(["YES", 11]) /** Stage 1 comparing values  */
 
                 didSwap = true;
                 [array[j], array[j + 1]] = [array[j + 1], array[j]];
-                lines.push([13, 14]); /** Stage 2, swapping*/
+                lines.push(["YES", 13, 14]); /** Stage 2, swapping*/
 
             /** Stage 2: If its no switch, just keep highlighting the if statement*/
             } else {
-                lines.push([11]);
-                lines.push([11]);
-                lines.push([11]);
+                lines.push(["YES", 11]);
+                lines.push(["YES", 11]);
+                lines.push(["NO", 11]);
             }
         }
         i--;
     }
-    // console.log(lines);
 }
 
 /*
@@ -142,7 +141,6 @@ function animate(
     let nextStepTimeout = 0;
     const stage = animationsIdx % 3;
     const highlightedLine = lines[linesIdx];
-    console.log(highlightedLine);
     /** If we compare/swap, swap and then highlight line, or else just highlight line */
     if (highlightedLine.includes(11)) {
         if (stage === 0) {

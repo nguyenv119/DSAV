@@ -3,6 +3,11 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import "./styles/SortingStyles.css";
 
+const colorMap = {
+    "YES": "#4FAF4F",
+    "NO": "#DC143C"
+};
+
 const defaultStyle = {
     ...oneDark,
     'pre[class*="language-"]': {
@@ -20,37 +25,37 @@ const defaultStyle = {
     'punctuation': { color: '#8A888E' },
     'comment': { color: '#727072' },
     'keyword': { color: '#FC618D' },
-    'function': {  color: '#7AD88F' },
+    'function': {  color: '#3985FF' },
     'number': {color: '#FD971F' },
     'boolean': { color: '#FD971F' },
     'variable': {  color: '#FD971F' },
     'class-name': { color: '#F4DD64' },
 };
 
-const highlightStyle = {
+const highlightStyle = (highlightColor) => ({
     ...defaultStyle,
     'code[class*="language-"]': {
       ...defaultStyle['code[class*="language-"]'],
-      color: '#3A86FF',
-      backgroundColor: 'black',
+      color: highlightColor,
+      backgroundColor: "black",
       minWidth: 'max-content'
     },
     'pre[class*="language-"]': {
       ...defaultStyle['pre[class*="language-"]'],
-      color: '#3A86FF',
-      backgroundColor: 'black',
+      color: highlightColor,
+      backgroundColor: "black",
       minWidth: 'max-content'
     },
-    'operator': { color: '#3A86FF' },
-    'punctuation': { color: '#3A86FF' },
-    'comment': { color: '#3A86FF' },
-    'keyword': { color: '#3A86FF' },
-    'function': {  color: '#3A86FF' },
-    'number': {color: '#3A86FF' },
-    'boolean': { color: '#3A86FF' },
-    'variable': {  color: '#3A86FF' },
-    'class-name': { color: '#3A86FF' },
-};
+    'operator': { color: highlightColor },
+    'punctuation': { color: highlightColor },
+    'comment': { color: highlightColor },
+    'keyword': { color: highlightColor },
+    'function': {  color: highlightColor },
+    'number': {color: highlightColor },
+    'boolean': { color: highlightColor },
+    'variable': {  color: highlightColor },
+    'class-name': { color: highlightColor },
+});
 
 const displayCode = (lines, highlightLines) => {
     /* 
@@ -60,12 +65,15 @@ const displayCode = (lines, highlightLines) => {
     /* Multiply by em to estimate width */
     const longestLineWidth = longestLineLength * characterWidthEm + 'em';
 
+    const highlightColor = colorMap[highlightLines[0]];
+    const actualHighlightLines = highlightLines.slice(1); // We remove the color key
+
     return (
         <div className="codeContainer" style={{ overflow: 'auto', backgroundColor: 'rgb(27, 27, 27)' }}>
             <pre style={{ display: 'inline', width: '100%' }}>
                 {lines.map((line, index) => {
-                    const highlighted = highlightLines.includes(index);
-                    const customStyle = highlighted ? highlightStyle : defaultStyle;
+                    const highlighted = actualHighlightLines.includes(index);
+                    const customStyle = highlighted ? highlightStyle(highlightColor) : defaultStyle;
 
                     /* 
                     !If the line is highlighted, set its width to the longest line width */
@@ -87,6 +95,7 @@ const displayCode = (lines, highlightLines) => {
         </div>
     );
 };
+
 
 export function BubbleSortCode({ highlightLines }) {
     const bubbleSort = `!! @param A: the array
@@ -112,7 +121,7 @@ bubbleSort(A, n) {
     return displayCode(lines, highlightLines);
 };
 
-export function SelectionSortCode({ highlightLine = []}) {
+export function SelectionSortCode({ highlightLines }) {
     const selectionSort = `!! @param A: the array
 !! @param n: the array length
 selectionSort(A, n) {
@@ -134,7 +143,7 @@ selectionSort(A, n) {
     }
 }`;
     const lines = selectionSort.split("\n");
-    return displayCode(lines, highlightLine)
+    return displayCode(lines, highlightLines)
 };
 
 export function InsertionSortCode ({ highlightLines }) {
