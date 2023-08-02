@@ -75,7 +75,7 @@ export const insertionDescription = () => (
     <>
         <p>
             <h5><strong>Insertion Sort:</strong></h5>
-            Each iteration removes consecutive elements from
+            Each iteration removes elements from
             the unsorted array, finds the location it belongs
             within the sorted part, and inserts it there. <br /><br />
             <h6><strong>Time Complexity:</strong></h6>
@@ -97,27 +97,26 @@ export const insertionDescription = () => (
 );
 
 export const mergeDescription = () => (
-    <>
+    <div style={{ lineHeight: "1.2" }}>
         <p>
             <h5><strong>Merge Sort:</strong></h5>
             A divide and conquer algorithm that divides the
-            input array into two halves, sorts them and then merges the two sorted halves. <br /><br />
-            <h6><strong>Time Complexity:</strong></h6>
+            input array into two halves, sorts them and then merges the two sorted halves.
         </p>
-        <ul>
-            <li> All Cases: Ω(nlog(n))</li>
-            <li>
-                In every scenario, the list
+        <h6 style={{ marginBottom: "0.5em" }}><strong>Time Complexity:</strong></h6>
+        <ul style={{ marginTop: "0.5em" }}>
+            <li>All Cases: θ(nlog(n)) — the list
                 performs a linearaithmic number of
                 operations
             </li>
         </ul>
         <h6><strong>Space Complexity:</strong></h6>
-        <p>O(n) — This is not in-place,
-            and requires extra space: the auxiliary array of
+        <p>θ(n) — Requires extra space: auxiliary array of
             n elements.</p>
-    </>
+    </div>
 );
+
+
 
 export const heapDescription = () => (
     <>

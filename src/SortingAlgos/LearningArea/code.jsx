@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useRef, useEffect } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import "./styles/SortingStyles.css";
@@ -58,6 +58,16 @@ const highlightStyle = (highlightColor) => ({
 });
 
 const displayCode = (lines, highlightLines) => {
+
+    const lineRefs = lines.map(() => useRef(null));
+    const actualHighlightLines = highlightLines.slice(1);
+    
+    useEffect(() => {
+        for (let lineNumber of actualHighlightLines) {
+            lineRefs[lineNumber].current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [highlightLines]);
+
     /* 
     !Calculate the length of the longest line */
     const longestLineLength = lines.reduce((max, line) => Math.max(max, line.length), 0);
@@ -66,7 +76,6 @@ const displayCode = (lines, highlightLines) => {
     const longestLineWidth = longestLineLength * characterWidthEm + 'em';
 
     const highlightColor = colorMap[highlightLines[0]];
-    const actualHighlightLines = highlightLines.slice(1); // We remove the color key
 
     return (
         <div className="codeContainer" style={{ overflow: 'auto', backgroundColor: 'rgb(27, 27, 27)' }}>
@@ -80,14 +89,17 @@ const displayCode = (lines, highlightLines) => {
                     const divStyle = highlighted ? { width: longestLineWidth} : {};
 
                     return (
-                        <div key={index} style={divStyle}>
-                            <SyntaxHighlighter
-                                language="java"
-                                style={customStyle}
-                                className="lineSpacing"
-                                wrapLines={true}>
-                                    {line}  
-                            </SyntaxHighlighter>
+                        <div 
+                            key={index} 
+                            style={divStyle}
+                            ref={lineRefs[index]}>
+                                <SyntaxHighlighter
+                                    language="java"
+                                    style={customStyle}
+                                    className="lineSpacing"
+                                    wrapLines={true}>
+                                        {line}  
+                                </SyntaxHighlighter>
                         </div>
                     );
                 })}
@@ -170,7 +182,7 @@ export function MergeSortCode ({ highlightLines }) {
 !! @param right: the subarray's rightmost index 
 mergeSort(A, left, right) {
     /* While our subarray is still larger than 1, split into 2 more subarrays*/
-    if left < right {
+    if (left < right) {
         mid ← [(left + right)/2]
         mergeSort(A, left, mid)
         mergeSort(A, mid + 1, right)
@@ -182,7 +194,6 @@ mergeSort(A, left, right) {
 !! @param right: the subarray's rightmost index 
 !! @param mid: the subarray's middle index
 merge(A, left, mid, right) {
-    /* Determine where to split A */
     split1 ← mid - left + 1
     split2 ← right - mid
     Create arrays L[0...split1] and R[0...split2]
@@ -193,18 +204,15 @@ merge(A, left, mid, right) {
     for (j ← 0 to split2 - 1 do) {
         R[j] ← A[mid + j]
     }
-    /* Avoid checking if subarrays are fully copied */
-    L[split1] ← ∞
-    R[split2] ← ∞
-    LIdx ← 0
-    RIdx ← 0
+    /* Sentinal values to avoid checking if subarrays are fully copied */
+    L[split1], R[split2] ← ∞, ∞
+    LIdx, RIdx ← 0, 0
     /* Compare L and R elements and merge into A */
     for (mainIdx ← left to right) {
         if L[LIdx] ≤ R[RIdx] {
             A[mainIdx] ← L[LIdx]
             LIdx ← LIdx + 1
-        }
-        else {
+        } else {
             A[mainIdx] ← R[RIdx]
             RIdx ← RIdx + 1
         }

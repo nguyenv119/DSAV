@@ -72,6 +72,7 @@ export default class SortingVisualizer extends React.Component {
             isPaused: false,
             activeAlgorithm: 0,
             highlightedLine: [0],
+            mergeSortActivated: false,
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
 
             /*
@@ -122,7 +123,6 @@ export default class SortingVisualizer extends React.Component {
         const { array } = this.state;
         return [array, arrayBars];
     }
-
 
     /* 
      * For all sorting algos, we are returned an animation array, and a copy
@@ -421,7 +421,7 @@ export default class SortingVisualizer extends React.Component {
                                     <button className={`cta sorting`}
                                         onClick={() => {
                                             this.mergeSort()
-                                            this.setState({ activeSortingButton: "mergeSort", activeAlgorithm: 4 });
+                                            this.setState({ activeSortingButton: "mergeSort", activeAlgorithm: 4,mergeSortActivated: true });
                                         }
                                         } disabled={sortingInProgress}>Merge Sort
                                     </button>
@@ -513,7 +513,8 @@ export default class SortingVisualizer extends React.Component {
                         className={`actualCode${
                             activeAlgorithmKey === "none" ? ' noCode' : 
                             activeAlgorithmKey === "insertionSort" ? ' insertion' :
-                            (activeAlgorithmKey === "mergeSort") || (activeAlgorithmKey === "heapSort") ? ' merge' : ' '}`}>
+                            activeAlgorithmKey === "mergeSort" ? ' merge' : 
+                            activeAlgorithmKey === "heapSort" ? ' heap' : ' '}`}>
                         {algorithmCode}
                     </div>
 
