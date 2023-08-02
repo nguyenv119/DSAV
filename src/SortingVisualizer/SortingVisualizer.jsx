@@ -33,7 +33,7 @@ const MINVAL = 10;
 const MAXVAL = 645;
 const SPEED_THRESHOLD = 6;
 
-export const PRIMARY_COLOR = '#3A86FF';
+export const PRIMARY_COLOR = '#3a85ffb2';
 export const SECONDARY_COLOR = '#FB5607';
 export const GREEN_SPEED = 7;
 export const SMALLER_COLOR = "#ea2c1e";
@@ -63,14 +63,14 @@ export default class SortingVisualizer extends React.Component {
             sortingAlgorithm: null,
             isSorting: false,
             buttonsDisabled: false,
-            ANIMATION_SPEED_MS: 6, //6
-            BARS: 14, // 14
+            ANIMATION_SPEED_MS: 2, //6
+            BARS: 8, // 14
             sortingInProgress: false,
             activeButton: "",
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 0,
+            activeAlgorithm: 4,
             highlightedLine: [0],
             mergeSortActivated: false,
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
@@ -320,6 +320,8 @@ export default class SortingVisualizer extends React.Component {
         const algorithm = codeVisualizer[activeAlgorithmKey];
         let algorithmCode;
         
+        /*
+        ? We only show the code highlighting if the speeds are not too high */
         if (ANIMATION_SPEED_MS <= SPEED_THRESHOLD) {
             switch (activeAlgorithmKey) {
                 case "bubbleSort":

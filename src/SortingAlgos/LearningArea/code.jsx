@@ -197,11 +197,12 @@ merge(A, left, mid, right) {
     split1 ← mid - left + 1
     split2 ← right - mid
     Create arrays L[0...split1] and R[0...split2]
-    /* Transfer elements from A to L and R */
-    for (i ← 0 to split1 - 1 do) {
+    /* Transfer 1st half of A to L */
+    for (i ← 0 to split1 - 1) {
         L[i] ← A[left + i - 1]
     }
-    for (j ← 0 to split2 - 1 do) {
+    /* Transfer 2nd half of A to R */
+    for (j ← 0 to split2 - 1) {
         R[j] ← A[mid + j]
     }
     /* Sentinal values to avoid checking if subarrays are fully copied */
@@ -209,7 +210,7 @@ merge(A, left, mid, right) {
     LIdx, RIdx ← 0, 0
     /* Compare L and R elements and merge into A */
     for (mainIdx ← left to right) {
-        if L[LIdx] ≤ R[RIdx] {
+        if (L[LIdx] ≤ R[RIdx]) {
             A[mainIdx] ← L[LIdx]
             LIdx ← LIdx + 1
         } else {
