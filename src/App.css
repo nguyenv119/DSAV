@@ -185,8 +185,8 @@ button[class*="btn"] {border: 1;}
 }
 
 .description.merge {
-  /* border: 2px solid blue; */
-  height: 30%; 
+  border: 2px solid blue;
+  height: 40%; 
   max-height: 30%; 
 }
 
@@ -284,7 +284,7 @@ button[class*="btn"] {border: 1;}
 }
 
 .arrayBars {
-  /* border: 2px solid blue; */
+  border: 2px solid red;
   transform: rotateX(180deg);
   display: flex;
   justify-content: left;
@@ -296,6 +296,23 @@ button[class*="btn"] {border: 1;}
 }
 
 .arrayBar {
+  width: 10.5px;
+  display: inline-block;
+  margin: 0 2px 0 0;
+}
+
+.arrayBarsUp {
+  border: 2px solid blue;
+  transform: rotateX(180deg);
+  display: flex;
+  justify-content: left;
+  position: relative;
+  left: 1%;
+  height: 38.5%;
+  width: 98%;
+}
+
+.arrayBarUp {
   width: 10.5px;
   display: inline-block;
   margin: 0 2px 0 0;

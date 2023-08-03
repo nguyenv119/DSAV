@@ -159,9 +159,10 @@ export default class SortingVisualizer extends React.Component {
 
     mergeSort() {
         let [array, arrayBars] = this.makeProps();
+        const arrayBarsUp = document.getElementsByClassName("arrayBarsUp");
         let comparisons = 0;
 
-        mergeSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
+        mergeSortExp(array, arrayBars, arrayBarsUp, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
         .then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
@@ -239,6 +240,11 @@ export default class SortingVisualizer extends React.Component {
                 TODO: To make the bars fill the screen, might have to change later */
                 arrayBars[i].style.width = `${5000 / length}px`;
                 arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+                if (this.state.activeAlgorithm === 4) {
+                    const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
+                    arrayBarsUp[i].style.width = `${5000 / length}px`;
+                    arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
+                }
             }
         });
     }
@@ -293,6 +299,39 @@ export default class SortingVisualizer extends React.Component {
     updateHighlightedLine = (newHighlightedLine) => {
         this.setState({ highlightedLine: newHighlightedLine });
     };
+
+    makeArray() {
+        const array = [];
+        let length = this.determineBars();
+
+        for (let i = 0; i < length; i++) {
+            if (this.state.activeAlgorithm === 4) {
+                array.push(randomIntFrom(MINVAL, MAXVAL / 2));
+            } else array.push(randomIntFrom(MINVAL, MAXVAL));
+        }
+
+        /* 
+        ? Sets the state to be the created array and the Bars.
+         * If we didnt have setState, we wouldnt
+         * update the array we created
+         */
+        this.setState({ comparisons: 0, array }, () => {
+            /* 
+            ? Resets the color of array back to PRIMARY, and determines width and length */
+            const arrayBars = document.getElementsByClassName("arrayBar");
+            for (let i = 0; i < arrayBars.length; i++) {
+                /*
+                TODO: To make the bars fill the screen, might have to change later */
+                arrayBars[i].style.width = `${5000 / length}px`;
+                arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+                if (this.state.activeAlgorithm === 4) {
+                    const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
+                    arrayBarsUp[i].style.width = `${5000 / length}px`;
+                    arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
+                }
+            }
+        });
+    }
 
     /* 
     ? Renders components UI */
@@ -384,6 +423,20 @@ export default class SortingVisualizer extends React.Component {
                                 }}
                             ></div>
                             ))}
+                    </div>
+                    <div 
+                        className="arrayBars"
+                        style={{height: activeAlgorithmKey === "mergeSort" ? '38.5%' : '77%'}}>
+                            {array.map((value, index) => (
+                                <div
+                                    className="arrayBar"
+                                    key={index}
+                                    style={{
+                                        backgroundColor: PRIMARY_COLOR,
+                                        height: `${value}px`
+                                    }}
+                                ></div>
+                                ))}
                     </div>
                     <ProgressBar comparisons={comparisons} totalComparisons={totalComparisons} />
                     <div class="buttons">
