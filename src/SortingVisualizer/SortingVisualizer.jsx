@@ -30,10 +30,11 @@ import ProgressBar from './ProgressBar';
 import { left } from "@popperjs/core";
 
 const MINVAL = 10;
-const MAXVAL = 645;
+const MAXVAL = 620;
 const SPEED_THRESHOLD = 6;
 
-export const PRIMARY_COLOR = '#3A86FF';
+export const PRIMARY_COLOR = '#3a85ffb2';
+export const SUPER_PRIMARY_COLOR = '#3A86FF';
 export const SECONDARY_COLOR = '#FB5607';
 export const GREEN_SPEED = 7;
 export const SMALLER_COLOR = "#ea2c1e";
@@ -70,7 +71,7 @@ export default class SortingVisualizer extends React.Component {
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 0,
+            activeAlgorithm: 4,
             highlightedLine: [0],
             mergeSortActivated: false,
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
@@ -159,9 +160,10 @@ export default class SortingVisualizer extends React.Component {
 
     mergeSort() {
         let [array, arrayBars] = this.makeProps();
+        const arrayBarsUp = document.getElementsByClassName("arrayBarsUp");
         let comparisons = 0;
 
-        mergeSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
+        mergeSortExp(array, arrayBars, arrayBarsUp, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
         .then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
@@ -222,7 +224,9 @@ export default class SortingVisualizer extends React.Component {
         let length = this.determineBars();
 
         for (let i = 0; i < length; i++) {
-            array.push(randomIntFrom(MINVAL, MAXVAL));
+            if (this.state.activeAlgorithm === 4) {
+                array.push(randomIntFrom(MINVAL, MAXVAL / 2));
+            } else array.push(randomIntFrom(MINVAL, MAXVAL));
         }
 
         /* 
@@ -239,6 +243,11 @@ export default class SortingVisualizer extends React.Component {
                 TODO: To make the bars fill the screen, might have to change later */
                 arrayBars[i].style.width = `${5000 / length}px`;
                 arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+                if (this.state.activeAlgorithm === 4) {
+                    const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
+                    arrayBarsUp[i].style.width = `${5000 / length}px`;
+                    arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
+                }
             }
         });
 
@@ -296,54 +305,38 @@ export default class SortingVisualizer extends React.Component {
         this.setState({ highlightedLine: newHighlightedLine });
     };
 
-   //Resets Comparisons and generates a new array
-resetArrayAndComparisons() {
-    this.makeArray();
-    this.setState({ comparisons: 0 });
-}
+    makeArray() {
+        const array = [];
+        let length = this.determineBars();
 
-// Updated handleReset
-handleReset = () => {
+        for (let i = 0; i < length; i++) {
+            if (this.state.activeAlgorithm === 4) {
+                array.push(randomIntFrom(MINVAL, MAXVAL / 2));
+            } else array.push(randomIntFrom(MINVAL, MAXVAL));
+        }
 
-    if (this.state.sortingInProgress) {
-      this.stopSorting();
+        /* 
+        ? Sets the state to be the created array and the Bars.
+         * If we didnt have setState, we wouldnt
+         * update the array we created
+         */
+        this.setState({ comparisons: 0, array }, () => {
+            /* 
+            ? Resets the color of array back to PRIMARY, and determines width and length */
+            const arrayBars = document.getElementsByClassName("arrayBar");
+            for (let i = 0; i < arrayBars.length; i++) {
+                /*
+                TODO: To make the bars fill the screen, might have to change later */
+                arrayBars[i].style.width = `${5000 / length}px`;
+                arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+                if (this.state.activeAlgorithm === 4) {
+                    const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
+                    arrayBarsUp[i].style.width = `${5000 / length}px`;
+                    arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
+                }
+            }
+        });
     }
-    
-    // Reset comparisons
-    this.setState({comparisons: 0});
-  
-    // Reset styles
-    const arrayBars = document.getElementsByClassName("arrayBar");
-    for(let i = 0; i < arrayBars.length; i++) {
-      arrayBars[i].style.backgroundColor = PRIMARY_COLOR; 
-    }
-    
-    // Generate new array
-    this.makeArray();
-    
-    // Reset remaining state
-    this.setState({
-      sortingAlgorithm: null,
-      isSorting: false,
-      buttonsDisabled: false,  
-      sortingInProgress: false,
-      isPaused: true
-    });
-  }
-
-  stopSorting = () => {
-
-    // Clear timeouts
-    clearTimeout(this.state.sortingTimeout);
-    
-    // Reject any promises
-    if (this.currentSortPromise) {
-      this.currentSortPromise.cancel(); 
-    }
-    
-    // Cleanup
-    cancelAnimationFrame(this.animationFrame);
-  }
 
     /* 
     ? Renders components UI */
@@ -363,7 +356,8 @@ handleReset = () => {
                 algorithmKeys,
                 codeVisualizer,
                 activeAlgorithm,
-                highlightedLine } = this.state;
+                highlightedLine
+              } = this.state;
 
         /*
         ! Determine codeArea rendering */
@@ -371,6 +365,8 @@ handleReset = () => {
         const algorithm = codeVisualizer[activeAlgorithmKey];
         let algorithmCode;
         
+        /*
+        ? We only show the code highlighting if the speeds are not too high */
         if (ANIMATION_SPEED_MS <= SPEED_THRESHOLD) {
             switch (activeAlgorithmKey) {
                 case "bubbleSort":
@@ -422,10 +418,10 @@ handleReset = () => {
             */
             <div>
                 <div className="arrayContainer">
-                    <div className="arrayBars">
+                <div className={`arrayBarsUp ${activeAlgorithmKey === "mergeSort" ? '' : ' hidden'}`}>
                         {array.map((value, index) => (
                             <div
-                                className="arrayBar"
+                                className="arrayBarUp hidden"
                                 key={index}
                                 style={{
                                     backgroundColor: PRIMARY_COLOR,
@@ -433,6 +429,20 @@ handleReset = () => {
                                 }}
                             ></div>
                             ))}
+                    </div>
+                    <div 
+                        className="arrayBars"
+                        style={{height: activeAlgorithmKey === "mergeSort" ? '38.5%' : '77%'}}>
+                            {array.map((value, index) => (
+                                <div
+                                    className="arrayBar"
+                                    key={index}
+                                    style={{
+                                        backgroundColor: PRIMARY_COLOR,
+                                        height: `${value}px`
+                                    }}
+                                ></div>
+                                ))}
                     </div>
                     <ProgressBar comparisons={comparisons} totalComparisons={totalComparisons} />
                     <div class="buttons">                    

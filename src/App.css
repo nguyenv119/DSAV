@@ -17,6 +17,7 @@
   --gradcolor3: #4600a6;
   overflow-x: hidden;
   background-color: #171717;
+  color: #3a85ffb2;
 }
 
 .hidden {
@@ -129,19 +130,6 @@ button[class*="btn"] {border: 1;}
   pointer-events: none;
 }
 
-.arrayContainer {
-  /* border: 2px solid white; */
-  background-color: #181818;
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  left: 0%;
-  top: 0%;
-  height: 100vh; /* This value should be 100vh to fill the entire viewport height */
-  border-right: solid 3px #0c0c0c;
-  width: 80%;
-}
-
 .codeArea {
   background: #101010;
   color: white;
@@ -194,7 +182,7 @@ button[class*="btn"] {border: 1;}
 
 .description.merge {
   /* border: 2px solid blue; */
-  height: 30%; 
+  height: 40%; 
   max-height: 30%; 
 }
 
@@ -291,19 +279,49 @@ button[class*="btn"] {border: 1;}
   /* border: 2px solid red; */
 }
 
+.arrayContainer {
+  /* border: 2px solid white; */
+  background-color: #181818;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  height: 100vh; 
+  border-right: solid 3px #0c0c0c;
+  width: 80%;
+}
+
 .arrayBars {
-  /* border: 2px solid blue; */
+  /* border: 2px solid red; */
   transform: rotateX(180deg);
   display: flex;
   justify-content: left;
   position: relative;
   top: 0%;
   left: 1%;
-  height: 78%; /* This value should be 80% to fill 80% of the arrayContainer div */
+  height: 77%;
   width: 98%; /* Add width of 100% to fill the entire parent div */
 }
 
 .arrayBar {
+  width: 10.5px;
+  display: inline-block;
+  margin: 0 2px 0 0;
+}
+
+.arrayBarsUp {
+  /* border: 2px solid blue; */
+  transform: rotateX(180deg);
+  display: flex;
+  justify-content: left;
+  position: relative;
+  left: 1%;
+  height: 38.5%;
+  width: 98%;
+}
+
+.arrayBarUp {
   width: 10.5px;
   display: inline-block;
   margin: 0 2px 0 0;

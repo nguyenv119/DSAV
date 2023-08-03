@@ -116,8 +116,6 @@ export const mergeDescription = () => (
     </div>
 );
 
-
-
 export const heapDescription = () => (
     <>
         <p>
