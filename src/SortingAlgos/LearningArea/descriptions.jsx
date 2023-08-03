@@ -24,8 +24,8 @@ export const bubbleDescription = () => (
     <>
         <p>
             <h5><strong>Bubble Sort:</strong></h5>
-            Algorithm that repeatedly compares adjacent elements
-            and swaps them if they are in the wrong order until the list is sorted.<br /><br />
+            Repeatedly swaps adjacent elements
+            if wrongly ordered,  <i><u>bubbling</u></i> up, until sorted<br /><br />
             <h6><strong>Time Complexity:</strong></h6>
         </p>
         <ul>
@@ -51,19 +51,18 @@ export const selectionDescription = () => (
     <>
         <p>
             <h5><strong>Selection Sort:</strong></h5>
-            This algorithm repeatedly <i>selects</i> the smallest element from the unsorted segment of the list, 
+            Repeatedly <i><u>selects</u></i> the smallest element from the unsorted segment of the list, 
             and then swaps it with the first unsorted item. <br />
         </p>
         <h6><strong>Time Complexity:</strong></h6>
         <ul>
             <li> All Cases: θ(n<sup>2</sup>)</li>
             <li>
-                Whether the list is sorted or not, 
-                the algorithm always makes n(n-1)/2 comparisons: O(n<sup>2</sup>).
+                Tthe algorithm always makes n(n-1)/2 comparisons: O(n<sup>2</sup>).
             </li>
             <li>
-                This is the case since without any additional knowledge, 
-                it cannot determine where the next minimum value will be in the unsorted part of the list.
+                Without any additional knowledge, 
+                we cannot determine where the next minimum value will be in the unsorted part of the list.
             </li>
         </ul>
         <h6><strong>Space Complexity:</strong></h6>
@@ -126,10 +125,10 @@ export const heapDescription = () => (
             <h6><strong>Time Complexity:</strong></h6>
         </p>
         <ul>
-            <li> All Cases: θ(nlog(n))</li>
-            <li> Making a Max-Heap: θ(n).
-                Swapping ends once, HEAPIFY-DOWN, is O(log(n)), and for n elements, θ(nlog(n)). So,
-                θ(nlog(n) + n) = θ(nlog(n))
+            {/* <li> All Cases: θ(nlog(n))</li> */}
+            <li> Building a Max-Heap: θ(n).
+                Swapping ends and HEAPIFY-DOWN: O(log(n)) — for n elements: θ(nlog(n)). 
+                <br />So, θ(nlog(n) + n) = θ(nlog(n))
             </li>
         </ul>
         <h6><strong>Space Complexity:</strong></h6>

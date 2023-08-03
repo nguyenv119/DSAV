@@ -217,16 +217,15 @@ button[class*="btn"] {border: 1;}
 }
 
 .actualCode.insertion {
-  margin-top: -15%;
-  max-height: 33vh;
-  min-height: 33vh;
-  height: 33vh;
+  max-height: 32.5vh;
+  min-height: 32.5vh;
+  height: 32.5vh;
   /* border: 2px solid purple; */
 }
 
 .actualCode.merge {
   /* border: 2px solid purple; */
-  margin-top: 14%;
+  margin-top: 16%;
   height: 0vh; /* set starting height */
   max-height: 88vh; /* adjust as needed */
   overflow: auto; /* enable scroll if content is larger */
