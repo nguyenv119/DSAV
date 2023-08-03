@@ -355,23 +355,41 @@ button[class*="btn"] {border: 1;}
   margin-left: 3%;
   margin-top: 3%;
   display: flex;
-  padding: 5px 20px;
+  padding: 10px 20px;
   text-decoration: none;
   font-size: 20px;
   color: rgb(233, 233, 233);
-  background-color: rgb(105, 72, 72);
-  transition: 1s;
+  background-color: transparent;
+  transition: all 1s;
   box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5); 
-  transform: skewX(-7deg);
-  border-top: 3px solid rgb(42, 42, 42); 
-  border-right: 3px solid rgb(22, 22, 22); 
-  border-bottom: 3px solid rgb(12, 12, 12); 
-  border-left: 0.5px solid rgb(32, 32, 32);
+  /*transform: skewX(-7deg);*/
+  border-top: 2px solid rgb(42, 42, 42); 
+  border-right: 2px solid rgb(22, 22, 22); 
+  border-bottom: 2px solid rgb(12, 12, 12); 
+  border-left: 2px solid rgb(32, 32, 32);
   white-space: nowrap; 
   font-weight: 900;
+  position:relative;
   /* border-radius: 5px; */
   align-items: center; /* aligns the image and the text vertically in the center */
   justify-content: center; /* space out the elements inside the button */
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 0%;
+  top: 0;
+  left: -40px;
+  transform: skewX(45deg);
+  background-color: black;
+  z-index: -1;
+  transition: all 1s;
+}
+
+.cta:hover::before {
+  width: 160%;
 }
 
 .cta:not(:last-child) {
@@ -422,9 +440,10 @@ button[class*="btn"] {border: 1;}
 }
 
 .cta:hover {
-    transition: 0.5s;
+    /*transition: 0.5s;
     background-color: rgb(255, 255, 255);
-    color: black;
+    color: black;*/
+    color:white;
 }
 
 .cta.img:hover {
