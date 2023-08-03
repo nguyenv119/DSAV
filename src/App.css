@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,800;1,900&display=swap');
+
+::-webkit-scrollbar {
+  /* display: none; */
+}
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -21,7 +26,7 @@
 
 body {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 100vh;
   margin: 0;
@@ -37,9 +42,18 @@ li {
 }
 
 .btn-container, .container {
-	border-radius: 4px;
-	text-align: center;
-	margin-bottom: 40px;
+  border-radius: 4px;
+  text-align: center;
+  margin-right: 20px;
+}
+
+.buttonContainer {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  left: 30px;
 }
 
 button[class*="btn"] {border: 1;}
@@ -48,8 +62,7 @@ button[class*="btn"] {border: 1;}
 .btn-3d {
 	position: relative;
 	display: inline-block;
-	font-size: 16px;
-	padding: 5px 17px 5px 17px;
+	padding: 5px 20px 5px 20px;
 	color: white;
   font-weight: 500;
 	text-align: center;
@@ -57,6 +70,18 @@ button[class*="btn"] {border: 1;}
 	text-shadow: 0 1px 0 rgba(0,0,0,0.15);
   border-radius: 8px;
   border: 1px solid transparent;
+}
+
+/* 3D button colors */
+.btn-3d.regular {
+  box-sizing: border-box;
+	background-color: #1a1a1a;
+	box-shadow: 0 0 0 1px #1a1a1a inset,
+        0 0 0 2px rgba(255,255,255,0.15) inset,
+        0 8px 0 0 #1a1a1a,
+        0 8px 0 1px rgba(0,0,0,0.4),
+				0 8px 8px 1px rgba(51, 26, 26, 0.5);
+  margin-right: 20px;
 }
 
 .btn-3d.regular:hover {
@@ -83,25 +108,10 @@ button[class*="btn"] {border: 1;}
   animation: AnimationName 7s ease infinite;
 }
 
-/* 3D button colors */
-.btn-3d.regular {
-  margin:45px 30px 0px 0px;
-	background-color: #1a1a1a;
-	box-shadow: 0 0 0 1px #1a1a1a inset,
-        0 0 0 2px rgba(255,255,255,0.15) inset,
-        0 8px 0 0 #1a1a1a,
-        0 8px 0 1px rgba(0,0,0,0.4),
-				0 8px 8px 1px rgba(51, 26, 26, 0.5);
-}
-
 .btn-3d.regular:active {
 	box-shadow: 0 0 0 1px #1a1a1a inset,
 				0 0 0 2px rgba(255,255,255,0.15) inset,
 				0 0 0 1px rgba(0,0,0,0.4);
-}
-
-.btn-3d.regular.colorful {
-  margin: 0px 300px 0px 0px;
 }
 
 .colorful {
@@ -117,21 +127,7 @@ button[class*="btn"] {border: 1;}
   /* background: linear-gradient(253deg, var(--gradcolor1), var(--gradcolor2), var(--gradcolor3)); */
   background-size: 600% 600%;
   animation: AnimationName 7s ease infinite;
-  margin: 3px 80px 0 0; 
   pointer-events: none;
-}
-
-.arrayContainer {
-  /* border: 2px solid white; */
-  background-color: #181818;
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  left: 0%;
-  top: 0%;
-  height: 100vh; /* This value should be 100vh to fill the entire viewport height */
-  border-right: solid 3px #0c0c0c;
-  width: 80%;
 }
 
 .codeArea {
@@ -185,7 +181,7 @@ button[class*="btn"] {border: 1;}
 }
 
 .description.merge {
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
   height: 40%; 
   max-height: 30%; 
 }
@@ -283,15 +279,28 @@ button[class*="btn"] {border: 1;}
   /* border: 2px solid red; */
 }
 
+.arrayContainer {
+  /* border: 2px solid white; */
+  background-color: #181818;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0%;
+  top: 0%;
+  height: 100vh; 
+  border-right: solid 3px #0c0c0c;
+  width: 80%;
+}
+
 .arrayBars {
-  border: 2px solid red;
+  /* border: 2px solid red; */
   transform: rotateX(180deg);
   display: flex;
   justify-content: left;
   position: relative;
   top: 0%;
   left: 1%;
-  height: 78%; /* This value should be 80% to fill 80% of the arrayContainer div */
+  height: 77%;
   width: 98%; /* Add width of 100% to fill the entire parent div */
 }
 
@@ -302,7 +311,7 @@ button[class*="btn"] {border: 1;}
 }
 
 .arrayBarsUp {
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
   transform: rotateX(180deg);
   display: flex;
   justify-content: left;
@@ -456,8 +465,20 @@ button:hover {
 
 /** Scrolling bar */
 .scrollableRangeContainer {
-  width: auto;
-  margin: 0 5px 0 0;
+  position: relative;
+  top: 0px;
+}
+
+.scrollableRange {
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: -13px;
+  margin-right: 20px;
+}
+
+.scrollableRange input {
+  width: 140px;
 }
 
 .pp {
@@ -475,14 +496,16 @@ button:hover {
 }
 
 .btn-3d.regular.colorful.speed {
-  margin: 0 -10px 0 0;
+  min-width: 90px;
+  margin-right: 60px;
 }
 
 .btn-3d.regular.comparisons {
-  margin: -3px 0px 0px -10px;
-  transform: translateX(-220px);
   pointer-events: none;
-  width: 200px;
+  min-width: 200px;
+  position: relative;
+  top: -2px;
+  margin-right: 20px;
 }
 
 @keyframes AnimationName {

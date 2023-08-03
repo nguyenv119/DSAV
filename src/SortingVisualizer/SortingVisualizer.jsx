@@ -30,10 +30,11 @@ import ProgressBar from './ProgressBar';
 import { left } from "@popperjs/core";
 
 const MINVAL = 10;
-const MAXVAL = 645;
+const MAXVAL = 620;
 const SPEED_THRESHOLD = 6;
 
 export const PRIMARY_COLOR = '#3a85ffb2';
+export const SUPER_PRIMARY_COLOR = '#3A86FF';
 export const SECONDARY_COLOR = '#FB5607';
 export const GREEN_SPEED = 7;
 export const SMALLER_COLOR = "#ea2c1e";
@@ -63,8 +64,8 @@ export default class SortingVisualizer extends React.Component {
             sortingAlgorithm: null,
             isSorting: false,
             buttonsDisabled: false,
-            ANIMATION_SPEED_MS: 2, //6
-            BARS: 8, // 14
+            ANIMATION_SPEED_MS: 6, //6
+            BARS: 14, // 14
             sortingInProgress: false,
             activeButton: "",
             activeSortingButton: "",
@@ -111,7 +112,7 @@ export default class SortingVisualizer extends React.Component {
      * invoked immedientally after a component is 
      * mounted (inserted into DOM tree), rendered for the first time
      */
-    componentDidMount() { 
+    componentDidMount() {
         this.makeArray()
     }
 
@@ -192,38 +193,40 @@ export default class SortingVisualizer extends React.Component {
     }
 
     /* 
-    ? Determines how many bars based on scrolling bar */
+    ? Determines how many bars based on scrolling bar.
+    ! We need to have the bars fill up all 1200 pixels. So our 1200/Bars should be a whole number*/
     determineBars() {
         const { BARS } = this.state;
-        const length = BARS === 20 ? 
-            300 : BARS === 19 ? 
-                290 : BARS === 18 ? 
-                    260 : BARS === 17 ? 
-                        230 : BARS === 16 ? 
-                            200 : BARS === 15 ? 
-                                180 : BARS === 14 ? 
-                                    160 : BARS === 13 ? 
-                                        145 : BARS === 12 ? 
-                                            120 : BARS === 11 ? 
-                                                100 : BARS === 10 ? 
-                                                    80 : BARS === 9 ? 
-                                                        60 : BARS === 8 ? 
-                                                            40 : BARS === 7 ? 
-                                                                20 : BARS === 6 ? 
-                                                                    10 : BARS === 5  
+        const length = BARS === 20 ?
+            300 : BARS === 19 ?
+                240 : BARS === 18 ?
+                    200 : BARS === 17 ?
+                        180 : BARS === 16 ?
+                            150 : BARS === 15 ?
+                                120 : BARS === 14 ?
+                                    100 : BARS === 13 ?
+                                        80 : BARS === 12 ?
+                                            50 : BARS === 11 ?
+                                                30 : BARS === 10 ?
+                                                    25 : BARS === 9 ?
+                                                        16 : BARS === 8 ?
+                                                            12 : BARS === 7 ?
+                                                                10 : BARS === 6 ?
+                                                                    8 : BARS === 5
                                                                         ? 5 : 5;
         return length;
     }
- 
+
     /* 
     ? Create the array, including how many bars and how wide */
     makeArray() {
-        
         const array = [];
         let length = this.determineBars();
 
         for (let i = 0; i < length; i++) {
-            array.push(randomIntFrom(MINVAL, MAXVAL));
+            if (this.state.activeAlgorithm === 4) {
+                array.push(randomIntFrom(MINVAL, MAXVAL / 2));
+            } else array.push(randomIntFrom(MINVAL, MAXVAL));
         }
 
         /* 
@@ -233,7 +236,7 @@ export default class SortingVisualizer extends React.Component {
          */
         this.setState({ comparisons: 0, array }, () => {
             /* 
-            ? Resets the color of array back to PRIMARY, and determines width and length */            
+            ? Resets the color of array back to PRIMARY, and determines width and length */
             const arrayBars = document.getElementsByClassName("arrayBar");
             for (let i = 0; i < arrayBars.length; i++) {
                 /*
@@ -276,9 +279,9 @@ export default class SortingVisualizer extends React.Component {
             isPaused: !prevState.isPaused
         }));
     }
-    
+
     /* 
-    ? Updates the number of bars and their width */  
+    ? Updates the number of bars and their width */
     handleBarsChange = (e) => {
         if (!this.state.isSorting) {
             this.setState({ BARS: parseInt(e.target.value) }, () => {
@@ -351,7 +354,8 @@ export default class SortingVisualizer extends React.Component {
                 algorithmKeys,
                 codeVisualizer,
                 activeAlgorithm,
-                highlightedLine } = this.state;
+                highlightedLine
+              } = this.state;
 
         /*
         ! Determine codeArea rendering */
@@ -412,10 +416,10 @@ export default class SortingVisualizer extends React.Component {
             */
             <div>
                 <div className="arrayContainer">
-                    <div className="arrayBars">
+                <div className={`arrayBarsUp ${activeAlgorithmKey === "mergeSort" ? '' : ' hidden'}`}>
                         {array.map((value, index) => (
                             <div
-                                className="arrayBar"
+                                className="arrayBarUp hidden"
                                 key={index}
                                 style={{
                                     backgroundColor: PRIMARY_COLOR,
