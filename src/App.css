@@ -181,8 +181,8 @@ button[class*="btn"] {border: 1;}
 }
 
 .description.merge {
-  /* border: 2px solid blue; */
-  height: 30%; 
+  border: 2px solid blue;
+  height: 40%; 
   max-height: 30%; 
 }
 
@@ -293,7 +293,7 @@ button[class*="btn"] {border: 1;}
 }
 
 .arrayBars {
-  /* border: 2px solid blue; */
+  border: 2px solid red;
   transform: rotateX(180deg);
   display: flex;
   justify-content: left;
@@ -311,15 +311,14 @@ button[class*="btn"] {border: 1;}
 }
 
 .arrayBarsUp {
-  /* border: 2px solid blue; */
+  border: 2px solid blue;
   transform: rotateX(180deg);
   display: flex;
   justify-content: left;
   position: relative;
-  top: 0%;
   left: 1%;
-  height: 39%;
-  width: 98%; /* Add width of 100% to fill the entire parent div */
+  height: 38.5%;
+  width: 98%;
 }
 
 .arrayBarUp {

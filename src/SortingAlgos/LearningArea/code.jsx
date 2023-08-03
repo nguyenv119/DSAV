@@ -1,4 +1,5 @@
 import { React, useRef, useEffect } from 'react';
+import { FixedSizeList as List } from 'react-window';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import "./styles/SortingStyles.css";
@@ -56,6 +57,53 @@ const highlightStyle = (highlightColor) => ({
     'variable': {  color: highlightColor },
     'class-name': { color: highlightColor },
 });
+
+export function MergeSortCode ({ highlightLines }) {
+    const mergeSort = `!! @param A: the array
+!! @param left: the subarray's leftmost index 
+!! @param right: the subarray's rightmost index 
+mergeSort(A, left, right) {
+    /* While our subarray is still larger than 1, split into 2 more subarrays*/
+    if (left < right) {
+        mid ← [(left + right)/2]
+        mergeSort(A, left, mid)
+        mergeSort(A, mid + 1, right)
+        merge(A, left, mid, right)
+    }
+}
+!! @param A: the array
+!! @param left: the subarray's leftmost index 
+!! @param right: the subarray's rightmost index 
+!! @param mid: the subarray's middle index
+merge(A, left, mid, right) {
+    split1 ← mid - left + 1
+    split2 ← right - mid
+    Create arrays L[0...split1] and R[0...split2]
+    /* Transfer 1st half of A to L */
+    for (i ← 0 to split1 - 1) {
+        L[i] ← A[left + i - 1]
+    }
+    /* Transfer 2nd half of A to R */
+    for (j ← 0 to split2 - 1) {
+        R[j] ← A[mid + j]
+    }
+    /* Sentinal values to avoid checking if subarrays are fully copied */
+    L[split1], R[split2] ← ∞, ∞
+    LIdx, RIdx ← 0, 0
+    /* Compare L and R elements and merge into A */
+    for (mainIdx ← left to right) {
+        if (L[LIdx] ≤ R[RIdx]) {
+            A[mainIdx] ← L[LIdx]
+            LIdx ← LIdx + 1
+        } else {
+            A[mainIdx] ← R[RIdx]
+            RIdx ← RIdx + 1
+        }
+    }
+}`
+    const lines = mergeSort.split("\n");
+    return displayCode(lines, highlightLines)
+}
 
 const displayCode = (lines, highlightLines) => {
 
@@ -176,52 +224,6 @@ insertionSort(A, n) {
     return displayCode(lines, highlightLines)
 };
 
-export function MergeSortCode ({ highlightLines }) {
-    const mergeSort = `!! @param A: the array
-!! @param left: the subarray's leftmost index 
-!! @param right: the subarray's rightmost index 
-mergeSort(A, left, right) {
-    /* While our subarray is still larger than 1, split into 2 more subarrays*/
-    if (left < right) {
-        mid ← [(left + right)/2]
-        mergeSort(A, left, mid)
-        mergeSort(A, mid + 1, right)
-        merge(A, left, mid, right)
-    }
-}
-!! @param A: the array
-!! @param left: the subarray's leftmost index 
-!! @param right: the subarray's rightmost index 
-!! @param mid: the subarray's middle index
-merge(A, left, mid, right) {
-    split1 ← mid - left + 1
-    split2 ← right - mid
-    Create arrays L[0...split1] and R[0...split2]
-    /* Transfer 1st half of A to L */
-    for (i ← 0 to split1 - 1) {
-        L[i] ← A[left + i - 1]
-    }
-    /* Transfer 2nd half of A to R */
-    for (j ← 0 to split2 - 1) {
-        R[j] ← A[mid + j]
-    }
-    /* Sentinal values to avoid checking if subarrays are fully copied */
-    L[split1], R[split2] ← ∞, ∞
-    LIdx, RIdx ← 0, 0
-    /* Compare L and R elements and merge into A */
-    for (mainIdx ← left to right) {
-        if (L[LIdx] ≤ R[RIdx]) {
-            A[mainIdx] ← L[LIdx]
-            LIdx ← LIdx + 1
-        } else {
-            A[mainIdx] ← R[RIdx]
-            RIdx ← RIdx + 1
-        }
-    }
-}`
-    const lines = mergeSort.split("\n");
-    return displayCode(lines, highlightLines)
-}
 
 export function HeapSortCode ({ highlightLines }) {
     const heapSort = `!! @param A: the array

@@ -13,6 +13,7 @@ const GOOD_COLOR = "#9706ff";
 /** The mergeSort function we are exporting with the animation array */
 export function mergeSortExp(array, 
                             arrayBars, 
+                            arrayBarsUp,
                             getSpeedCallback, 
                             comparisons, 
                             updateComparisons,
@@ -22,7 +23,7 @@ export function mergeSortExp(array,
     return new Promise((resolve) => {
         resetAllBarColors(arrayBars, PRIMARY_COLOR);        
         const [lines, animations, arr] = getMergeSortAnimationArray(array.slice());
-        animate(lines, 0, animations, arrayBars, 0, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, () => resolve(arr));
+        animate(lines, 0, animations, arrayBars, arrayBarsUp, 0, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, () => resolve(arr));
     });
 }
 
@@ -66,22 +67,23 @@ function mergeSort(array, l, r, copy, lines, animations) {
     we have to unhighlight the ends (animationsIdx - 2) and the mid (animationsIdx - 1 
     Or, we can implement it to set it to default with a delay in the future */
 
-    animations.push(["ENDS", l, r]); /* Set from index 1 to end to SECONDARY COLOR */
+    animations.push(["ENDS", l, r]); /* Set from index 1 to end to primary */
     lines.push(["YES", 5]);
     let m = Math.floor((l + r) / 2);
     animations.push(["MID", m]); /* Highlight the middle split */
     lines.push(["YES", 6]);
 
-    lines.push(["YES", 7]);
+    lines.push(["YES", 7, l, m, r]);
     mergeSort(copy, l, m, array, lines, animations);
-    lines.push(["YES", 8]);
+    lines.push(["YES", 8, l, m + 1, r]);
     mergeSort(copy, m + 1, r, array, lines, animations);
     lines.push(["YES", 9]);
     merge(array, l, m, r, copy, lines, animations);
 
+    /*
+    ! Already highlighted SUPER_PRIMARY COMING IN */
     function merge(mainArr, l, m, r, copy, lines, animations) {
         if (mainArr == null) return null;
-        animations.push(["PART", l, r]); /* Highlight all from l to r SUPER_PRIMARY */
         let index = l;
         let i = l; 
         let j = m + 1;
@@ -89,7 +91,7 @@ function mergeSort(array, l, r, copy, lines, animations) {
         lines.push(["YES", 17]);
         lines.push(["YES", 18]);
         lines.push(["YES", 19]);
-        lines.push(["YES", 20, 24]); /* Copy arrayBars to arrayBarsUp halfway up the screen. Set heights of actual to 0px */
+        lines.push(["YES", 20, 24]); /* for l to r: Set heights of arrayBars to 0px, and unhide the arrayBarsUp */
         animations.push(["SPLIT", l, m, r]); /* array[m] margin right */
         lines.push(["YES", 29]);
         lines.push(["YES", 30]);
@@ -98,48 +100,34 @@ function mergeSort(array, l, r, copy, lines, animations) {
             /** When we compare two indices, we will
              * change the color of the bars to another color. */
             lines.push(["YES", 32]);
-            animations.push([i, j]);  /* Stage 0: compare bars */
+            animations.push([i, j]); 
             if (copy[i] <= copy[j]) {
-                lines.push(["YES", 33]); 
-                lines.push(["YES", 33]); 
+                lines.push(["YES", "S0", 33]); /* Stage 0: compare arrayBarsUp */
+                lines.push(["YES", "S1", 33]); 
                 lines.push(["YES", 34]); 
                 lines.push(["YES", 35]);
-                /** We have guaranteed that the i'th element
-                 * is smaller than the j'th. Therefore we are
-                 * replicating the swapping in the mainArray
-                 * in the animationArray:
-                 * 
-                 * --> "index" is the index we have sorted so far.
-                 * So we replace the index's index with the new height.
-                 * 
-                 * Why a replacement and not a swap? 
-                 * Take auxiliary array [1, 3, 5, 2, 4, 6] = [1, 3, 5], [2, 4, 6]
-                 * When we merge and compare the two auxilary arrays, all 
-                 * we need to do is replace the original array with the value in
-                 * the auxiliary one, and we are guaranteed that every element will be
-                 * readded
-                 * 
-                 */
-                animations.push([i, j]); /* Stage 1: compare values */
-                animations.push([index, copy[i]]); /* Stage 2: put values back, and pink */
+
+                animations.push([i, j]); /* Stage 1: compare values, 2nd 33 */
+                animations.push([index, copy[i]]); /* Stage 2: put values back, and pink, set this arrayBarsUp value to hidden 34 */
                 mainArr[index++] = copy[i++];
             }
             else {
-                lines.push(["YES", 36]);
-                lines.push(["YES", 36]);
+                lines.push(["YES", "S0", 36]); /* Stage 0: compare arrayBarsUp */
+                lines.push(["YES", "S1", 36]); 
                 lines.push(["YES", 37]);
                 lines.push(["YES", 38]);
 
-                animations.push([j, i]);
-                animations.push([index, copy[j]]);
+                animations.push([j, i]); /* Stage 1: compare values, 2nd 36 */
+                animations.push([index, copy[j]]);  /* Stage 2: put values back, and pink, set this arrayBarsUp value to hidden 37 */
                 mainArr[index++] = copy[j++];
             }
         }
     
         while (i <= m) {
-            lines.push(["YES", 33]);
-            lines.push(["YES", 33]);
-            lines.push(["YES", 34]);
+            lines.push(["YES", 32]); /* Simulate still in for loop */
+            lines.push(["YES", "S0", 33]); /* Stage 0: compare arrayBarsUp */
+            lines.push(["YES", "S1", 33]); /* Stage 1: compare values, 2nd 33 */
+            lines.push(["YES", 34]); /* Stage 2: put values back, and pink, set this arrayBarsUp value to hidden 37 */
             lines.push(["YES", 35]);
 
             animations.push([i, i]);
@@ -148,8 +136,9 @@ function mergeSort(array, l, r, copy, lines, animations) {
             mainArr[index++] = copy[i++];
         }
         while (j <= r) {
-            lines.push(["YES", 36]);
-            lines.push(["YES", 36]);
+            lines.push(["YES", 32]); 
+            lines.push(["YES", "S0",  36]);
+            lines.push(["YES", "S1", 36]);
             lines.push(["YES", 37]);
             lines.push(["YES", 38]);
 
@@ -158,16 +147,17 @@ function mergeSort(array, l, r, copy, lines, animations) {
             animations.push([index, copy[j]])
             mainArr[index++] = copy[j++];
         }
-        lines.push(["NO", 32]) /* if this specific line, turn back to primary */
+        /* if this specific line 1. turn back to primary 2. copy arrayBars from l to r into arrayBarsUp */
+        lines.push(["NO", 32, l, r]) 
     }
 }
 
 /** Animates mergeSort */
-function animate(lines, linesIdx, animations, arrayBars, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback) {
+function animate(lines, linesIdx, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback) {
     
     if (isPausedCallback()) {
         setTimeout(() => {
-            animate(lines, 0, animations, arrayBars, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback);
+            animate(lines, 0, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback);
         }, getSpeedCallback())
         return;
     }
@@ -177,6 +167,41 @@ function animate(lines, linesIdx, animations, arrayBars, animationsIdx, getSpeed
         resolveCallback(animations) 
         return;
     } 
+
+    /*
+    ? Actual MergeSort algorithm animations */
+    /* Set from index 1 to end to PRIMARY */
+    if (animations[animationsIdx].includes("ENDS")) {
+
+    /* Highlight the middle split */
+    } else if (animations[animationsIdx].includes("MID")) {
+
+    } 
+
+    /* Highlight l to m PRIMARY_SUPER, and m + 1 to r, PRIMARY */
+    if (lines[linesIdx].includes(7)) {
+
+    /* Highlight m + 1 to r PRIMARY_SUPER, and l to m, PRIMARY */
+    } else if (lines[linesIdx].includes(8)) {
+
+    /* for l to r: Set heights of arrayBars to 0px, and unhide the arrayBarsUp */
+    } else if (lines[linesIdx].includes(20)) {
+        /* We are on SPLIT */
+
+
+    } else if ((lines[linesIdx].includes(33)) || (lines[linesIdx].includes(36))) {
+        /* Stage 0 */
+        if (lines[linesIdx].includes("S0")) {
+
+        /* Stage 1 */
+        } else if (lines[linesIdx].includes("S1")) {
+
+        }
+    } else if ((lines[linesIdx].includes(34)) || (lines[linesIdx].includes(33))) {
+        /* Stage 2 */
+    } else if (lines[linesIdx].includes(32) && (lines[linesIdx].includes("NO"))) {
+
+    }
 
     const stage = animationsIdx % 3;
 
@@ -235,10 +260,11 @@ function animate(lines, linesIdx, animations, arrayBars, animationsIdx, getSpeed
         }, getSpeedCallback());
         nextStepTimeout = getSpeedCallback();  
     }
+
     nextStepTimeout = getSpeedCallback(); 
     updateHighlight(highlightedLine);
     linesIdx++;
-    setTimeout(() => animate(lines, linesIdx, animations, arrayBars, animationsIdx, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback), nextStepTimeout);
+    setTimeout(() => animate(lines, linesIdx, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback), nextStepTimeout);
 }
 
 //Worse Case Calculation Errors
