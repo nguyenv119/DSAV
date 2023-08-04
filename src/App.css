@@ -350,29 +350,56 @@ button[class*="btn"] {border: 1;}
   font-family: 'Poppins', sans-serif;
   margin-left: 3%;
   margin-top: 3%;
+  cursor:pointer;
   display: flex;
-  padding: 5px 20px;
+  padding: 8px 16px;
   text-decoration: none;
   font-size: 20px;
-  color: rgb(233, 233, 233);
-  background-color: rgb(26, 26, 26);
-  transition: 1s;
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5); 
-  transform: skewX(-7deg);
-  border-top: 3px solid rgb(42, 42, 42); 
-  border-right: 3px solid rgb(22, 22, 22); 
-  border-bottom: 3px solid rgb(12, 12, 12); 
-  border-left: 0.5px solid rgb(32, 32, 32);
+  color: rgb(255, 255, 255);
+  background-color: transparent;
+  transition: all 1s;
+  box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.971); 
+  /*transform: skewX(-7deg);*/
+  border: 2px solid rgb(255, 250, 250);
   white-space: nowrap; 
   font-weight: 900;
-  /* border-radius: 5px; */
+  position:relative;
+  border-radius: 5px; 
   align-items: center; /* aligns the image and the text vertically in the center */
   justify-content: center; /* space out the elements inside the button */
 }
 
-.cta:not(:last-child) {
-  margin-right: 3%;
+.cta::before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 0%;
+  top: 0;
+  left: 0px;
+  /*transform: skewX(45deg);*/
+  background-color: rgb(169, 110, 110);
+  z-index: -1;
+  transition: all 1s;
 }
+
+.cta:hover {
+  transition: 0.5s;
+  /*background-color: rgb(255, 255, 255);
+  color: black;*/
+  color:black;
+}
+
+.cta:hover::before {
+  width:100%;
+}
+
+.cta:active::before {
+  background-color: rgb(169,110,110);
+}
+
+/*.cta:not(:last-child) {
+  margin-right: 3%;
+}*/
 
 .settings {
   display: flex;
@@ -394,14 +421,14 @@ button[class*="btn"] {border: 1;}
   /* border: 2px solid purple; */
 }
 
-.cta.img {
+/*.cta.img {
   margin-right: 2%; 
   margin-bottom: 1%;
   padding: 5px 6px 6px 7px;
   transform: skewX(0deg);
   border-radius: 25%;
   box-shadow: 0px 0px 3px 0px rgba(17, 17, 17, 0.5);
-}
+}*/
 
 .cta.sorting {
   font-family: 'Poppins', sans-serif;
@@ -420,12 +447,6 @@ button[class*="btn"] {border: 1;}
 
 .cta:focus {
    outline: none; 
-}
-
-.cta:hover {
-    transition: 0.5s;
-    background-color: rgb(255, 255, 255);
-    color: black;
 }
 
 .cta.img:hover {
