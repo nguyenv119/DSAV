@@ -224,7 +224,6 @@ insertionSort(A, n) {
     return displayCode(lines, highlightLines)
 };
 
-
 export function HeapSortCode ({ highlightLines }) {
     const heapSort = `!! @param A: the array
 HEAPSORT(A) {
@@ -263,4 +262,4 @@ BUILD_MAX_HEAP(A) {
 `;
     const lines = heapSort.split("\n");
     return displayCode(lines, highlightLines);
-}
+};

@@ -1,8 +1,9 @@
 import {resetAllBarColors, greenify} from "../CommonMethods/commonMethods";
 import {    PRIMARY_COLOR,
+            SUPER_PRIMARY_COLOR,
             SECONDARY_COLOR,
-            LARGER_COLOR,
-            SMALLER_COLOR,
+            LARGER_COLOR as GREEN,
+            SMALLER_COLOR as RED,
             SAMESIZE_COLOR,
             DONE_COLOR
         } from "../../SortingVisualizer/SortingVisualizer";
@@ -18,11 +19,11 @@ export function mergeSortExp(array,
                             updateComparisons,
                             isPausedCallback,
                             updateHighlight) {
-
+                        
     return new Promise((resolve) => {
         resetAllBarColors(arrayBars, PRIMARY_COLOR);        
         const [lines, animations, arr] = getMergeSortAnimationArray(array.slice());
-        animate(lines, 0, animations, arrayBars, arrayBarsUp, 0, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, () => resolve(arr));
+        animate(lines, 0, array.length - 1, animations, arrayBars, arrayBarsUp, 0, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, () => resolve(arr));
     });
 }
 
@@ -58,7 +59,7 @@ function mergeSort(array, l, r, copy, lines, animations) {
     ? IF THE ANIMATIONS ELEMENTS CONTAINS ENDS OR MID — DIFFERENTIATES IT FROM NORMAL ANIMATION */
     if (l === r) {
         animations.push(["ENDS", l, r]);
-        lines.push(["NO", 5]);
+        lines.push(["NO", "5", 5]);
         return;
     }
 
@@ -67,16 +68,16 @@ function mergeSort(array, l, r, copy, lines, animations) {
     Or, we can implement it to set it to default with a delay in the future */
 
     animations.push(["ENDS", l, r]); /* Set from index 1 to end to primary */
-    lines.push(["YES", 5]);
+    lines.push(["YES", "5", 5]);
     let m = Math.floor((l + r) / 2);
     animations.push(["MID", m]); /* Highlight the middle split */
-    lines.push(["YES", 6]);
+    lines.push(["YES", "6", 6]);
 
-    lines.push(["YES", 7, l, m, r]);
+    lines.push(["YES", "7", l, m, r]);
     mergeSort(copy, l, m, array, lines, animations);
-    lines.push(["YES", 8, l, m + 1, r]);
+    lines.push(["YES", "8", l, m, r]);
     mergeSort(copy, m + 1, r, array, lines, animations);
-    lines.push(["YES", 9]);
+    lines.push(["YES", "9", 9]);
     merge(array, l, m, r, copy, lines, animations);
 
     /*
@@ -101,9 +102,9 @@ function mergeSort(array, l, r, copy, lines, animations) {
             lines.push(["YES", 32]);
             animations.push([i, j]); 
             if (copy[i] <= copy[j]) {
-                lines.push(["YES", "S0", 33]); /* Stage 0: compare arrayBarsUp */
+                lines.push(["YES", "S0", 33]) /* Stage 0: compare arrayBarsUp */
                 lines.push(["YES", "S1", 33]); 
-                lines.push(["YES", 34]); 
+                lines.push(["YES", "S2", 34]); 
                 lines.push(["YES", 35]);
 
                 animations.push([i, j]); /* Stage 1: compare values, 2nd 33 */
@@ -113,7 +114,7 @@ function mergeSort(array, l, r, copy, lines, animations) {
             else {
                 lines.push(["YES", "S0", 36]); /* Stage 0: compare arrayBarsUp */
                 lines.push(["YES", "S1", 36]); 
-                lines.push(["YES", 37]);
+                lines.push(["YES", "S2", 37]);
                 lines.push(["YES", 38]);
 
                 animations.push([j, i]); /* Stage 1: compare values, 2nd 36 */
@@ -124,9 +125,9 @@ function mergeSort(array, l, r, copy, lines, animations) {
     
         while (i <= m) {
             lines.push(["YES", 32]); /* Simulate still in for loop */
-            lines.push(["YES", "S0", 33]); /* Stage 0: compare arrayBarsUp */
-            lines.push(["YES", "S1", 33]); /* Stage 1: compare values, 2nd 33 */
-            lines.push(["YES", 34]); /* Stage 2: put values back, and pink, set this arrayBarsUp value to hidden 37 */
+            lines.push(["YES", "S0", "hi", 33]); /* Stage 0: compare arrayBarsUp */
+            lines.push(["YES", "S1", "hi", 33]); /* Stage 1: compare values, 2nd 33 */
+            lines.push(["YES", "S2", 34]); /* Stage 2: put values back, and pink, set this arrayBarsUp value to hidden 37 */
             lines.push(["YES", 35]);
 
             animations.push([i, i]);
@@ -136,9 +137,9 @@ function mergeSort(array, l, r, copy, lines, animations) {
         }
         while (j <= r) {
             lines.push(["YES", 32]); 
-            lines.push(["YES", "S0",  36]);
-            lines.push(["YES", "S1", 36]);
-            lines.push(["YES", 37]);
+            lines.push(["YES", "S0", "hi", 36]);
+            lines.push(["YES", "S1", "hi", 36]);
+            lines.push(["YES", "S2", 37]);
             lines.push(["YES", 38]);
 
             animations.push([j, j]);
@@ -147,16 +148,16 @@ function mergeSort(array, l, r, copy, lines, animations) {
             mainArr[index++] = copy[j++];
         }
         /* if this specific line 1. turn back to primary 2. copy arrayBars from l to r into arrayBarsUp */
-        lines.push(["NO", 32, l, r]) 
+        lines.push(["NO", 32, l, m, r]) 
     }
 }
 
 /** Animates mergeSort */
-function animate(lines, linesIdx, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback) {
+function animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback) {
     
     if (isPausedCallback()) {
         setTimeout(() => {
-            animate(lines, 0, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback);
+            animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback);
         }, getSpeedCallback())
         return;
     }
@@ -167,103 +168,164 @@ function animate(lines, linesIdx, animations, arrayBars, arrayBarsUp, animations
         return;
     } 
 
+    let nextStepTimeout = 0;
+    let highlightedLine = lines[linesIdx];
+    let animationLine = animations[animationsIdx];
+
+    console.log("LineIdx", linesIdx, highlightedLine);
+    console.log("AnimationIdx", animationsIdx, animationLine);
+
     /*
     ? Actual MergeSort algorithm animations */
-    /* Set from index 1 to end to PRIMARY */
-    if (animations[animationsIdx].includes("ENDS")) {
+    /* Set from index l to r to PRIMARY */
+    if (highlightedLine.includes("5")) {
+        let [l, r] = [animationLine[1], animationLine[2]];
 
-    /* Highlight the middle split */
-    } else if (animations[animationsIdx].includes("MID")) {
+        for (let j = 0; j < l; j++) arrayBars[j].style.backgroundColor = PRIMARY_COLOR;
+        for (let j = r + 1; j <= length; j++) arrayBars[j].style.backgroundColor = PRIMARY_COLOR;
 
-    } 
-
-    /* Highlight l to m PRIMARY_SUPER, and m + 1 to r, PRIMARY */
-    if (lines[linesIdx].includes(7)) {
-
-    /* Highlight m + 1 to r PRIMARY_SUPER, and l to m, PRIMARY */
-    } else if (lines[linesIdx].includes(8)) {
-
-    /* for l to r: Set heights of arrayBars to 0px, and unhide the arrayBarsUp */
-    } else if (lines[linesIdx].includes(20)) {
-        /* We are on SPLIT */
-
-
-    } else if ((lines[linesIdx].includes(33)) || (lines[linesIdx].includes(36))) {
-        /* Stage 0 */
-        if (lines[linesIdx].includes("S0")) {
-
-        /* Stage 1 */
-        } else if (lines[linesIdx].includes("S1")) {
-
+        for (let i = l; i <= r; i++) {
+            arrayBars[i].style.backgroundColor = SUPER_PRIMARY_COLOR;
         }
-    } else if ((lines[linesIdx].includes(34)) || (lines[linesIdx].includes(33))) {
-        /* Stage 2 */
-    } else if (lines[linesIdx].includes(32) && (lines[linesIdx].includes("NO"))) {
+        if (lines[linesIdx + 1].includes("YES") && !lines[linesIdx + 1].includes(9)) animationsIdx++;
+    /* Highlight the middle split */
+    } else if (highlightedLine.includes("6")) {
+        let mid = animationLine[1];
+        arrayBars[mid].style.backgroundColor = DONE_COLOR;
+        animationsIdx++;
+    /* Highlight l to m PRIMARY_SUPER, and m + 1 to r, PRIMARY */
+    } else if (highlightedLine.includes("7")) {
+        let prevAnimationLine = animations[animationsIdx - 1];
+        let pinkIndex = prevAnimationLine[1];
+        arrayBars[pinkIndex].style.backgroundColor = SUPER_PRIMARY_COLOR;
 
-    }
+        let [l, m, r] = [highlightedLine[2], highlightedLine[3], highlightedLine[4]];
 
-    const stage = animationsIdx % 3;
+        for (let i = l; i <= m; i++) {
+            arrayBars[i].style.backgroundColor = SUPER_PRIMARY_COLOR;
+        }
+        for (let i = m + 1; i <= r; i++) {
+            arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+        }
+        highlightedLine = ["YES", 7];
+    /* Highlight m + 1 to r PRIMARY_SUPER, and l to m, PRIMARY */
+    } else if (highlightedLine.includes("8")) {
+        let [l, m, r] = [highlightedLine[2], highlightedLine[3], highlightedLine[4]];
+        for (let i = l; i <= m; i++) {
+            arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+        }
+        for (let i = m + 1; i <= r; i++) {
+            arrayBars[i].style.backgroundColor = SUPER_PRIMARY_COLOR;
+        }
+        
+        highlightedLine = ["YES", 8];
+        animationsIdx++;
 
-    let nextStepTimeout = 0;
+    /* We have to highlight both subarrays SUPER again before merging to show */
+    } else if (highlightedLine.includes("9")) {
+        let [l, r] = [animationLine[2], animationLine[3]];
+        for (let i = l; i <= r; i++) {
+            arrayBars[i].style.backgroundColor = SUPER_PRIMARY_COLOR;
+        }
+        highlightedLine = ["YES", 9];
+        
+    /* for l to r: Set heights of arrayBars to 0px, and unhide the arrayBarsUp */
+    } else if (highlightedLine.includes(20)) {
+        /* We are on SPLIT */
+        let [l, m, r] = [animationLine[1], animationLine[2], animationLine[3]];
+        let i = l;
+        while (i <= r) {
+            arrayBars[i].style.height = "0px";
+            arrayBarsUp[i].style.display = "inline-block";
+            arrayBarsUp[i].style.backgroundColor = SUPER_PRIMARY_COLOR;
+            if (i === m) {
+                arrayBarsUp[i].style.marginRight = "5px";
+            } 
+            i++;
+        }
+        animationsIdx++;
 
-    if (stage === 0) {
-        const [barOneIdx, barTwoIdx] = animations[animationsIdx];
-        const barOneStyle = arrayBars[barOneIdx].style;
-        const barTwoStyle = arrayBars[barTwoIdx].style;        
+    } else if (highlightedLine.includes("S0")) {
+        /* Stage 0 */
+        const [barOneIdx, barTwoIdx] = animationLine;
+        const barOneStyle = arrayBarsUp[barOneIdx].style;
+        const barTwoStyle = arrayBarsUp[barTwoIdx].style;        
 
         barOneStyle.backgroundColor = SECONDARY_COLOR;
         barTwoStyle.backgroundColor = SECONDARY_COLOR;
-        animationsIdx ++;
-
-        /*
-        ? We have to use the latest speed changed in the animation due to some delay */
+        if (highlightedLine.includes(33)) {
+            highlightedLine = ["YES", 33];
+        } else if (highlightedLine.includes(36)) {
+            highlightedLine = ["YES", 36];
+        }
         nextStepTimeout = getSpeedCallback();  
-    
-    } else if (stage === 1) {
-        const [indexSmall, indexLarge] = animations[animationsIdx];
-        const smallBarStyle = arrayBars[indexSmall].style;
-        const largeBarStyle = arrayBars[indexLarge].style;
+        animationsIdx++;
 
-        /*
-        ? If it's the same index, meaning extra elements from auxiliary left right arr */
+    } else if (highlightedLine.includes("S1")) {
+        /* Stage 1 */
+        const [indexSmall, indexLarge] = animationLine;
+        const smallBarStyle = arrayBarsUp[indexSmall].style;
+        const largeBarStyle = arrayBarsUp[indexLarge].style;
+
         if (indexSmall === indexLarge) {
             smallBarStyle.backgroundColor = GOOD_COLOR;
-        } else if (arrayBars[indexSmall] === arrayBars[indexLarge]) {
+        } else if (arrayBarsUp[indexSmall] === arrayBarsUp[indexLarge]) {
             smallBarStyle.backgroundColor = SAMESIZE_COLOR;
             largeBarStyle.backgroundColor = SAMESIZE_COLOR;
         } else {
-            smallBarStyle.backgroundColor = LARGER_COLOR;
-            largeBarStyle.backgroundColor = SMALLER_COLOR;
+            smallBarStyle.backgroundColor = GREEN;
+            largeBarStyle.backgroundColor = RED;
         }
-        setTimeout(() => {
-            smallBarStyle.backgroundColor = PRIMARY_COLOR;
-            largeBarStyle.backgroundColor = PRIMARY_COLOR;
-        }, getSpeedCallback());
+
+        if (highlightedLine.includes(33)) {
+            highlightedLine = ["YES", 33];
+        } else if (highlightedLine.includes(36)) {
+            highlightedLine = ["YES", 36];
+        }
 
         updateComparisons(comparisons + 1);
         comparisons++;
+        nextStepTimeout = getSpeedCallback();  
+        animationsIdx++;
+
+    /* Stage 2 */
+    } else if (highlightedLine.includes("S2")) {
+        /* Hides the smaller arrayBarsUp after choosing, and bigger, just back to primary */
+        let prevLine = animations[animationsIdx - 1];
+        let [smallerBarIdx, largerBarIdx] = [prevLine[0], prevLine[1]];
+    
+        arrayBarsUp[largerBarIdx].style.backgroundColor = SUPER_PRIMARY_COLOR;
+        arrayBarsUp[smallerBarIdx].style.backgroundColor = SUPER_PRIMARY_COLOR;
+        arrayBarsUp[smallerBarIdx].style.height = "0px";
+
+        const [barLowerAppearIdx, lowerHeight] = animations[animationsIdx];
+        const barLowerAppearStyle = arrayBars[barLowerAppearIdx].style;
+        barLowerAppearStyle.height = `${lowerHeight}px`;
+        barLowerAppearStyle.backgroundColor = DONE_COLOR;
+
+        if (highlightedLine.includes(34)) {
+            highlightedLine = ["YES", 34];
+        } else if (highlightedLine.includes(37)) {
+            highlightedLine = ["YES", 37];
+        }
         animationsIdx++;
         nextStepTimeout = getSpeedCallback();  
 
-    } else if (stage === 2) {
-        const [barOneIdx, newHeight] = animations[animationsIdx];
-        const barOneStyle = arrayBars[barOneIdx].style;
-        barOneStyle.height = `${newHeight}px`;
-        barOneStyle.backgroundColor = DONE_COLOR;
-        animationsIdx++;
-
-        /*
-        ? Resets the color of the bars */
-        setTimeout(() => {
-            barOneStyle.backgroundColor = PRIMARY_COLOR;
-        }, getSpeedCallback());
-        nextStepTimeout = getSpeedCallback();  
+    } else if (highlightedLine.includes(32) && (highlightedLine.includes("NO"))) {
+        let [l, m, r] = [highlightedLine[1], highlightedLine[2], highlightedLine[3]];
+        for (let i = l; i <= r; i++) {
+            arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+            arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
+            arrayBarsUp[i].style.height = arrayBars[i].style.height;
+            if (i === m) arrayBarsUp[i].marginRight = "0px";
+        }
     }
-
+    
     nextStepTimeout = getSpeedCallback(); 
     updateHighlight(highlightedLine);
     linesIdx++;
-    setTimeout(() => animate(lines, linesIdx, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, resolveCallback), nextStepTimeout);
+    
+    setTimeout(() => animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback), nextStepTimeout);
 }
 
 //Worse Case Calculation Errors
