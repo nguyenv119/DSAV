@@ -161,8 +161,9 @@ export default class SortingVisualizer extends React.Component {
     mergeSort() {
         let [array, arrayBars] = this.makeProps();
         const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
-        const barWidth = this.getWidth();
-        console.log("Inputted Width" + barWidth)
+        const arrayBarsSingle = document.getElementsByClassName("arrayBar");
+        const barWidth = arrayBarsSingle[0].clientWidth;
+
         let comparisons = 0;
 
         mergeSortExp(array, arrayBars, arrayBarsUp, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine, barWidth)
