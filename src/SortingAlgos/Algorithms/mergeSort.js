@@ -18,12 +18,13 @@ export function mergeSortExp(array,
                             comparisons, 
                             updateComparisons,
                             isPausedCallback,
-                            updateHighlight) {
+                            updateHighlight,
+                            barWidth) {
                         
     return new Promise((resolve) => {
         resetAllBarColors(arrayBars, PRIMARY_COLOR);        
         const [lines, animations, arr] = getMergeSortAnimationArray(array.slice());
-        animate(lines, 0, array.length - 1, animations, arrayBars, arrayBarsUp, 0, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, () => resolve(arr));
+        animate(lines, 0, array.length - 1, barWidth, animations, arrayBars, arrayBarsUp, 0, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, () => resolve(arr));
     });
 }
 
@@ -41,7 +42,6 @@ function getMergeSortAnimationArray(arr) {
     if (arr.length <= 1) return arr;
     const copy = arr.slice();
     mergeSort(arr, 0, arr.length - 1, copy, lines, animations);
-    console.log(animations);
     return [lines, animations, arr];
 }
 
@@ -154,11 +154,11 @@ function mergeSort(array, l, r, copy, lines, animations) {
 }
 
 /** Animates mergeSort */
-function animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback) {
+function animate(lines, linesIdx, length, barWidth, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback) {
     
     if (isPausedCallback()) {
         setTimeout(() => {
-            animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback);
+            animate(lines, linesIdx, length, barWidth, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback);
         }, getSpeedCallback())
         return;
     }
@@ -173,8 +173,8 @@ function animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, an
     let highlightedLine = lines[linesIdx];
     let animationLine = animations[animationsIdx];
 
-    console.log("LineIdx", highlightedLine);
-    console.log("AnimationIdx", animationLine);
+    // console.log("LineIdx", highlightedLine);
+    // console.log("AnimationIdx", animationLine);
     
     /*
     ? Actual MergeSort algorithm animations */
@@ -247,6 +247,7 @@ function animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, an
         while (i <= r) {
             arrayBars[i].style.height = "0px";
             arrayBarsUp[i].style.display = "inline-block";
+            arrayBarsUp[i].style.width = `${barWidth}px`;
             arrayBarsUp[i].style.backgroundColor = SUPER_PRIMARY_COLOR;
             if (l !== m) {
                 if (i === l) arrayBarsUp[i].style.marginLeft= "1%";
@@ -356,5 +357,5 @@ function animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, an
     updateHighlight(highlightedLine);
     linesIdx++;
     
-    setTimeout(() => animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback), nextStepTimeout);
+    setTimeout(() => animate(lines, linesIdx, length, barWidth, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback), nextStepTimeout);
 }

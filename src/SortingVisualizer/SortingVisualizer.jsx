@@ -161,9 +161,11 @@ export default class SortingVisualizer extends React.Component {
     mergeSort() {
         let [array, arrayBars] = this.makeProps();
         const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
+        const barWidth = this.getWidth();
+        console.log("Inputted Width" + barWidth)
         let comparisons = 0;
 
-        mergeSortExp(array, arrayBars, arrayBarsUp, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
+        mergeSortExp(array, arrayBars, arrayBarsUp, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine, barWidth)
         .then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
@@ -190,6 +192,13 @@ export default class SortingVisualizer extends React.Component {
                             1000 : ANIMATION_SPEED_MS === 0 ?
                                 2000 : 3000;
         return speed;
+    }
+
+    /*
+    ? Gets the width for each bar */
+    getWidth() {
+        const arrayBarsContainer = document.getElementsByClassName("arrayBars")[0];
+        return arrayBarsContainer.clientWidth / this.determineBars();
     }
 
     /* 
@@ -289,16 +298,18 @@ export default class SortingVisualizer extends React.Component {
             /* 
             ? Resets the color of array back to PRIMARY, and determines width and length */
             const arrayBars = document.getElementsByClassName("arrayBar");
+            const barWidth = this.getWidth();
+
             for (let i = 0; i < arrayBars.length; i++) {
                 /*
                 TODO: To make the bars fill the screen, might have to change later */
-                arrayBars[i].style.width = `${5000 / length}px`;
+                arrayBars[i].style.width = `${barWidth}px`;
                 arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
                 if (this.state.activeAlgorithm === 4) {
                     const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
-                    arrayBarsUp[i].style.width = `${5000 / length}px`;
+                    arrayBarsUp[i].style.width = `${barWidth}px`;
                     arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
-                    // arrayBarsUp[i].style.display = 'none';
+                    arrayBarsUp[i].style.display = 'none';
                 }
             }
         });
