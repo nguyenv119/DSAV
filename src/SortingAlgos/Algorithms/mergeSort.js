@@ -18,21 +18,13 @@ export function mergeSortExp(array,
                             comparisons, 
                             updateComparisons,
                             isPausedCallback,
-                            updateHighlight,
-                            barWidth) {
+                            updateHighlight) {
                         
     return new Promise((resolve) => {
         resetAllBarColors(arrayBars, PRIMARY_COLOR);        
         const [lines, animations, arr] = getMergeSortAnimationArray(array.slice());
-        animate(lines, 0, array.length - 1, barWidth, animations, arrayBars, arrayBarsUp, 0, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, 
-            () => {
-                /* Reset the heights of arrayBarsUp to 0px */
-                for (let bar of arrayBarsUp) {
-                    bar.style.backgroundColor = "red";
-                    bar.style.height = '0px';
-                }
-                resolve(arr);
-            });
+        animate(lines, 0, array.length - 1, animations, arrayBars, arrayBarsUp, 0, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, 
+            () => resolve(arr));
     });
 }
 
@@ -162,11 +154,11 @@ function mergeSort(array, l, r, copy, lines, animations) {
 }
 
 /** Animates mergeSort */
-function animate(lines, linesIdx, length, barWidth, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback) {
+function animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback) {
     
     if (isPausedCallback()) {
         setTimeout(() => {
-            animate(lines, linesIdx, length, barWidth, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback);
+            animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback);
         }, getSpeedCallback())
         return;
     }
@@ -256,7 +248,7 @@ function animate(lines, linesIdx, length, barWidth, animations, arrayBars, array
             arrayBarsUp[i].style.height = arrayBars[i].style.height ;
             arrayBars[i].style.height = "0px";
             arrayBarsUp[i].style.display = "inline-block";
-            arrayBarsUp[i].style.width = `${barWidth}px`;
+            arrayBarsUp[i].style.width = arrayBars[0].style.width;
             arrayBarsUp[i].style.backgroundColor = SUPER_PRIMARY_COLOR;
             if (i === m) {
                 arrayBarsUp[i].style.marginRight= "1%";
@@ -349,5 +341,5 @@ function animate(lines, linesIdx, length, barWidth, animations, arrayBars, array
     updateHighlight(highlightedLine);
     linesIdx++;
     
-    setTimeout(() => animate(lines, linesIdx, length, barWidth, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback), nextStepTimeout);
+    setTimeout(() => animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback), nextStepTimeout);
 }

@@ -64,8 +64,8 @@ export default class SortingVisualizer extends React.Component {
             sortingAlgorithm: null,
             isSorting: false,
             buttonsDisabled: false,
-            ANIMATION_SPEED_MS: 6, //6
-            BARS: 14, // 14
+            ANIMATION_SPEED_MS: 10, //6
+            BARS: 5, // 14
             sortingInProgress: false,
             activeButton: "",
             activeSortingButton: "",
@@ -160,17 +160,21 @@ export default class SortingVisualizer extends React.Component {
 
     mergeSort() {
         let [array, arrayBars] = this.makeProps();
-
         for (let i = 0; i < array.length; i++) {
             array[i] /= 2;
+            arrayBars[i].style.height = `${array[i]}px`;
         }
+
         const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
-        const arrayBarsSingle = document.getElementsByClassName("arrayBar");
-        const barWidth = arrayBarsSingle[0].style.width;
         let comparisons = 0;
 
-        mergeSortExp(array, arrayBars, arrayBarsUp, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine, barWidth)
+        mergeSortExp(array, arrayBars, arrayBarsUp, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
         .then((arr) => {
+            for (let i = 0; i < array.length; i++) {
+                arr[i] *= 2;
+                const height = parseInt(arrayBars[i].style.height, 10);
+                arrayBars[i].style.height = `${height * 2}px`;
+            }
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
     }
