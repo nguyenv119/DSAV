@@ -71,7 +71,7 @@ export default class SortingVisualizer extends React.Component {
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 4,
+            activeAlgorithm: 0,
             highlightedLine: [0],
             mergeSortActivated: false,
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
@@ -160,11 +160,13 @@ export default class SortingVisualizer extends React.Component {
 
     mergeSort() {
         let [array, arrayBars] = this.makeProps();
+
+        for (let i = 0; i < array.length; i++) {
+            array[i] /= 2;
+        }
         const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
         const arrayBarsSingle = document.getElementsByClassName("arrayBar");
         const barWidth = arrayBarsSingle[0].style.width;
-
-        console.log("Passed in " + barWidth)
         let comparisons = 0;
 
         mergeSortExp(array, arrayBars, arrayBarsUp, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine, barWidth)
@@ -286,9 +288,7 @@ export default class SortingVisualizer extends React.Component {
         let length = this.determineBars();
 
         for (let i = 0; i < length; i++) {
-            if (this.state.activeAlgorithm === 4) {
-                array.push(randomIntFrom(MINVAL, MAXVAL / 2));
-            } else array.push(randomIntFrom(MINVAL, MAXVAL));
+            array.push(randomIntFrom(MINVAL, MAXVAL));
         }
 
         /* 
@@ -314,8 +314,6 @@ export default class SortingVisualizer extends React.Component {
                     arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
                 }
             }
-            console.log("Up " + arrayBarsUp[0].style.width);
-            console.log("Down " + arrayBars[0].style.width);
         });
     }
     
@@ -441,36 +439,36 @@ export default class SortingVisualizer extends React.Component {
                                     </button>
                                     <button className={`cta sorting`}
                                          onClick={() => {
-                                            this.bubbleSort()
-                                            this.setState({ activeSortingButton: "bubbleSort", activeAlgorithm: 1 });
+                                             this.setState({ activeSortingButton: "bubbleSort", activeAlgorithm: 1 });
+                                             this.bubbleSort()
                                         }}
                                         disabled={sortingInProgress}>Bubble Sort
                                     </button>
                                     <button className={`cta sorting`}
                                         onClick={() => {
-                                            this.selectionSort()
                                             this.setState({ activeSortingButton: "selectionSort", activeAlgorithm: 2 });
+                                            this.selectionSort()
                                         }}
                                         disabled={sortingInProgress}>Selection Sort
                                     </button>
                                     <button className={`cta sorting`}
                                         onClick={() => {
-                                            this.insertionSort()
                                             this.setState({ activeSortingButton: "insertionSort", activeAlgorithm: 3 });
+                                            this.insertionSort()
                                         }}
                                         disabled={sortingInProgress}>Insertion Sort
                                     </button>
                                     <button className={`cta sorting`}
                                         onClick={() => {
+                                            this.setState({ activeSortingButton: "mergeSort", activeAlgorithm: 4 });
                                             this.mergeSort()
-                                            this.setState({ activeSortingButton: "mergeSort", activeAlgorithm: 4,mergeSortActivated: true });
                                         }
                                         } disabled={sortingInProgress}>Merge Sort
                                     </button>
                                     <button className={`cta sorting`}
                                         onClick={() => {
-                                            this.heapSort()
                                             this.setState({ activeSortingButton: "heapSort", activeAlgorithm: 5 });
+                                            this.heapSort()
                                         }}
                                         disabled={sortingInProgress}>Heap Sort
                                     </button>
