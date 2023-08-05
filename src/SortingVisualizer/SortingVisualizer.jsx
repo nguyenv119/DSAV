@@ -162,8 +162,9 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars] = this.makeProps();
         const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
         const arrayBarsSingle = document.getElementsByClassName("arrayBar");
-        const barWidth = arrayBarsSingle[0].clientWidth;
+        const barWidth = arrayBarsSingle[0].style.width;
 
+        console.log("Passed in " + barWidth)
         let comparisons = 0;
 
         mergeSortExp(array, arrayBars, arrayBarsUp, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine, barWidth)
@@ -299,7 +300,9 @@ export default class SortingVisualizer extends React.Component {
             /* 
             ? Resets the color of array back to PRIMARY, and determines width and length */
             const arrayBars = document.getElementsByClassName("arrayBar");
+            const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
             const barWidth = this.getWidth();
+            
 
             for (let i = 0; i < arrayBars.length; i++) {
                 /*
@@ -307,12 +310,12 @@ export default class SortingVisualizer extends React.Component {
                 arrayBars[i].style.width = `${barWidth}px`;
                 arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
                 if (this.state.activeAlgorithm === 4) {
-                    const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
                     arrayBarsUp[i].style.width = `${barWidth}px`;
                     arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
-                    arrayBarsUp[i].style.display = 'none';
                 }
             }
+            console.log("Up " + arrayBarsUp[0].style.width);
+            console.log("Down " + arrayBars[0].style.width);
         });
     }
     
@@ -403,7 +406,7 @@ export default class SortingVisualizer extends React.Component {
                                 key={index}
                                 style={{
                                     backgroundColor: PRIMARY_COLOR,
-                                    height: `${value}px`
+                                    height: "0px"
                                 }}
                             ></div>
                             ))}

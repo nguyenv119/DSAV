@@ -24,7 +24,15 @@ export function mergeSortExp(array,
     return new Promise((resolve) => {
         resetAllBarColors(arrayBars, PRIMARY_COLOR);        
         const [lines, animations, arr] = getMergeSortAnimationArray(array.slice());
-        animate(lines, 0, array.length - 1, barWidth, animations, arrayBars, arrayBarsUp, 0, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, () => resolve(arr));
+        animate(lines, 0, array.length - 1, barWidth, animations, arrayBars, arrayBarsUp, 0, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, 
+            () => {
+                /* Reset the heights of arrayBarsUp to 0px */
+                for (let bar of arrayBarsUp) {
+                    bar.style.backgroundColor = "red";
+                    bar.style.height = '0px';
+                }
+                resolve(arr);
+            });
     });
 }
 
@@ -245,22 +253,14 @@ function animate(lines, linesIdx, length, barWidth, animations, arrayBars, array
         let [l, m, r] = [animationLine[1], animationLine[2], animationLine[3]];
         let i = l;
         while (i <= r) {
+            arrayBarsUp[i].style.height = arrayBars[i].style.height ;
             arrayBars[i].style.height = "0px";
             arrayBarsUp[i].style.display = "inline-block";
             arrayBarsUp[i].style.width = `${barWidth}px`;
             arrayBarsUp[i].style.backgroundColor = SUPER_PRIMARY_COLOR;
-            if (l !== m) {
-                if (i === l) arrayBarsUp[i].style.marginLeft= "1%";
-                else if (i === m) arrayBarsUp[i].style.marginRight = "2%";
-                else if (i === r) arrayBarsUp[i].style.marginRight = "1%";
-            } else {
-                if (i === l) {
-                    arrayBarsUp[i].style.marginLeft= "1%";
-                    arrayBarsUp[i].style.marginRight= "1%";
-                }
-                else if (i === r) arrayBarsUp[i].style.marginRight = "1%";
+            if (i === m) {
+                arrayBarsUp[i].style.marginRight= "1%";
             }
-            
             i++;
         }
         animationsIdx++;
@@ -337,17 +337,9 @@ function animate(lines, linesIdx, length, barWidth, animations, arrayBars, array
         for (let i = l; i <= r; i++) {
             arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
             arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
-            arrayBarsUp[i].style.height = arrayBars[i].style.height;
-            if (l !== m) {
-                if (i === l) arrayBarsUp[i].style.marginLeft= "0px"
-                else if (i === m) arrayBarsUp[i].style.marginRight = "2px";
-                else if (i === r) arrayBarsUp[i].style.marginRight = "2px";
-            } else {
-                if (i === l) {
-                    arrayBarsUp[i].style.marginLeft= "0px";
-                    arrayBarsUp[i].style.marginRight= "2px";
-                }
-                else if (i === r) arrayBarsUp[i].style.marginRight = "2px";
+            arrayBarsUp[i].style.height = "0px";
+            if (i === m) {
+                arrayBarsUp[i].style.marginRight = "2px";
             }
         }
         highlightedLine = ["NO", 32];
