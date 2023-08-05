@@ -30,7 +30,7 @@ import ProgressBar from './ProgressBar';
 import { left } from "@popperjs/core";
 
 const MINVAL = 10;
-const MAXVAL = 645;
+const MAXVAL = 625;
 const SPEED_THRESHOLD = 6;
 
 export const PRIMARY_COLOR = '#3a85ff8e';
@@ -64,8 +64,8 @@ export default class SortingVisualizer extends React.Component {
             sortingAlgorithm: null,
             isSorting: false,
             buttonsDisabled: false,
-            ANIMATION_SPEED_MS: 2, //6
-            BARS: 11, // 14
+            ANIMATION_SPEED_MS: 6, //6
+            BARS: 14, // 14
             sortingInProgress: false,
             activeButton: "",
             activeSortingButton: "",
@@ -398,7 +398,7 @@ export default class SortingVisualizer extends React.Component {
                     </div>
                     <div 
                         className="arrayBars"
-                        style={{height: activeAlgorithmKey === "mergeSort" ? '40%' : '80%'}}>
+                        style={{height: activeAlgorithmKey === "mergeSort" ? '39.5%' : '79%'}}>
                             {array.map((value, index) => (
                                 <div
                                     className="arrayBar"
