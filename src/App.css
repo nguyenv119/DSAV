@@ -359,7 +359,6 @@ button[class*="btn"] {border: 1;}
   background-color: transparent;
   transition: all 1s;
   box-shadow: 1px 1px 0 rgba(255, 255, 255, 0.971); 
-  /*transform: skewX(-7deg);*/
   border: 2px solid rgb(255, 250, 250);
   white-space: nowrap; 
   font-weight: 900;
@@ -376,7 +375,6 @@ button[class*="btn"] {border: 1;}
   width: 0%;
   top: 0;
   left: 0px;
-  /*transform: skewX(45deg);*/
   background-color: rgb(169, 110, 110);
   z-index: -1;
   transition: all 1s;
@@ -384,8 +382,7 @@ button[class*="btn"] {border: 1;}
 
 .cta:hover {
   transition: 0.5s;
-  /*background-color: rgb(255, 255, 255);
-  color: black;*/
+  /*background-color: rgb(255, 255, 255);*/
   color:black;
 }
 
@@ -396,10 +393,6 @@ button[class*="btn"] {border: 1;}
 .cta:active::before {
   background-color: rgb(169,110,110);
 }
-
-/*.cta:not(:last-child) {
-  margin-right: 3%;
-}*/
 
 .settings {
   display: flex;

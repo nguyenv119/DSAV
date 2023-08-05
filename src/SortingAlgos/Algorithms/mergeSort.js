@@ -40,7 +40,8 @@ function getMergeSortAnimationArray(arr) {
     const lines = [];
     if (arr.length <= 1) return arr;
     const copy = arr.slice();
-    mergeSort(arr, 0, arr.length - 1, copy, lines, animations)
+    mergeSort(arr, 0, arr.length - 1, copy, lines, animations);
+    console.log(animations);
     return [lines, animations, arr];
 }
 
@@ -172,22 +173,23 @@ function animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, an
     let highlightedLine = lines[linesIdx];
     let animationLine = animations[animationsIdx];
 
-    console.log("LineIdx", linesIdx, highlightedLine);
-    console.log("AnimationIdx", animationsIdx, animationLine);
-
+    console.log("LineIdx", highlightedLine);
+    console.log("AnimationIdx", animationLine);
+    
     /*
     ? Actual MergeSort algorithm animations */
     /* Set from index l to r to PRIMARY */
     if (highlightedLine.includes("5")) {
-        let [l, r] = [animationLine[1], animationLine[2]];
-
-        for (let j = 0; j < l; j++) arrayBars[j].style.backgroundColor = PRIMARY_COLOR;
-        for (let j = r + 1; j <= length; j++) arrayBars[j].style.backgroundColor = PRIMARY_COLOR;
-
-        for (let i = l; i <= r; i++) {
-            arrayBars[i].style.backgroundColor = SUPER_PRIMARY_COLOR;
+        if (highlightedLine.includes("YES")) {
+            let [l, r] = [animationLine[1], animationLine[2]];
+            for (let j = 0; j < l; j++) arrayBars[j].style.backgroundColor = PRIMARY_COLOR;
+            for (let j = r + 1; j <= length; j++) arrayBars[j].style.backgroundColor = PRIMARY_COLOR;
+            for (let i = l; i <= r; i++) {
+                arrayBars[i].style.backgroundColor = SUPER_PRIMARY_COLOR;
+            }
+            animationsIdx++;
         }
-        if (lines[linesIdx + 1].includes("YES") && !lines[linesIdx + 1].includes(9)) animationsIdx++;
+
     /* Highlight the middle split */
     } else if (highlightedLine.includes("6")) {
         let mid = animationLine[1];
@@ -207,7 +209,12 @@ function animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, an
         for (let i = m + 1; i <= r; i++) {
             arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
         }
+
         highlightedLine = ["YES", 7];
+        /* We want 8 to be only be 1 behind SPLIT. So, if this 7 is behind 8, as in it
+        doesnt keep splitting, we increment the animationsIdx */
+        if (lines[linesIdx + 2].includes("8")) animationsIdx++;
+
     /* Highlight m + 1 to r PRIMARY_SUPER, and l to m, PRIMARY */
     } else if (highlightedLine.includes("8")) {
         let [l, m, r] = [highlightedLine[2], highlightedLine[3], highlightedLine[4]];
@@ -219,18 +226,21 @@ function animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, an
         }
         
         highlightedLine = ["YES", 8];
-        animationsIdx++;
+        /* If we are about to merge, we want 9 to be at the SPLIT */
+        if (animationLine[1] === animationLine[2] && lines[linesIdx + 2].includes("9")) {
+            animationsIdx++;
+        }
 
     /* We have to highlight both subarrays SUPER again before merging to show */
     } else if (highlightedLine.includes("9")) {
-        let [l, r] = [animationLine[2], animationLine[3]];
+        let [l, r] = [animationLine[1], animationLine[3]];
         for (let i = l; i <= r; i++) {
             arrayBars[i].style.backgroundColor = SUPER_PRIMARY_COLOR;
         }
         highlightedLine = ["YES", 9];
         
     /* for l to r: Set heights of arrayBars to 0px, and unhide the arrayBarsUp */
-    } else if (highlightedLine.includes(20)) {
+    } else if (highlightedLine.includes(20) && highlightedLine.includes("YES")) {
         /* We are on SPLIT */
         let [l, m, r] = [animationLine[1], animationLine[2], animationLine[3]];
         let i = l;
@@ -238,9 +248,18 @@ function animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, an
             arrayBars[i].style.height = "0px";
             arrayBarsUp[i].style.display = "inline-block";
             arrayBarsUp[i].style.backgroundColor = SUPER_PRIMARY_COLOR;
-            if (i === m) {
-                arrayBarsUp[i].style.marginRight = "5px";
-            } 
+            if (l !== m) {
+                if (i === l) arrayBarsUp[i].style.marginLeft= "1%";
+                else if (i === m) arrayBarsUp[i].style.marginRight = "2%";
+                else if (i === r) arrayBarsUp[i].style.marginRight = "1%";
+            } else {
+                if (i === l) {
+                    arrayBarsUp[i].style.marginLeft= "1%";
+                    arrayBarsUp[i].style.marginRight= "1%";
+                }
+                else if (i === r) arrayBarsUp[i].style.marginRight = "1%";
+            }
+            
             i++;
         }
         animationsIdx++;
@@ -311,14 +330,26 @@ function animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, an
         animationsIdx++;
         nextStepTimeout = getSpeedCallback();  
 
+    /* Reset colors and margins */
     } else if (highlightedLine.includes(32) && (highlightedLine.includes("NO"))) {
-        let [l, m, r] = [highlightedLine[1], highlightedLine[2], highlightedLine[3]];
+        let [l, m, r] = [highlightedLine[2], highlightedLine[3], highlightedLine[4]];
         for (let i = l; i <= r; i++) {
             arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
             arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
             arrayBarsUp[i].style.height = arrayBars[i].style.height;
-            if (i === m) arrayBarsUp[i].marginRight = "0px";
+            if (l !== m) {
+                if (i === l) arrayBarsUp[i].style.marginLeft= "0px"
+                else if (i === m) arrayBarsUp[i].style.marginRight = "2px";
+                else if (i === r) arrayBarsUp[i].style.marginRight = "2px";
+            } else {
+                if (i === l) {
+                    arrayBarsUp[i].style.marginLeft= "0px";
+                    arrayBarsUp[i].style.marginRight= "2px";
+                }
+                else if (i === r) arrayBarsUp[i].style.marginRight = "2px";
+            }
         }
+        highlightedLine = ["NO", 32];
     }
     
     nextStepTimeout = getSpeedCallback(); 
@@ -327,59 +358,3 @@ function animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, an
     
     setTimeout(() => animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, animationsIdx, getSpeedCallback, comparisons, updateComparisons, updateHighlight, isPausedCallback, resolveCallback), nextStepTimeout);
 }
-
-//Worse Case Calculation Errors
-    /*
-        | Current Case | Worse Case | Error |
-        |--------------|------------|-------|
-        | 12           | 12         | 0     |
-        | 24           | 24         | 0     |
-        | 34           | 33         | 1     |
-        | 44           | 43         | 1     |
-        | 64           | 64         | 0     |
-        | 118          | 116        | 2     |
-        | 148          | 147        | 1     |
-        | 286          | 282        | 4     |
-        | 512          | 506        | 6     |
-        | 672          | 664        | 8     |
-        | 832          | 829        | 3     |
-        | 1094         | 1084       | 10    |
-        | 1364         | 1349       | 15    |
-        | 1544         | 1529       | 15    |
-        | 1904         | 1898       | 6     |
-        | 2488         | 2469       | 19    |
-
-        ***Zach's Thinking***
-        Seems to be linear relationship between size of the array and error size. This leads me to believe this might have something to
-        do with rounding. Lets say somewhere in the merge sort algo we round from 0.99 -> 1. Initally this isnt a big deal as 1.1 will
-        round down to 1 as an int. However, if we compound this 10 -> 100 -> 1000 -> etc  the error will grow bigger and bigger in a 
-        linear fashion. There are some flaws in this theory because we see some outiers to my thinking such as 832 829 3. We would 
-        expect the error to be larger than the previous one if it was truly compounding but it is less so it makes me reconsider my
-        hypothesis.
-
-        ***Chat GPT***
-        Input Data Characteristics:
-            The worst-case scenario for merge sort occurs when the input data is in the reverse order. In such cases, the algorithm 
-            performs the maximum number of comparisons. However, in real-world data or random data, the input might have certain 
-            characteristics that make it easier to sort. For example, if the input data is partially sorted or has some patterns, merge 
-            sort may perform better than the worst-case scenario.
-
-        Merge Sort Implementation:
-            The number of comparisons made during merge sort can vary based on the specific implementation. Different implementations 
-            might have slightly different comparison patterns, leading to variations in the number of comparisons for a given input.
-
-        Overhead from Animation:
-            It appears that the provided merge sort implementation also includes code for animation and visualization. The additional 
-            operations required for visualization might cause some variations in the number of comparisons, especially for smaller input 
-            sizes, as the animation overhead could be relatively more significant for smaller arrays.
-
-        Precision and Rounding Errors:
-            The error values (current case - worst case) are relatively small, and some of them are in single digits. It's possible that
-            some of these differences could be due to precision errors or rounding issues, especially if the comparison count is being 
-            tracked with floating-point numbers or if there's some small variation in the implementation.
-
-        Small Sample Size:
-            The dataset provided has a limited number of data points. With a small sample size, the observations might not fully 
-            represent the overall trend, and occasional variations may occur due to random fluctuations.
-        
-    */
