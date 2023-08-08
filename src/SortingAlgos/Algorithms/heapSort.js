@@ -12,17 +12,24 @@ const NO_SWITCH_COLOR = "#9706ff";
 ! We have to animate the buildMaxHeap and sorting differently, since they both use heapifyDown, 
 ! but we have different animations 
 */
-export function heapSortExp(array, arrayBars, getSpeedCallback, comparisons, isPausedCallback, updateComparisons) {
+export function heapSortExp(array, 
+                            arrayBars, 
+                            getSpeedCallback, 
+                            comparisons, 
+                            isPausedCallback, 
+                            updateComparisons,
+                            updateHighlight) {
+
     return new Promise((resolve) => {
         resetAllBarColors(arrayBars, PRIMARY_COLOR);     
-        const [maxHeapAnimations, heapSortAnimations, arr] = getHeapSortAnimationArray(array.slice());
+        const [lines, maxHeapAnimations, heapSortAnimations, arr] = getHeapSortAnimationArray(array.slice());
         /*
         ? animateMaxHeap returns a promise, only after which we called animateHeapSort */
-        animateMaxHeap(maxHeapAnimations, arrayBars, 0, getSpeedCallback, comparisons, isPausedCallback, updateComparisons)
+        animateMaxHeap(lines, 0, maxHeapAnimations, arrayBars, 0, getSpeedCallback, comparisons, isPausedCallback, updateComparisons, updateHighlight)
         .then((comparisons) => {
             /*
             ? animateHeapSort also returns a promise, which after it is done, then we return the original array to the React component for it to update its state with */
-            animateHeapSort(heapSortAnimations, arrayBars, 0, getSpeedCallback, comparisons, isPausedCallback, updateComparisons)
+            animateHeapSort(lines, 0, heapSortAnimations, arrayBars, 0, getSpeedCallback, comparisons, isPausedCallback, updateComparisons, updateHighlight)
             .then(() => {
                 resolve(arr);
             })
@@ -32,24 +39,25 @@ export function heapSortExp(array, arrayBars, getSpeedCallback, comparisons, isP
 
 function getHeapSortAnimationArray(arr) {
     if (arr.length <= 1) return arr;
+    const lines = [];
     const maxHeapAnimations = [];
     const heapSortAnimations = [];
-    heapSort(arr, maxHeapAnimations, heapSortAnimations);
-    return [maxHeapAnimations, heapSortAnimations, arr];
+    heapSort(arr, lines, maxHeapAnimations, heapSortAnimations);
+    return [lines, maxHeapAnimations, heapSortAnimations, arr];
 }
 
 /* 
 * Build the max heap */
-function buildMaxHeap(array, maxHeapAnimations) {
+function buildMaxHeap(lines, array, maxHeapAnimations) {
     let heapSize = array.length;
     for (let i = Math.floor((heapSize / 2)); i >= 0; i--) {
-        heapifyDownMax(array, i, heapSize, maxHeapAnimations)
+        heapifyDownMax(lines, array, i, heapSize, maxHeapAnimations)
     }
 }
   
 /*
 * HeapifyDown for building maxHeap DS */
-function heapifyDownMax(arr, idx, heapSize, maxHeapAnimations) {
+function heapifyDownMax(lines, arr, idx, heapSize, maxHeapAnimations) {
     /** If index is not a parent, return */
     if (idx >= Math.floor(heapSize / 2)) return;
     
@@ -82,13 +90,13 @@ function heapifyDownMax(arr, idx, heapSize, maxHeapAnimations) {
 
     if (arr[idx] < arr[largest]) {
         [arr[idx], arr[largest]] = [arr[largest], arr[idx]];
-        heapifyDownMax(arr, largest, heapSize, maxHeapAnimations);
+        heapifyDownMax(lines, arr, largest, heapSize, maxHeapAnimations);
     }
 }
 
 /*
 * HeapifyDown for sorting */
-function heapifyDownSort(arr, idx, heapSize, heapSortAnimations, swapEnds) {
+function heapifyDownSort(lines, arr, idx, heapSize, heapSortAnimations, swapEnds) {
 
     let largest;
 
@@ -138,20 +146,20 @@ function heapifyDownSort(arr, idx, heapSize, heapSortAnimations, swapEnds) {
     if (idx !== largest) {
         [arr[idx], arr[largest]] = [arr[largest], arr[idx]];
         /** Since we don't need to swapEnds anymore */
-        heapifyDownSort(arr, largest, heapSize, heapSortAnimations, false);
+        heapifyDownSort(lines, arr, largest, heapSize, heapSortAnimations, false);
     }
 }
 
 /*
 * The actual heapSort function */
-function heapSort(array, maxHeapAnimations, heapSortAnimations) {
-    buildMaxHeap(array, maxHeapAnimations);
+function heapSort(lines, array, maxHeapAnimations, heapSortAnimations) {
+    buildMaxHeap(lines, array, maxHeapAnimations);
     let heapSize = array.length - 1; 
     for (let i = heapSize; i >= 1; i--) {
         [array[0], array[i]] = [array[i], array[0]];
         /** Initially pass in true, that we need to swap ends */
         heapSize--;
-        heapifyDownSort(array, 0, heapSize + 1, heapSortAnimations, true);
+        heapifyDownSort(lines, array, 0, heapSize + 1, heapSortAnimations, true);
     }
 }
 
@@ -162,10 +170,10 @@ function heapSort(array, maxHeapAnimations, heapSortAnimations) {
  * 2: Switch heights, and keeping the color of the heights before, then back to primary, do i + 1 timing
  */    
 
-async function animateMaxHeap(maxHeapAnimations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, isPausedCallback) {
+async function animateMaxHeap(lines, linesIdx, maxHeapAnimations, arrayBars, animationsIdx, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, updateHighlight) {
 
     return new Promise(async resolve => {
-        while (completedAnimations < maxHeapAnimations.length) {
+        while (animationsIdx < maxHeapAnimations.length) {
 
             /*
             ? If animation is paused, pause execution until Promise is resolved/rejected and then starts from loop 
@@ -191,7 +199,7 @@ async function animateMaxHeap(maxHeapAnimations, arrayBars, completedAnimations,
                 continue;
             }
 
-            const i = completedAnimations;
+            const i = animationsIdx;
             const stage = i % 3;
 
             if (stage === 0) {
@@ -237,7 +245,6 @@ async function animateMaxHeap(maxHeapAnimations, arrayBars, completedAnimations,
             ? Sets the delay for the next animation of latest speed MS */
             await new Promise(resolve => setTimeout(resolve, getSpeedCallback()));
         }
-
         resolve(comparisons);
     })
 }
@@ -254,18 +261,18 @@ async function animateMaxHeap(maxHeapAnimations, arrayBars, completedAnimations,
  * 3: Highlight the largest one GREEN, the rest RED
  * 4: Switch heights, and keeping the color of the heights before, then back to primary, do i + 1 timing
 */
-function animateHeapSort(heapSortAnimations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, isPausedCallback) {
+function animateHeapSort(lines, linesIdx, heapSortAnimations, arrayBars, animationsIdx, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, updateHighlight) {
     return new Promise((resolve) => {
 
-        if (completedAnimations >= heapSortAnimations.length) {
-            greenify(completedAnimations, heapSortAnimations, arrayBars);
+        if (linesIdx >= lines.length) {
+            greenify(linesIdx, lines, arrayBars);
             resolve();
             return;
         }
 
         if (isPausedCallback()) {
             setTimeout(() => {
-                animateHeapSort(heapSortAnimations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, isPausedCallback);
+                animateHeapSort(lines, linesIdx, heapSortAnimations, arrayBars, animationsIdx, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, updateHighlight);
             }, getSpeedCallback());
 
             /*
@@ -273,20 +280,20 @@ function animateHeapSort(heapSortAnimations, arrayBars, completedAnimations, get
             return;
         }
 
-        const i = completedAnimations;
+        const i = animationsIdx;
         const stage = i % 5;
 
         let nextStepTimeout = 0;
 
         if (stage === 0) {
             if (heapSortAnimations[i].length === 0) {
-                completedAnimations++;
+                animationsIdx++;
             } else {
                 const [beginningIdx, endIdx] = heapSortAnimations[i];
                 const beginningStyle = arrayBars[beginningIdx].style;
                 const endStyle = arrayBars[endIdx].style;
                 [beginningStyle.backgroundColor, endStyle.backgroundColor] = [SECONDARY_COLOR, SECONDARY_COLOR];
-                completedAnimations++;
+                animationsIdx++;
                 nextStepTimeout = getSpeedCallback(); 
             }
         }
@@ -301,14 +308,14 @@ function animateHeapSort(heapSortAnimations, arrayBars, completedAnimations, get
                 updateComparisons(comparisons + 1);
                 comparisons++
             }
-            completedAnimations++;
+            animationsIdx++;
             nextStepTimeout = getSpeedCallback(); 
         } 
         else if (stage === 2) {
             for (let j = 0; j < heapSortAnimations[i].length; j++) {
                 arrayBars[heapSortAnimations[i][j]].style.backgroundColor = SECONDARY_COLOR;
             }
-            completedAnimations++;
+            animationsIdx++;
             nextStepTimeout = getSpeedCallback(); 
         } 
         else if (stage === 3) {
@@ -320,7 +327,7 @@ function animateHeapSort(heapSortAnimations, arrayBars, completedAnimations, get
                 comparisons++
             }
             arrayBars[heapSortAnimations[i][0]].style.backgroundColor = LARGER_COLOR;
-            completedAnimations++;
+            animationsIdx++;
             nextStepTimeout = getSpeedCallback(); 
         } 
         else {
@@ -337,7 +344,7 @@ function animateHeapSort(heapSortAnimations, arrayBars, completedAnimations, get
                     arrayBars[heapSortAnimations[i - 1][j]].style.backgroundColor = NO_SWITCH_COLOR;
                 }
             }
-            completedAnimations++;
+            animationsIdx++;
             nextStepTimeout = getSpeedCallback(); 
 
             setTimeout(() => {
@@ -347,7 +354,7 @@ function animateHeapSort(heapSortAnimations, arrayBars, completedAnimations, get
             }, getSpeedCallback());
         }
 
-        setTimeout(() => animateHeapSort(heapSortAnimations, arrayBars, completedAnimations, getSpeedCallback, comparisons, updateComparisons, isPausedCallback).then(() => resolve()), nextStepTimeout);
+        setTimeout(() => animateHeapSort(lines, linesIdx, heapSortAnimations, arrayBars, animationsIdx, getSpeedCallback, comparisons, updateComparisons, isPausedCallback, updateHighlight).then(() => resolve()), nextStepTimeout);
     });
 }
 

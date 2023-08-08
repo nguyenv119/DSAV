@@ -167,7 +167,6 @@ export default class SortingVisualizer extends React.Component {
 
         const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
         let comparisons = 0;
-
         mergeSortExp(array, arrayBars, arrayBarsUp, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
         .then((arr) => {
             for (let i = 0; i < array.length; i++) {
@@ -306,6 +305,7 @@ export default class SortingVisualizer extends React.Component {
             const arrayBars = document.getElementsByClassName("arrayBar");
             const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
             const barWidth = this.getWidth();
+            const activeAlgorithmKey = this.state.algorithmKeys[this.state.activeAlgorithm];
             
 
             for (let i = 0; i < arrayBars.length; i++) {
@@ -313,13 +313,13 @@ export default class SortingVisualizer extends React.Component {
                 TODO: To make the bars fill the screen, might have to change later */
                 arrayBars[i].style.width = `${barWidth}px`;
                 arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
-                if (this.state.activeAlgorithm === 4) {
-                    arrayBarsUp[i].style.width = `${barWidth}px`;
-                    arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
-                }
+
+                /* This makes sure the width is always the same. No matter if we are in mergeSort or not, we do this. Doesnt hurt, since in others, we just dont see it */
+                arrayBarsUp[i].style.width = `${barWidth}px`;
+                arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
             }
-        });
-    }
+        }
+    )};
     
     /* 
     ? Renders components UI */
@@ -401,7 +401,7 @@ export default class SortingVisualizer extends React.Component {
             */
             <div>
                 <div className="arrayContainer">
-                <div className={`arrayBarsUp ${activeAlgorithmKey === "mergeSort" ? '' : ' hidden'}`}>
+                    <div className={`arrayBarsUp ${activeAlgorithmKey === "mergeSort" ? '' : ' hidden'}`}>
                         {array.map((value, index) => (
                             <div
                                 className="arrayBarUp"
@@ -409,6 +409,7 @@ export default class SortingVisualizer extends React.Component {
                                 style={{
                                     backgroundColor: PRIMARY_COLOR,
                                     height: "0px"
+                                    // height: `${value}px`
                                 }}
                             ></div>
                             ))}

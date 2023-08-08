@@ -248,7 +248,6 @@ function animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, an
             arrayBarsUp[i].style.height = arrayBars[i].style.height ;
             arrayBars[i].style.height = "0px";
             arrayBarsUp[i].style.display = "inline-block";
-            arrayBarsUp[i].style.width = arrayBars[0].style.width;
             arrayBarsUp[i].style.backgroundColor = SUPER_PRIMARY_COLOR;
             if (i === m) {
                 arrayBarsUp[i].style.marginRight= "1%";
@@ -330,9 +329,7 @@ function animate(lines, linesIdx, length, animations, arrayBars, arrayBarsUp, an
             arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
             arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
             arrayBarsUp[i].style.height = "0px";
-            if (i === m) {
-                arrayBarsUp[i].style.marginRight = "2px";
-            }
+            arrayBarsUp[i].style.marginRight = "2px";
         }
         highlightedLine = ["NO", 32];
     }
