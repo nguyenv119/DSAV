@@ -1,5 +1,4 @@
 import { React, useRef, useEffect } from 'react';
-import { FixedSizeList as List } from 'react-window';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import "./styles/SortingStyles.css";
@@ -231,14 +230,18 @@ HEAPSORT(A) {
     /* Swap n elements */
     for (i ← length(A) downto 2) {
         swap(A[1], A[i])
-        heap-size(A) ← heap-size(A) - 1
+        heapSize(A) ← heapSize(A) - 1
         /* HEAPIFY_DOWN the swapped element */
         HEAPIFY_DOWN(A, 1)
     }
 }
-!! @param A: the array 
+!! @param A: the array, 1-Based indexing
 !! @param idx: the index of the element being HEAPIFY_DOWNED
 HEAPIFY_DOWN(A, idx) {
+    /* If idx has no children (over halfway point of array) */
+    if (idx * 2 ≥ heapSize(A)) {
+        return;
+    }
     /* Determine children of node */
     LChild ← 2i
     RChild ← 2i + 1
@@ -253,7 +256,7 @@ HEAPIFY_DOWN(A, idx) {
 }
 !! @param A: the array 
 BUILD_MAX_HEAP(A) {
-    heapsize(A) ← length(A)
+    heapSize(A) ← length(A)
     /* Only HEAPIFY_DOWN the 1st half of the array: top 50% of the tree*/
     for (i ← length(A)/2 downto 1) {
         HEAPIFY_DOWN(A, i)
