@@ -61,6 +61,7 @@ export default class SortingVisualizer extends React.Component {
         ? Init the initial state of component */
         this.state = {
             array: [],
+            tArray: [],
             sortingAlgorithm: null,
             isSorting: false,
             buttonsDisabled: false,
@@ -282,6 +283,52 @@ export default class SortingVisualizer extends React.Component {
         }));
     }
 
+
+    // Updated handleReset
+    handleReset = () => {
+        if (this.state.sortingInProgress) {
+            this.handlePause();
+        }
+
+        // Reset styles
+        const arrayBars = document.getElementsByClassName("arrayBar");
+        for (let i = 0; i < arrayBars.length; i++) {
+            arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+        }
+
+        // Generate new array
+        console.log(this.state.array)
+        console.log(this.state.tArray)
+        
+        // Reset remaining state
+        this.setState({
+            array: this.state.tArray,
+            comparisons: 0,
+            sortingAlgorithm: null,
+            isSorting: false,
+            buttonsDisabled: false,
+            sortingInProgress: false,
+            isPaused: true
+        });
+    }
+
+    /*
+        //Stops the Sorting
+        stopSorting = () => {
+            // Clear timeouts
+            clearTimeout(this.state.sortingTimeout);
+
+            // Reject any promises
+            if (this.currentSortPromise) {
+                this.currentSortPromise.cancel();
+            }
+                
+            // Cleanup
+            cancelAnimationFrame(this.animationFrame);
+        }
+    */
+    
+
     /* 
     ? Updates the number of bars and their width */
     handleBarsChange = (e) => {
@@ -312,15 +359,18 @@ export default class SortingVisualizer extends React.Component {
         for (let i = 0; i < length; i++) {
             if (this.state.activeAlgorithm === 4) {
                 array.push(randomIntFrom(MINVAL, MAXVAL / 2));
-            } else array.push(randomIntFrom(MINVAL, MAXVAL));
+            } else 
+                array.push(randomIntFrom(MINVAL, MAXVAL));
         }
+
+        const tArray = Array.from(array);
 
         /* 
         ? Sets the state to be the created array and the Bars.
          * If we didnt have setState, we wouldnt
          * update the array we created
          */
-        this.setState({ comparisons: 0, array }, () => {
+        this.setState({ comparisons: 0, array, tArray }, () => {
             /* 
             ? Resets the color of array back to PRIMARY, and determines width and length */
             const arrayBars = document.getElementsByClassName("arrayBar");
