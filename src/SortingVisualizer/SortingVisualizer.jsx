@@ -60,6 +60,7 @@ export default class SortingVisualizer extends React.Component {
         ? Init the initial state of component */
         this.state = {
             array: [],
+            tArray: [],
             sortingAlgorithm: null,
             isSorting: false,
             buttonsDisabled: false,
@@ -246,6 +247,54 @@ export default class SortingVisualizer extends React.Component {
         })
     }
 
+
+    // Updated handleReset
+    handleReset = () => {
+        if (this.state.sortingInProgress) {
+            this.stopSorting();
+        }
+
+        // Reset styles
+        const arrayBars = document.getElementsByClassName("arrayBar");
+        for (let i = 0; i < arrayBars.length; i++) {
+            arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+        }
+
+        // Reset remaining state
+        this.setState({
+            array: this.state.tArray,
+            tArray: [],
+            comparisons: 0,
+            sortingAlgorithm: null,
+            isSorting: false,
+            buttonsDisabled: false,
+            sortingInProgress: false,
+            isPaused: true
+        });
+    }
+
+    
+    stopSorting = () => {
+        // Clear timeouts
+        clearTimeout(this.state.sortingTimeout);
+    
+        // Reset tArray-related state if necessary
+        this.setState({
+            tArray: [],
+            sortingTimeout: null
+        });
+    
+        // Reject any promises
+        if (this.currentSortPromise) {
+            this.currentSortPromise.cancel();
+        }
+        
+        // Cleanup
+        cancelAnimationFrame(this.animationFrame);
+    }
+
+    
+
     /* 
     ? Updates the number of bars and their width */
     handleBarsChange = (e) => {
@@ -276,12 +325,45 @@ export default class SortingVisualizer extends React.Component {
         this.setState({ comparisons: newComparisons });
     };
 
+<<<<<<< Updated upstream
     /*
     ? Handles the pause/play action*/
     handlePause = () => {
         this.setState(prevState => ({
             isPaused: !prevState.isPaused
         }));
+=======
+        for (let i = 0; i < length; i++) {
+            if (this.state.activeAlgorithm === 4) {
+                array.push(randomIntFrom(MINVAL, MAXVAL / 2));
+            } else 
+                array.push(randomIntFrom(MINVAL, MAXVAL));
+        }
+
+        const tArray = Array.from(array);
+
+        /* 
+        ? Sets the state to be the created array and the Bars.
+         * If we didnt have setState, we wouldnt
+         * update the array we created
+         */
+        this.setState({ comparisons: 0, array, tArray }, () => {
+            /* 
+            ? Resets the color of array back to PRIMARY, and determines width and length */
+            const arrayBars = document.getElementsByClassName("arrayBar");
+            for (let i = 0; i < arrayBars.length; i++) {
+                /*
+                TODO: To make the bars fill the screen, might have to change later */
+                arrayBars[i].style.width = `${5000 / length}px`;
+                arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+                if (this.state.activeAlgorithm === 4) {
+                    const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
+                    arrayBarsUp[i].style.width = `${5000 / length}px`;
+                    arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
+                }
+            }
+        });
+>>>>>>> Stashed changes
     }
 
    //Resets Comparisons and generates a new array
