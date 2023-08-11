@@ -2,7 +2,8 @@ import React from "react";
 
 /*
 ? Imports the descriptions and code for the algos */
-import { introDescription,
+import { 
+         introDescription,
          bubbleDescription,
          selectionDescription,
          insertionDescription,
@@ -30,10 +31,10 @@ import ProgressBar from './ProgressBar';
 import { left } from "@popperjs/core";
 
 const MINVAL = 10;
-const MAXVAL = 620;
+const MAXVAL = 625;
 const SPEED_THRESHOLD = 6;
 
-export const PRIMARY_COLOR = '#3a85ffb2';
+export const PRIMARY_COLOR = '#3a85ff8e';
 export const SUPER_PRIMARY_COLOR = '#3A86FF';
 export const SECONDARY_COLOR = '#FB5607';
 export const GREEN_SPEED = 7;
@@ -72,7 +73,7 @@ export default class SortingVisualizer extends React.Component {
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 4,
+            activeAlgorithm: 0,
             highlightedLine: [0],
             mergeSortActivated: false,
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
@@ -135,9 +136,9 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
         bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
-            .then((arr) => {
-                this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
-            })
+        .then((arr) => {
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+        })
     }
 
     selectionSort() {
@@ -161,11 +162,20 @@ export default class SortingVisualizer extends React.Component {
 
     mergeSort() {
         let [array, arrayBars] = this.makeProps();
-        const arrayBarsUp = document.getElementsByClassName("arrayBarsUp");
-        let comparisons = 0;
+        for (let i = 0; i < array.length; i++) {
+            array[i] /= 2;
+            arrayBars[i].style.height = `${array[i]}px`;
+        }
 
+        const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
+        let comparisons = 0;
         mergeSortExp(array, arrayBars, arrayBarsUp, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
         .then((arr) => {
+            for (let i = 0; i < array.length; i++) {
+                arr[i] *= 2;
+                const height = parseInt(arrayBars[i].style.height, 10);
+                arrayBars[i].style.height = `${height * 2}px`;
+            }
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
         })
     }
@@ -191,6 +201,13 @@ export default class SortingVisualizer extends React.Component {
                             1000 : ANIMATION_SPEED_MS === 0 ?
                                 2000 : 3000;
         return speed;
+    }
+
+    /*
+    ? Gets the width for each bar */
+    getWidth() {
+        const arrayBarsContainer = document.getElementsByClassName("arrayBars")[0];
+        return arrayBarsContainer.clientWidth / this.determineBars();
     }
 
     /* 
@@ -352,42 +369,39 @@ export default class SortingVisualizer extends React.Component {
         this.setState({ highlightedLine: newHighlightedLine });
     };
 
+        /* 
+    ? Create the array, including how many bars and how wide */
     makeArray() {
         const array = [];
         let length = this.determineBars();
 
         for (let i = 0; i < length; i++) {
-            if (this.state.activeAlgorithm === 4) {
-                array.push(randomIntFrom(MINVAL, MAXVAL / 2));
-            } else 
-                array.push(randomIntFrom(MINVAL, MAXVAL));
+            array.push(randomIntFrom(MINVAL, MAXVAL));
         }
-
-        const tArray = Array.from(array);
 
         /* 
         ? Sets the state to be the created array and the Bars.
          * If we didnt have setState, we wouldnt
          * update the array we created
          */
-        this.setState({ comparisons: 0, array, tArray }, () => {
+        this.setState({ comparisons: 0, array }, () => {
             /* 
             ? Resets the color of array back to PRIMARY, and determines width and length */
             const arrayBars = document.getElementsByClassName("arrayBar");
-            for (let i = 0; i < arrayBars.length; i++) {
-                /*
-                TODO: To make the bars fill the screen, might have to change later */
-                arrayBars[i].style.width = `${5000 / length}px`;
-                arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
-                if (this.state.activeAlgorithm === 4) {
-                    const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
-                    arrayBarsUp[i].style.width = `${5000 / length}px`;
-                    arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
-                }
-            }
-        });
-    }
+            const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
+            const barWidth = this.getWidth();            
 
+            for (let i = 0; i < arrayBars.length; i++) {
+                arrayBars[i].style.width = `${barWidth}px`;
+                arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+
+                /* This makes sure the width is always the same. No matter if we are in mergeSort or not, we do this. Doesnt hurt, since in others, we just dont see it */
+                arrayBarsUp[i].style.width = `${barWidth}px`;
+                arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
+            }
+        }
+    )};
+    
     /* 
     ? Renders components UI */
     render() {
@@ -468,21 +482,22 @@ export default class SortingVisualizer extends React.Component {
             */
             <div>
                 <div className="arrayContainer">
-                <div className={`arrayBarsUp ${activeAlgorithmKey === "mergeSort" ? '' : ' hidden'}`}>
+                    <div className={`arrayBarsUp ${activeAlgorithmKey === "mergeSort" ? '' : ' hidden'}`}>
                         {array.map((value, index) => (
                             <div
-                                className="arrayBarUp hidden"
+                                className="arrayBarUp"
                                 key={index}
                                 style={{
                                     backgroundColor: PRIMARY_COLOR,
-                                    height: `${value}px`
+                                    height: "0px"
+                                    // height: `${value}px`
                                 }}
                             ></div>
                             ))}
                     </div>
                     <div 
                         className="arrayBars"
-                        style={{height: activeAlgorithmKey === "mergeSort" ? '38.5%' : '77%'}}>
+                        style={{height: activeAlgorithmKey === "mergeSort" ? '39.5%' : '79%'}}>
                             {array.map((value, index) => (
                                 <div
                                     className="arrayBar"
@@ -510,36 +525,36 @@ export default class SortingVisualizer extends React.Component {
                                     </button>
                                     <button className={`cta sorting`}
                                          onClick={() => {
-                                            this.bubbleSort()
-                                            this.setState({ activeSortingButton: "bubbleSort", activeAlgorithm: 1 });
+                                             this.setState({ activeSortingButton: "bubbleSort", activeAlgorithm: 1 });
+                                             this.bubbleSort()
                                         }}
                                         disabled={sortingInProgress}>Bubble Sort
                                     </button>
                                     <button className={`cta sorting`}
                                         onClick={() => {
-                                            this.selectionSort()
                                             this.setState({ activeSortingButton: "selectionSort", activeAlgorithm: 2 });
+                                            this.selectionSort()
                                         }}
                                         disabled={sortingInProgress}>Selection Sort
                                     </button>
                                     <button className={`cta sorting`}
                                         onClick={() => {
-                                            this.insertionSort()
                                             this.setState({ activeSortingButton: "insertionSort", activeAlgorithm: 3 });
+                                            this.insertionSort()
                                         }}
                                         disabled={sortingInProgress}>Insertion Sort
                                     </button>
                                     <button className={`cta sorting`}
                                         onClick={() => {
+                                            this.setState({ activeSortingButton: "mergeSort", activeAlgorithm: 4 });
                                             this.mergeSort()
-                                            this.setState({ activeSortingButton: "mergeSort", activeAlgorithm: 4,mergeSortActivated: true });
                                         }
                                         } disabled={sortingInProgress}>Merge Sort
                                     </button>
                                     <button className={`cta sorting`}
                                         onClick={() => {
-                                            this.heapSort()
                                             this.setState({ activeSortingButton: "heapSort", activeAlgorithm: 5 });
+                                            this.heapSort()
                                         }}
                                         disabled={sortingInProgress}>Heap Sort
                                     </button>
@@ -554,7 +569,6 @@ export default class SortingVisualizer extends React.Component {
                                         Reset
                                     </button>
                                 </div>
-
                                 {/* <div className="btn-container">
                                     <button className={`btn-3d regular${activeSortingButton === "heapSort" ? ' down' : ''}`}
                                         onClick={() => {

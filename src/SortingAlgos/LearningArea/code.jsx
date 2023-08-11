@@ -1,5 +1,4 @@
 import { React, useRef, useEffect } from 'react';
-import { FixedSizeList as List } from 'react-window';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import "./styles/SortingStyles.css";
@@ -57,53 +56,6 @@ const highlightStyle = (highlightColor) => ({
     'variable': {  color: highlightColor },
     'class-name': { color: highlightColor },
 });
-
-export function MergeSortCode ({ highlightLines }) {
-    const mergeSort = `!! @param A: the array
-!! @param left: the subarray's leftmost index 
-!! @param right: the subarray's rightmost index 
-mergeSort(A, left, right) {
-    /* While our subarray is still larger than 1, split into 2 more subarrays*/
-    if (left < right) {
-        mid ← [(left + right)/2]
-        mergeSort(A, left, mid)
-        mergeSort(A, mid + 1, right)
-        merge(A, left, mid, right)
-    }
-}
-!! @param A: the array
-!! @param left: the subarray's leftmost index 
-!! @param right: the subarray's rightmost index 
-!! @param mid: the subarray's middle index
-merge(A, left, mid, right) {
-    split1 ← mid - left + 1
-    split2 ← right - mid
-    Create arrays L[0...split1] and R[0...split2]
-    /* Transfer 1st half of A to L */
-    for (i ← 0 to split1 - 1) {
-        L[i] ← A[left + i - 1]
-    }
-    /* Transfer 2nd half of A to R */
-    for (j ← 0 to split2 - 1) {
-        R[j] ← A[mid + j]
-    }
-    /* Sentinal values to avoid checking if subarrays are fully copied */
-    L[split1], R[split2] ← ∞, ∞
-    LIdx, RIdx ← 0, 0
-    /* Compare L and R elements and merge into A */
-    for (mainIdx ← left to right) {
-        if (L[LIdx] ≤ R[RIdx]) {
-            A[mainIdx] ← L[LIdx]
-            LIdx ← LIdx + 1
-        } else {
-            A[mainIdx] ← R[RIdx]
-            RIdx ← RIdx + 1
-        }
-    }
-}`
-    const lines = mergeSort.split("\n");
-    return displayCode(lines, highlightLines)
-}
 
 const displayCode = (lines, highlightLines) => {
 
@@ -224,22 +176,73 @@ insertionSort(A, n) {
     return displayCode(lines, highlightLines)
 };
 
+export function MergeSortCode ({ highlightLines }) {
+    const mergeSort = `!! @param A: the array
+!! @param left: the subarray's leftmost index 
+!! @param right: the subarray's rightmost index 
+mergeSort(A, left, right) {
+    /* While our subarray is still larger than 1, split into 2 more subarrays*/
+    if (left < right) {
+        mid ← [(left + right)/2]
+        mergeSort(A, left, mid)
+        mergeSort(A, mid + 1, right)
+        merge(A, left, mid, right)
+    }
+}
+!! @param A: the array
+!! @param left: the subarray's leftmost index 
+!! @param right: the subarray's rightmost index 
+!! @param mid: the subarray's middle index
+merge(A, left, mid, right) {
+    split1 ← mid - left + 1
+    split2 ← right - mid
+    Create arrays L[0...split1] and R[0...split2]
+    /* Transfer 1st half of A to L */
+    for (i ← 0 to split1 - 1) {
+        L[i] ← A[left + i - 1]
+    }
+    /* Transfer 2nd half of A to R */
+    for (j ← 0 to split2 - 1) {
+        R[j] ← A[mid + j]
+    }
+    /* Sentinal values to avoid checking if subarrays are fully copied */
+    L[split1], R[split2] ← ∞, ∞
+    LIdx, RIdx ← 0, 0
+    /* Compare L and R elements and merge into A */
+    for (mainIdx ← left to right) {
+        if (L[LIdx] ≤ R[RIdx]) {
+            A[mainIdx] ← L[LIdx]
+            LIdx ← LIdx + 1
+        } else {
+            A[mainIdx] ← R[RIdx]
+            RIdx ← RIdx + 1
+        }
+    }
+}`
+    const lines = mergeSort.split("\n");
+    return displayCode(lines, highlightLines)
+}
 
 export function HeapSortCode ({ highlightLines }) {
-    const heapSort = `!! @param A: the array
+    const heapSort = `!! @param A: the array, 1 based indexing
 HEAPSORT(A) {
     BUILD_MAX_HEAP(A)
+    heapSize(A) ← len(A)
     /* Swap n elements */
     for (i ← length(A) downto 2) {
         swap(A[1], A[i])
-        heap-size(A) ← heap-size(A) - 1
+        heapSize(A) ← heapSize(A) - 1
         /* HEAPIFY_DOWN the swapped element */
         HEAPIFY_DOWN(A, 1)
     }
 }
-!! @param A: the array 
+!! @param A: the array
 !! @param idx: the index of the element being HEAPIFY_DOWNED
 HEAPIFY_DOWN(A, idx) {
+    /* If idx has no children (over halfway point of array) */
+    if (idx * 2 > heapSize(A)) {
+        return;
+    }
     /* Determine children of node */
     LChild ← 2i
     RChild ← 2i + 1
@@ -252,9 +255,9 @@ HEAPIFY_DOWN(A, idx) {
         HEAPIFY_DOWN(A, largestIdx)
     }
 }
-!! @param A: the array 
+!! @param A: the array
 BUILD_MAX_HEAP(A) {
-    heap-size(A) ← length(A)
+    heapSize(A) ← length(A)
     /* Only HEAPIFY_DOWN the 1st half of the array: top 50% of the tree*/
     for (i ← length(A)/2 downto 1) {
         HEAPIFY_DOWN(A, i)
@@ -263,4 +266,4 @@ BUILD_MAX_HEAP(A) {
 `;
     const lines = heapSort.split("\n");
     return displayCode(lines, highlightLines);
-}
+};
