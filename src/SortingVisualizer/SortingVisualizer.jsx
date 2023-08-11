@@ -2,7 +2,8 @@ import React from "react";
 
 /*
 ? Imports the descriptions and code for the algos */
-import { introDescription,
+import { 
+         introDescription,
          bubbleDescription,
          selectionDescription,
          insertionDescription,
@@ -61,6 +62,7 @@ export default class SortingVisualizer extends React.Component {
         ? Init the initial state of component */
         this.state = {
             array: [],
+            tArray: [],
             sortingAlgorithm: null,
             isSorting: false,
             buttonsDisabled: false,
@@ -233,6 +235,43 @@ export default class SortingVisualizer extends React.Component {
         return length;
     }
 
+    /* 
+    ? Create the array, including how many bars and how wide */
+    makeArray() {
+        const array = [];
+        let length = this.determineBars();
+
+        for (let i = 0; i < length; i++) {
+            if (this.state.activeAlgorithm === 4) {
+                array.push(randomIntFrom(MINVAL, MAXVAL / 2));
+            } else array.push(randomIntFrom(MINVAL, MAXVAL));
+        }
+
+        /* 
+        ? Sets the state to be the created array and the Bars.
+         * If we didnt have setState, we wouldnt
+         * update the array we created
+         */
+        this.setState({ comparisons: 0, array }, () => {
+            /* 
+            ? Resets the color of array back to PRIMARY, and determines width and length */
+            const arrayBars = document.getElementsByClassName("arrayBar");
+            for (let i = 0; i < arrayBars.length; i++) {
+                /*
+                TODO: To make the bars fill the screen, might have to change later */
+                arrayBars[i].style.width = `${5000 / length}px`;
+                arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+                if (this.state.activeAlgorithm === 4) {
+                    const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
+                    arrayBarsUp[i].style.width = `${5000 / length}px`;
+                    arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
+                }
+            }
+        });
+
+        
+    }
+
     /*
      ? Returns whether or not the animation is paused or not */
     getIsPaused() {
@@ -260,6 +299,52 @@ export default class SortingVisualizer extends React.Component {
             isPaused: !prevState.isPaused
         }));
     }
+
+
+    // Updated handleReset
+    handleReset = () => {
+        if (this.state.sortingInProgress) {
+            this.handlePause();
+        }
+
+        // Reset styles
+        const arrayBars = document.getElementsByClassName("arrayBar");
+        for (let i = 0; i < arrayBars.length; i++) {
+            arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+        }
+
+        // Generate new array
+        console.log(this.state.array)
+        console.log(this.state.tArray)
+        
+        // Reset remaining state
+        this.setState({
+            array: this.state.tArray,
+            comparisons: 0,
+            sortingAlgorithm: null,
+            isSorting: false,
+            buttonsDisabled: false,
+            sortingInProgress: false,
+            isPaused: true
+        });
+    }
+
+    /*
+        //Stops the Sorting
+        stopSorting = () => {
+            // Clear timeouts
+            clearTimeout(this.state.sortingTimeout);
+
+            // Reject any promises
+            if (this.currentSortPromise) {
+                this.currentSortPromise.cancel();
+            }
+                
+            // Cleanup
+            cancelAnimationFrame(this.animationFrame);
+        }
+    */
+    
 
     /* 
     ? Updates the number of bars and their width */
@@ -425,7 +510,7 @@ export default class SortingVisualizer extends React.Component {
                                 ))}
                     </div>
                     <ProgressBar comparisons={comparisons} totalComparisons={totalComparisons} />
-                    <div class="buttons">
+                    <div class="buttons">                    
                         <div className="buttonContainer">
                             <div className="buttonGroup">
                                 <div class="wrapper buttons">
@@ -472,6 +557,16 @@ export default class SortingVisualizer extends React.Component {
                                             this.heapSort()
                                         }}
                                         disabled={sortingInProgress}>Heap Sort
+                                    </button>
+                                    
+                                    {/* Reset Button */}
+                                    <button style={{
+                                        color: 'black'
+                                    }}
+                                        className="btn-3d sorting"
+                                        onClick={this.handleReset}
+                                    >
+                                        Reset
                                     </button>
                                 </div>
                                 {/* <div className="btn-container">
