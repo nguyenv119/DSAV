@@ -224,9 +224,10 @@ merge(A, left, mid, right) {
 }
 
 export function HeapSortCode ({ highlightLines }) {
-    const heapSort = `!! @param A: the array
+    const heapSort = `!! @param A: the array, 1 based indexing
 HEAPSORT(A) {
     BUILD_MAX_HEAP(A)
+    heapSize(A) ← len(A)
     /* Swap n elements */
     for (i ← length(A) downto 2) {
         swap(A[1], A[i])
@@ -235,11 +236,11 @@ HEAPSORT(A) {
         HEAPIFY_DOWN(A, 1)
     }
 }
-!! @param A: the array, 1-Based indexing
+!! @param A: the array
 !! @param idx: the index of the element being HEAPIFY_DOWNED
 HEAPIFY_DOWN(A, idx) {
     /* If idx has no children (over halfway point of array) */
-    if (idx * 2 ≥ heapSize(A)) {
+    if (idx * 2 > heapSize(A)) {
         return;
     }
     /* Determine children of node */
@@ -254,7 +255,7 @@ HEAPIFY_DOWN(A, idx) {
         HEAPIFY_DOWN(A, largestIdx)
     }
 }
-!! @param A: the array 
+!! @param A: the array
 BUILD_MAX_HEAP(A) {
     heapSize(A) ← length(A)
     /* Only HEAPIFY_DOWN the 1st half of the array: top 50% of the tree*/

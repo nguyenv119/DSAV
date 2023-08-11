@@ -64,8 +64,8 @@ export default class SortingVisualizer extends React.Component {
             sortingAlgorithm: null,
             isSorting: false,
             buttonsDisabled: false,
-            ANIMATION_SPEED_MS: 2, //6
-            BARS: 7, // 14
+            ANIMATION_SPEED_MS: 6, //6
+            BARS: 14, // 14
             sortingInProgress: false,
             activeButton: "",
             activeSortingButton: "",
@@ -134,9 +134,9 @@ export default class SortingVisualizer extends React.Component {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
         bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
-            .then((arr) => {
-                this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
-            })
+        .then((arr) => {
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+        })
     }
 
     selectionSort() {
@@ -304,13 +304,9 @@ export default class SortingVisualizer extends React.Component {
             ? Resets the color of array back to PRIMARY, and determines width and length */
             const arrayBars = document.getElementsByClassName("arrayBar");
             const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
-            const barWidth = this.getWidth();
-            const activeAlgorithmKey = this.state.algorithmKeys[this.state.activeAlgorithm];
-            
+            const barWidth = this.getWidth();            
 
             for (let i = 0; i < arrayBars.length; i++) {
-                /*
-                TODO: To make the bars fill the screen, might have to change later */
                 arrayBars[i].style.width = `${barWidth}px`;
                 arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
 
