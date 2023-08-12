@@ -66,8 +66,8 @@ export default class SortingVisualizer extends React.Component {
             sortingAlgorithm: null,
             isSorting: false,
             buttonsDisabled: false,
-            ANIMATION_SPEED_MS: 6, //6
-            BARS: 14, // 14
+            ANIMATION_SPEED_MS: 2, //6
+            BARS: 6, // 14
             sortingInProgress: false,
             activeButton: "",
             activeSortingButton: "",
@@ -135,9 +135,12 @@ export default class SortingVisualizer extends React.Component {
     bubbleSort() {
         let [array, arrayBars] = this.makeProps();
         let comparisons = 0;
+        console.log(this.state.array);
         bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
         .then((arr) => {
             this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+            console.log(arr);
+            console.log(this.state.array);
         })
     }
 
@@ -301,32 +304,37 @@ export default class SortingVisualizer extends React.Component {
     }
 
 
-    // Updated handleReset
+    /* Updated handleReset */
     handleReset = () => {
-        if (this.state.sortingInProgress) {
-            this.handlePause();
-        }
+        // if (this.state.sortingInProgress) {
+        //     this.handlePause();
+        // }
 
-        // Reset styles
+        /* Reset styles */
         const arrayBars = document.getElementsByClassName("arrayBar");
+        const array = this.state.array;
+        console.log(array);
+        console.log(arrayBars)
         for (let i = 0; i < arrayBars.length; i++) {
+            console.log("hi");
+            console.log(arrayBars[i].style.height);
+            arrayBars[i].style.height = `${array[i]}px`;
             arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
         }
 
-        // Generate new array
-        console.log(this.state.array)
-        console.log(this.state.tArray)
+        /* Generate new array */
+        // console.log(this.state.tArray)
         
-        // Reset remaining state
-        this.setState({
-            array: this.state.tArray,
-            comparisons: 0,
-            sortingAlgorithm: null,
-            isSorting: false,
-            buttonsDisabled: false,
-            sortingInProgress: false,
-            isPaused: true
-        });
+        /* Reset remaining state */
+        // this.setState({
+        //     array: this.state.tArray,
+        //     comparisons: 0,
+        //     sortingAlgorithm: null,
+        //     isSorting: false,
+        //     buttonsDisabled: false,
+        //     sortingInProgress: false,
+        //     isPaused: true
+        // });
     }
 
     /*

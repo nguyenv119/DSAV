@@ -445,7 +445,7 @@ button[class*="btn"] {border: 1;}
 }
 
 .cta.img:hover {
-  box-shadow: 0px 0px 0px 1px #FF00FF;
+  /* box-shadow: 0px 0px 0px 1px #FF00FF; */
 }
 
 .cta span:nth-child(2) {

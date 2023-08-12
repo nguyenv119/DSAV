@@ -186,8 +186,8 @@ async function animate(lines, linesIdx, animations, arrayBars, animationsIdx, ge
             let highlightedLine = lines[linesIdx];
             let animationLine = animations[animationsIdx];
 
-            console.log("Highlight: ", highlightedLine);
-            console.log("Animation: ", animationLine);
+            // console.log("Highlight: ", highlightedLine);
+            // console.log("Animation: ", animationLine);
 
             if (highlightedLine.includes(6)) {
                 /* We need it to stay on 6, so we decrease the lineIdx */
