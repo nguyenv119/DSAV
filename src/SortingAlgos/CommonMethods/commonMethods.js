@@ -26,3 +26,9 @@ export function greenify(completedAnimations, res, arrayBars) {
         }, GREEN_SPEED);
     }
 }
+
+/*
+? Generates random int from min to max */
+export function randomIntFrom(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}

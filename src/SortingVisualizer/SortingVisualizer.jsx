@@ -1,21 +1,48 @@
 import React from "react";
-import {mergeSortExp} from "../SortingAlgos/mergeSort"
-import {bubbleSortExp} from "../SortingAlgos/bubbleSort"
-import {selectionSortExp} from "../SortingAlgos/selectionSort"
-import {insertionSortExp} from "../SortingAlgos/insertionSort"
-import {heapSortExp} from "../SortingAlgos/heapSort"
+
+/*
+? Imports the descriptions and code for the algos */
+import { 
+         introDescription,
+         bubbleDescription,
+         selectionDescription,
+         insertionDescription,
+         mergeDescription,
+         heapDescription } from "../SortingAlgos/LearningArea/descriptions";    
+import { BubbleSortCode,
+        SelectionSortCode,
+        InsertionSortCode,
+        MergeSortCode,
+        HeapSortCode } from "../SortingAlgos/LearningArea/code";    
+
+/*
+? Importing the actual sorting algos */
+import { bubbleSortExp } from "../SortingAlgos/Algorithms/bubbleSort"
+import { selectionSortExp } from "../SortingAlgos/Algorithms/selectionSort"
+import { insertionSortExp } from "../SortingAlgos/Algorithms/insertionSort"
+import { mergeSortExp } from "../SortingAlgos/Algorithms/mergeSort"
+import { heapSortExp } from "../SortingAlgos/Algorithms/heapSort"
+import { randomIntFrom } from "../SortingAlgos/CommonMethods/commonMethods";
 import 'bootstrap/dist/css/bootstrap.css';
 
-const MINVAL = 5;
+/*
+? Imports the Progress Bar */
+import ProgressBar from './ProgressBar';
+import { left } from "@popperjs/core";
+
+const MINVAL = 10;
 const MAXVAL = 625;
+const SPEED_THRESHOLD = 6;
+
+export const PRIMARY_COLOR = '#3a85ff8e';
+export const SUPER_PRIMARY_COLOR = '#3A86FF';
+export const SECONDARY_COLOR = '#FB5607';
 export const GREEN_SPEED = 7;
-export const PRIMARY_COLOR = '#007ce8';
-export const SECONDARY_COLOR = '#fe5f24';
-export const SMALLER_COLOR = "#f44336";
+export const SMALLER_COLOR = "#ea2c1e";
 export const LARGER_COLOR = "#50af50"
 export const SAMESIZE_COLOR = "#f1cc32";
-export const SMALLEST_SOFAR_COLOR = "#FC0FC0"
-export const DONE_COLOR = "rgba(255, 0, 166, 0.87)";
+export const SMALLEST_SOFAR_COLOR = "#FF006E"
+export const DONE_COLOR = "#FF006E";
 
 /*
 ? export default class defines the class we want to have as a tag*/
@@ -35,16 +62,50 @@ export default class SortingVisualizer extends React.Component {
         ? Init the initial state of component */
         this.state = {
             array: [],
+            tArray: [],
             sortingAlgorithm: null,
             isSorting: false,
             buttonsDisabled: false,
-            ANIMATION_SPEED_MS: 6, 
-            BARS: 10, 
-            sortingInProgress: false, 
+            ANIMATION_SPEED_MS: 6, //6
+            BARS: 14, // 14
+            sortingInProgress: false,
             activeButton: "",
             activeSortingButton: "",
             comparisons: 0,
-            isPaused: false
+            isPaused: false,
+            activeAlgorithm: 0,
+            highlightedLine: [0],
+            mergeSortActivated: false,
+            algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
+
+            /*
+            ? This is the component that will be chosen dependant on the sorting algo */
+            codeVisualizer: {
+                "none": {
+                    about: [ introDescription() ],
+                    code: []
+                },
+                "bubbleSort": {
+                    about: [ bubbleDescription() ],
+                    code: [ <BubbleSortCode highlightLines={[2]} /> ]
+                },
+                "selectionSort": {
+                    about: [ selectionDescription() ],
+                    code: [ <SelectionSortCode highlightLines={[2]} /> ]
+                },
+                "insertionSort": {
+                    about: [ insertionDescription() ],
+                    code: [ <InsertionSortCode highlightLines={[2]} /> ]
+                },
+                "mergeSort": {
+                    about: [ mergeDescription() ],
+                    code: [ <MergeSortCode highlightLines={[3]} /> ]
+                },
+                "heapSort": {
+                    about: [ heapDescription() ],
+                    code: [ <HeapSortCode highlightLines={[1]} /> ]
+                },
+            }
         };
     };
 
@@ -66,17 +127,94 @@ export default class SortingVisualizer extends React.Component {
         return [array, arrayBars];
     }
 
+    /* 
+     * For all sorting algos, we are returned an animation array, and a copy
+     * of the sorted array. At the end of every animation, we set the state
+     * to be the sorted array, as to not redo the animations on the unsorted array
+     * if it were not replaced with the sorted array */
+    bubbleSort() {
+        let [array, arrayBars] = this.makeProps();
+        let comparisons = 0;
+        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
+        .then((arr) => {
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+        })
+    }
+
+    selectionSort() {
+        let [array, arrayBars] = this.makeProps();
+        let comparisons = 0;
+        selectionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
+        .then((arr) => {
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+        })
+    }
+
+    insertionSort() {
+        let [array, arrayBars] = this.makeProps();
+        let comparisons = 0;
+
+        insertionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
+        .then((arr) => {
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+        })
+    }
+
+    mergeSort() {
+        let [array, arrayBars] = this.makeProps();
+        for (let i = 0; i < array.length; i++) {
+            array[i] /= 2;
+            arrayBars[i].style.height = `${array[i]}px`;
+        }
+
+        const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
+        let comparisons = 0;
+        mergeSortExp(array, arrayBars, arrayBarsUp, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
+        .then((arr) => {
+            for (let i = 0; i < array.length; i++) {
+                arr[i] *= 2;
+                const height = parseInt(arrayBars[i].style.height, 10);
+                arrayBars[i].style.height = `${height * 2}px`;
+            }
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+        })
+    }
+
+    heapSort() {
+        let [array, arrayBars] = this.makeProps();
+        let comparisons = 0;
+
+        heapSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused(), this.updateHighlightedLine)
+        .then((arr) => {
+            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false });
+        })
+    }
+
     /*
     ? Gets the speed of the animation */
     getSpeed(ANIMATION_SPEED_MS) {
-        const speed = ANIMATION_SPEED_MS === 10?
-        1 : ANIMATION_SPEED_MS === 8 ?
-            10 : ANIMATION_SPEED_MS === 6 ?
-                20 : ANIMATION_SPEED_MS === 4 ?
-                    200 : ANIMATION_SPEED_MS === 2 ?
-                        1000 : ANIMATION_SPEED_MS === 0 ?
-                            2000 : 3000;
+        const speed = ANIMATION_SPEED_MS === 10 ?
+            0 : ANIMATION_SPEED_MS === 8 ?
+                10 : ANIMATION_SPEED_MS === 6 ?
+                    20 : ANIMATION_SPEED_MS === 4 ?
+                        200 : ANIMATION_SPEED_MS === 2 ?
+                            1000 : ANIMATION_SPEED_MS === 0 ?
+                                2000 : 3000;
         return speed;
+    }
+
+    /*
+    ? Gets the width for each bar */
+    getWidth() {
+        const arrayBarsContainer = document.getElementsByClassName("arrayBars")[0];
+        return arrayBarsContainer.clientWidth / this.determineBars();
+    }
+
+    /*
+    ? Gets the width for each bar */
+    getWidth() {
+        const arrayBarsContainer = document.getElementsByClassName("arrayBars")[0];
+        return arrayBarsContainer.clientWidth / this.determineBars();
     }
 
     /* 
@@ -111,7 +249,9 @@ export default class SortingVisualizer extends React.Component {
         let length = this.determineBars();
 
         for (let i = 0; i < length; i++) {
-            array.push(randomIntFrom(MINVAL, MAXVAL));
+            if (this.state.activeAlgorithm === 4) {
+                array.push(randomIntFrom(MINVAL, MAXVAL / 2));
+            } else array.push(randomIntFrom(MINVAL, MAXVAL));
         }
 
         /* 
@@ -124,10 +264,19 @@ export default class SortingVisualizer extends React.Component {
             ? Resets the color of array back to PRIMARY, and determines width and length */            
             const arrayBars = document.getElementsByClassName("arrayBar");
             for (let i = 0; i < arrayBars.length; i++) {
-                arrayBars[i].style.width = `${810 / length}px`;
+                /*
+                TODO: To make the bars fill the screen, might have to change later */
+                arrayBars[i].style.width = `${5000 / length}px`;
                 arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+                if (this.state.activeAlgorithm === 4) {
+                    const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
+                    arrayBarsUp[i].style.width = `${5000 / length}px`;
+                    arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
+                }
             }
         });
+
+        
     }
 
     /*
@@ -137,55 +286,73 @@ export default class SortingVisualizer extends React.Component {
     }
 
     /* 
-     * For all sorting algos, we are returned an animation array, and a copy
-     * of the sorted array. At the end of every animation, we set the state
-     * to be the sorted array, as to not redo the animations on the unsorted array
-     * if it were not replaced with the sorted array */ 
-    bubbleSort() {
-        let [array, arrayBars] = this.makeProps();
-        let comparisons = 0;
-        bubbleSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused())
-        .then((arr) => {
-            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
-        })
+    ? Changes the state of the button that is being pressed down */
+    buttonDown = (buttonName) => {
+        this.setState({ activeButton: buttonName });
+    };
+
+    /* 
+    ? Callback function to update comparisons. We have to pass in the function, 
+    ? not just the variable comparisons, because it will create a local copy of comparisons
+    ? in the sorting JS file */
+    updateComparisons = (newComparisons) => {
+        this.setState({ comparisons: newComparisons });
+    };
+
+     /*
+    ? Handles the pause/play action*/
+    handlePause = () => {
+        this.setState(prevState => ({
+            isPaused: !prevState.isPaused
+        }));
     }
 
-    selectionSort() {
-        let [array, arrayBars] = this.makeProps();
-        let comparisons = 0;
 
-        selectionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
-            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
-        })
+    // Updated handleReset
+    handleReset = () => {
+        if (this.state.sortingInProgress) {
+            this.handlePause();
+        }
+
+        // Reset styles
+        const arrayBars = document.getElementsByClassName("arrayBar");
+        for (let i = 0; i < arrayBars.length; i++) {
+            arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+        }
+
+        // Generate new array
+        console.log(this.state.array)
+        console.log(this.state.tArray)
+        
+        // Reset remaining state
+        this.setState({
+            array: this.state.tArray,
+            comparisons: 0,
+            sortingAlgorithm: null,
+            isSorting: false,
+            buttonsDisabled: false,
+            sortingInProgress: false,
+            isPaused: true
+        });
     }
 
-    insertionSort() {
-        let [array, arrayBars] = this.makeProps();
-        let comparisons = 0;
+    /*
+        //Stops the Sorting
+        stopSorting = () => {
+            // Clear timeouts
+            clearTimeout(this.state.sortingTimeout);
 
-        insertionSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
-            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
-        })
-    }
+            // Reject any promises
+            if (this.currentSortPromise) {
+                this.currentSortPromise.cancel();
+            }
+                
+            // Cleanup
+            cancelAnimationFrame(this.animationFrame);
+        }
+    */
     
-    mergeSort() {
-        let [array, arrayBars] = this.makeProps();
-        let comparisons = 0;
 
-        mergeSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
-            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
-        })
-    }
-
-    heapSort() {
-        let [array, arrayBars] = this.makeProps();
-        let comparisons = 0;
-
-        heapSortExp(array, arrayBars, () => this.getSpeed(this.state.ANIMATION_SPEED_MS), comparisons, this.updateComparisons, () => this.getIsPaused()).then((arr) => {
-            this.setState({ array: arr, buttonsDisabled: false, isSorting: false, sortingInProgress: false});
-        })
-    }
-    
     /* 
     ? Updates the number of bars and their width */  
     handleBarsChange = (e) => {
@@ -201,28 +368,46 @@ export default class SortingVisualizer extends React.Component {
     handleAnimationSpeedChange = (e) => {
         this.setState({ ANIMATION_SPEED_MS: parseInt(e.target.value) });
     };
-    
-    /* 
-    ? Changes the state of the button that is being pressed down */
-    buttonDown = (buttonName) => {
-        this.setState({ activeButton: buttonName });
-    };
-
-    /* 
-    ? Callback function to update comparisons. We have to pass in the function, 
-    ? not just the varibale comparisons, because it will create a local copy of comparisons
-    ? in the sorting JS file */
-    updateComparisons = (newComparisons) => {
-        this.setState({ comparisons: newComparisons });
-    };
 
     /*
-    ? Handles the pause/play action*/
-    handlePause = () => {
-        this.setState(prevState => ({
-            isPaused: !prevState.isPaused
-        }));
-    }
+    ? Callbackfunction to update the highlightedLine we are on.
+    ? Called in the animate function, and rerenders the code when we update */
+    updateHighlightedLine = (newHighlightedLine) => {
+        this.setState({ highlightedLine: newHighlightedLine });
+    };
+
+        /* 
+    ? Create the array, including how many bars and how wide */
+    makeArray() {
+        const array = [];
+        let length = this.determineBars();
+
+        for (let i = 0; i < length; i++) {
+            array.push(randomIntFrom(MINVAL, MAXVAL));
+        }
+
+        /* 
+        ? Sets the state to be the created array and the Bars.
+         * If we didnt have setState, we wouldnt
+         * update the array we created
+         */
+        this.setState({ comparisons: 0, array }, () => {
+            /* 
+            ? Resets the color of array back to PRIMARY, and determines width and length */
+            const arrayBars = document.getElementsByClassName("arrayBar");
+            const arrayBarsUp = document.getElementsByClassName("arrayBarUp");
+            const barWidth = this.getWidth();            
+
+            for (let i = 0; i < arrayBars.length; i++) {
+                arrayBars[i].style.width = `${barWidth}px`;
+                arrayBars[i].style.backgroundColor = PRIMARY_COLOR;
+
+                /* This makes sure the width is always the same. No matter if we are in mergeSort or not, we do this. Doesnt hurt, since in others, we just dont see it */
+                arrayBarsUp[i].style.width = `${barWidth}px`;
+                arrayBarsUp[i].style.backgroundColor = PRIMARY_COLOR;
+            }
+        }
+    )};
     
     /* 
     ? Renders components UI */
@@ -231,14 +416,66 @@ export default class SortingVisualizer extends React.Component {
         ? Gets the state (array we created) out of the object, 
          * We need the {}, won't work with just array
         */
-        const { array, 
-                activeButton, 
-                activeSortingButton, 
-                sortingInProgress, 
-                isSorting, 
-                ANIMATION_SPEED_MS, 
-                BARS, 
-                comparisons } = this.state;
+        const { array,
+                activeButton,
+                activeSortingButton,
+                sortingInProgress,
+                isSorting,
+                ANIMATION_SPEED_MS,
+                BARS,
+                comparisons,
+                algorithmKeys,
+                codeVisualizer,
+                activeAlgorithm,
+                highlightedLine
+              } = this.state;
+
+        /*
+        ! Determine codeArea rendering */
+        const activeAlgorithmKey = algorithmKeys[activeAlgorithm];
+        const algorithm = codeVisualizer[activeAlgorithmKey];
+        let algorithmCode;
+        
+        /*
+        ? We only show the code highlighting if the speeds are not too high */
+        if (ANIMATION_SPEED_MS <= SPEED_THRESHOLD) {
+            switch (activeAlgorithmKey) {
+                case "bubbleSort":
+                    algorithmCode = <BubbleSortCode highlightLines={ isSorting ?  highlightedLine : [2] } />;
+                    break;
+                case "selectionSort":
+                    algorithmCode = <SelectionSortCode highlightLines={ isSorting ?  highlightedLine : [2] } />;
+                    break;
+                case "insertionSort":
+                    algorithmCode = <InsertionSortCode highlightLines={ isSorting ?  highlightedLine : [2] } />;
+                    break;
+                case "mergeSort":
+                    algorithmCode = <MergeSortCode highlightLines={ isSorting ?  highlightedLine : [3] } />;
+                    break;
+                case "heapSort":
+                    algorithmCode = <HeapSortCode highlightLines={ isSorting ?  highlightedLine : [1] } />;
+                    break;
+                default:
+                    algorithmCode = "";
+            }
+        } else algorithmCode = algorithm.code;
+    
+        /* 
+        !Code for determining what formula to use when calculating worse case */
+        let totalComparisons;
+        switch (activeSortingButton) {
+            case "bubbleSort":
+            case "selectionSort":
+            case "insertionSort":
+                totalComparisons = Math.round((array.length * (array.length - 1)) / 2);
+                break;
+            case "mergeSort":
+            case "heapSort":
+                totalComparisons = Math.round(array.length * Math.log2(array.length));
+                break;
+            default:
+                totalComparisons = 0;
+        }
 
         return (
             /* 
@@ -250,131 +487,210 @@ export default class SortingVisualizer extends React.Component {
              * 
              * ref: https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_map3
             */
-
-            <div className="arrayContainer">
-                <div>
-                    <div className="buttonContainer">
-                       <div className="buttonGroup">
-                            <div className="btn-container">
-                                <button className={`btn-3d regular${activeButton === "generateArray" ? ' down' : ''}`} 
-                                    onClick={() => {
-                                        this.makeArray();
-                                        this.setState({ activeButton: "generateArray", activeSortingButton: "" });
-                                    }} 
-                                    disabled={isSorting}>Generate New Array</button>
-                            </div>
-                            <div className="btn-container">
-                                <button className={`btn-3d regular${activeSortingButton === "bubbleSort" ? ' down' : ''}`} 
-                                    onClick={() => {
-                                        this.bubbleSort()
-                                        this.setState({ activeSortingButton: "bubbleSort" });
-                                    }} 
-                                    disabled={sortingInProgress}>Bubble Sort</button>
-                            </div>
-                            <div className="btn-container">
-                                <button className={`btn-3d regular${activeSortingButton === "selectionSort" ? ' down' : ''}`} 
-                                    onClick={() => {
-                                        this.selectionSort()
-                                        this.setState({ activeSortingButton: "selectionSort" });
-                                    }}
-                                    disabled={sortingInProgress}>Selection Sort</button>
-                            </div>
-                            <div className="btn-container">
-                                <button className={`btn-3d regular${activeSortingButton === "insertionSort" ? ' down' : ''}`} 
-                                    onClick={() => {
-                                        this.insertionSort()
-                                        this.setState({ activeSortingButton: "insertionSort" });
-                                    }} 
-                                    disabled={sortingInProgress}>Insertion Sort</button>
-                            </div>
-                            <div className="btn-container">
-                                <button className={`btn-3d regular${activeSortingButton === "mergeSort" ? ' down' : ''}`} 
-                                    onClick={() => {
-                                        this.mergeSort()
-                                        this.setState({ activeSortingButton: "mergeSort" });
-                                    }
-                                    } disabled={sortingInProgress}>Merge Sort</button>
-                            </div>
-                            <div className="btn-container">
-                                <button className={`btn-3d regular${activeSortingButton === "heapSort" ? ' down' : ''}`} 
-                                    onClick={() => {
-                                        this.heapSort()
-                                        this.setState({ activeSortingButton: "heapSort" });
-                                    }} 
-                                    disabled={sortingInProgress}>Heap Sort</button>
-                            </div>
-                        </div>
+            <div>
+                <div className="arrayContainer">
+                    <div className={`arrayBarsUp ${activeAlgorithmKey === "mergeSort" ? '' : ' hidden'}`}>
+                        {array.map((value, index) => (
+                            <div
+                                className="arrayBarUp"
+                                key={index}
+                                style={{
+                                    backgroundColor: PRIMARY_COLOR,
+                                    height: "0px"
+                                    // height: `${value}px`
+                                }}
+                            ></div>
+                            ))}
                     </div>
-                    <div className="settings">
-                        <div className="scrollableRangeContainer">
-                            <label for="customRange3" className="form-label"></label>
-                            <div className="scrollableRange">
-                                <input
-                                    type="range"
-                                    className="form-range"
-                                    min="0"
-                                    max="10"
-                                    step="2"
-                                    id="customRange3"
-                                    value={ANIMATION_SPEED_MS}
-                                    onChange={this.handleAnimationSpeedChange}
-                                ></input>
+                    <div 
+                        className="arrayBars"
+                        style={{height: activeAlgorithmKey === "mergeSort" ? '39.5%' : '79%'}}>
+                            {array.map((value, index) => (
+                                <div
+                                    className="arrayBar"
+                                    key={index}
+                                    style={{
+                                        backgroundColor: PRIMARY_COLOR,
+                                        height: `${value}px`
+                                    }}
+                                ></div>
+                                ))}
+                    </div>
+                    <ProgressBar comparisons={comparisons} totalComparisons={totalComparisons} />
+                    <div class="buttons">                    
+                        <div className="buttonContainer">
+                            <div className="buttonGroup">
+                                <div class="wrapper buttons">
+                                    <button className={`cta sorting`}
+                                        onClick={() => {
+                                            this.makeArray();
+                                            /*
+                                            ? Specifies the button that is active for 1. button animations, and 2. Code Visualization  */
+                                            this.setState({ activeButton: "generateArray", activeSortingButton: "", activeAlgorithm: 0 });
+                                        }}
+                                        disabled={isSorting}>Generate New Array
+                                    </button>
+                                    <button className={`cta sorting`}
+                                         onClick={() => {
+                                             this.setState({ activeSortingButton: "bubbleSort", activeAlgorithm: 1 });
+                                             this.bubbleSort()
+                                        }}
+                                        disabled={sortingInProgress}>Bubble Sort
+                                    </button>
+                                    <button className={`cta sorting`}
+                                        onClick={() => {
+                                            this.setState({ activeSortingButton: "selectionSort", activeAlgorithm: 2 });
+                                            this.selectionSort()
+                                        }}
+                                        disabled={sortingInProgress}>Selection Sort
+                                    </button>
+                                    <button className={`cta sorting`}
+                                        onClick={() => {
+                                            this.setState({ activeSortingButton: "insertionSort", activeAlgorithm: 3 });
+                                            this.insertionSort()
+                                        }}
+                                        disabled={sortingInProgress}>Insertion Sort
+                                    </button>
+                                    <button className={`cta sorting`}
+                                        onClick={() => {
+                                            this.setState({ activeSortingButton: "mergeSort", activeAlgorithm: 4 });
+                                            this.mergeSort()
+                                        }
+                                        } disabled={sortingInProgress}>Merge Sort
+                                    </button>
+                                    <button className={`cta sorting`}
+                                        onClick={() => {
+                                            this.setState({ activeSortingButton: "heapSort", activeAlgorithm: 5 });
+                                            this.heapSort()
+                                        }}
+                                        disabled={sortingInProgress}>Heap Sort
+                                    </button>
+                                    
+                                    {/* Reset Button */}
+                                    <button style={{
+                                        color: 'black'
+                                    }}
+                                        className="btn-3d sorting"
+                                        onClick={this.handleReset}
+                                    >
+                                        Reset
+                                    </button>
+                                </div>
+                                {/* <div className="btn-container">
+                                    <button className={`btn-3d regular${activeSortingButton === "heapSort" ? ' down' : ''}`}
+                                        onClick={() => {
+                                            this.heapSort()
+                                            this.setState({ activeSortingButton: "heapSort", activeAlgorithm: 5 });
+                                        }}
+                                        disabled={sortingInProgress}>Heap Sort</button>
+                                </div> */}
                             </div>
                         </div>
-                        <button className="btn-3d regular colorful speed">
-                            Speed
-                        </button>
-                        <div className="scrollableRangeContainer">
-                            <label for="customRange4" className="form-label"></label>
-                            <div className="scrollableRange">
-                                <input
-                                    type="range"
-                                    className="form-range"
-                                    min="5"
-                                    max="20"
-                                    step="1"
-                                    id="customRange4"
-                                    value={BARS}
-                                    onChange={this.handleBarsChange}
-                                ></input>
+                        <div className="settings">
+                            <div className="scrollableRangeContainer">
+                                <label for="customRange3" className="form-label"></label>
+                                <div className="scrollableRange">
+                                    <input
+                                        type="range"
+                                        className="form-range"
+                                        min="0"
+                                        max="10"
+                                        step="2"
+                                        id="customRange3"
+                                        value={ANIMATION_SPEED_MS}
+                                        onChange={this.handleAnimationSpeedChange}
+                                    ></input>
+                                </div>
+                            </div>
+                            <button className="btn-3d colorful regular speed">
+                                Speed
+                            </button>
+                            <div className="scrollableRangeContainer">
+                                <label for="customRange4" className="form-label"></label>
+                                <div className="scrollableRange">
+                                    <input
+                                        type="range"
+                                        className="form-range"
+                                        min="5"
+                                        max="20"
+                                        step="1"
+                                        id="customRange4"
+                                        value={BARS}
+                                        onChange={this.handleBarsChange}
+                                    ></input>
+                                </div>
+                            </div>
+                            <button className="btn-3d colorful regular length">
+                                Array Length
+                            </button>
+                            <button
+                                className="btn-3d regular comparisons"
+                                style={{ fontSize: '16px', height: '60px', left: '-18px'}}
+                            >
+                                <span style={{ color: LARGER_COLOR }}>Current Case: {comparisons}</span>
+                                <br />
+                                <span style={{ color: SMALLER_COLOR  }}>Worse Case: {totalComparisons}</span>
+                            </button>
+                            <div className="btn-container">
+                                <button className={`btn-3d regular pp${activeButton === "pause" ? ' down' : ''}`}
+                                    onClick={() => {
+                                        this.handlePause();
+                                        this.setState({ activeButton: this.state.isPaused ? "" : "pause" });
+                                    }}
+                                    disabled={!this.state.sortingInProgress}>{this.state.isPaused ? "Play" : "Pause"}</button>
                             </div>
                         </div>
-                        <button className="btn-3d colorful regular length">
-                            Array Length
-                        </button>
-                        <button className="btn-3d regular comparisons"> 
-                        Comparisions: {comparisons}                                
-                        </button>
-                        <div className="btn-container">
-                            <button className={`btn-3d regular pp${activeButton === "pause" ? ' down' : ''}`} 
-                                onClick={() => {
-                                    this.handlePause();
-                                    this.setState({ activeButton: this.state.isPaused ? "" : "pause" });
-                                }} 
-                                disabled={!this.state.sortingInProgress}>{this.state.isPaused ? "Play" : "Pause"}</button>
-                        </div>
-
                     </div>
                 </div>
-                <div className="arrayBars">
-                    {array.map((value, index) => (
-                    <div
-                        className="arrayBar"
-                        key={index}
-                        style={{
-                        backgroundColor: PRIMARY_COLOR,
-                        height: `${value}px`
-                        }}
-                    ></div>
-                    ))}
+                <div className="codeArea">
+                    {/* Determines the height of the description */}
+                    <div 
+                        className={`description${
+                            activeAlgorithmKey === "none" ? ' intro' : 
+                            activeAlgorithmKey === "insertionSort" ? ' insertion' :
+                            activeAlgorithmKey === "mergeSort" ? ' merge' : 
+                            activeAlgorithmKey === "heapSort" ? ' heap' : ' '}`}>
+                        {algorithm.about}
+                    </div>
+                    <div 
+                        className={`actualCode${
+                            activeAlgorithmKey === "none" ? ' noCode' : 
+                            activeAlgorithmKey === "insertionSort" ? ' insertion' :
+                            activeAlgorithmKey === "mergeSort" ? ' merge' : 
+                            activeAlgorithmKey === "heapSort" ? ' heap' : ' '}`}>
+                        {algorithmCode}
+                    </div>
+
+                    {/* if we are at the start page, the explanation section is smaller */}
+                    <div 
+                        className={`explanation${
+                            activeAlgorithmKey === "none" ? ' about-us' : 
+                            (activeAlgorithmKey === "mergeSort") || (activeAlgorithmKey === "heapSort") ? ' merge' : ' '}`}>
+
+                        <h5 className={`${activeAlgorithmKey !== "none" ? 'hidden' : ''}`}><strong>Reach out and Contribute!</strong></h5>
+                        <div class="wrapper noButtons">
+                            {/* If we are in the sorting algorithms, we don't show the social media */}
+                            <a className={`cta img ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://github.com/nguyenv119/DSAV" target="_blank">
+                                <img className="cta-image" src="/github-icon.png" alt="Github"></img>
+                            </a>
+                            <a className={`cta img ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="mailto:nguyenv@brandeis.edu" target="_blank">
+                                <img className="cta-image" src="/email-icon.png" alt="Email"></img>
+                            </a>
+                            <a className={`cta img ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://www.linkedin.com/in/long-nguyen-8b77b7248/" target="_blank">
+                                <img className="cta-image" src="/linkedin-icon.png" alt="Linkedin"></img>
+                            </a>
+                            <a className={`cta img ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://www.instagram.com/_vinh.long_/" target="_blank">
+                                <img className="cta-image" src="/instagram-icon.png" alt="Instagram"></img>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <footer className="footerStyle">
+                        <p> DSAV Copyright @2023 </p>
+                    </footer>
                 </div>
             </div>
         );
     }
-}
-
-/* 
-? Generates random int from min to max */
-function randomIntFrom(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
 }
