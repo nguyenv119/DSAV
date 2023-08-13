@@ -1,4 +1,4 @@
-# DSA Visualizer:  test
+# DSA Visualizer:
 
 Hey there! 🧋
 
