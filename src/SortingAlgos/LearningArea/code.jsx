@@ -1,7 +1,7 @@
 import { React, useRef, useEffect } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import "./styles/SortingStyles.css";
+import '../../Styles/App.css'
 
 const colorMap = {
     "YES": "#4FAF4F",

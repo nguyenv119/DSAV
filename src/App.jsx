@@ -1,7 +1,8 @@
 import React from "react";
 import SortingVisualizer from "./SortingVisualizer/SortingVisualizer.jsx";
 import 'bootstrap/dist/css/bootstrap.css';
-import './App.css';
+import './Styles/App.css';
+import './Styles/Buttons.scss'
 
 class App extends React.Component {
 

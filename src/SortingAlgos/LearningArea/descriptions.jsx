@@ -1,4 +1,4 @@
-import '../../../src/App.css';
+import '../../Styles/App.css';
 export const introDescription = () => (
     <>
         <h5><strong>Data Structure & Algorithm Visualizer</strong></h5>
