@@ -522,56 +522,55 @@ export default class SortingVisualizer extends React.Component {
                         <div className="buttonContainer">
                             <div className="buttonGroup">
                                 <div class="wrapper buttons">
-                                    <button className={`cta sorting`}
+                                    <button className={`button _1`}
                                         onClick={() => {
                                             this.makeArray();
                                             /*
                                             ? Specifies the button that is active for 1. button animations, and 2. Code Visualization  */
                                             this.setState({ activeButton: "generateArray", activeSortingButton: "", activeAlgorithm: 0 });
                                         }}
-                                        disabled={isSorting}>Generate New Array
+                                        disabled={isSorting}>
+                                            <span>Generate New Array</span><div class="back"></div>
                                     </button>
-                                    <button className={`cta sorting`}
+                                    <button className={`button _1`}
                                          onClick={() => {
                                              this.setState({ activeSortingButton: "bubbleSort", activeAlgorithm: 1 });
                                              this.bubbleSort()
                                         }}
-                                        disabled={sortingInProgress}>Bubble Sort
+                                        disabled={sortingInProgress}><span>Bubble Sort</span><div class="back"></div>
                                     </button>
-                                    <button className={`cta sorting`}
+                                    <button className={`button _1`}
                                         onClick={() => {
                                             this.setState({ activeSortingButton: "selectionSort", activeAlgorithm: 2 });
                                             this.selectionSort()
                                         }}
-                                        disabled={sortingInProgress}>Selection Sort
+                                        disabled={sortingInProgress}><span>Selection Sort</span><div class="back"></div>
                                     </button>
-                                    <button className={`cta sorting`}
+                                    <button className={`button _1`}
                                         onClick={() => {
                                             this.setState({ activeSortingButton: "insertionSort", activeAlgorithm: 3 });
                                             this.insertionSort()
                                         }}
-                                        disabled={sortingInProgress}>Insertion Sort
+                                        disabled={sortingInProgress}><span>Insertion Sort</span><div class="back"></div>
                                     </button>
-                                    <button className={`cta sorting`}
+                                    <button className={`button _1`}
                                         onClick={() => {
                                             this.setState({ activeSortingButton: "mergeSort", activeAlgorithm: 4 });
                                             this.mergeSort()
                                         }
-                                        } disabled={sortingInProgress}>Merge Sort
+                                        } disabled={sortingInProgress}><span>Merge Sort</span><div class="back"></div>
                                     </button>
-                                    <button className={`cta sorting`}
+                                    <button className={`button _1`}
                                         onClick={() => {
                                             this.setState({ activeSortingButton: "heapSort", activeAlgorithm: 5 });
                                             this.heapSort()
                                         }}
-                                        disabled={sortingInProgress}>Heap Sort
+                                        disabled={sortingInProgress}><span>Heap Sort</span><div class="back"></div>
                                     </button>
                                     
                                     {/* Reset Button */}
-                                    <button style={{
-                                        color: 'black'
-                                    }}
-                                        className="btn-3d sorting"
+                                    <button 
+                                        className="button _1"
                                         onClick={this.handleReset}
                                     >
                                         Reset
