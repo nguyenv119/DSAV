@@ -15,7 +15,7 @@
     display: flex;
     padding: 8px 16px;
     text-decoration: none;
-    font-size: 15px;
+    font-size: 1vw;
     color: #fff;
     background-color: transparent;
     transition: all 1s;
@@ -27,7 +27,8 @@
     border-radius: 3px; 
     align-items: center; 
     justify-content: center; 
-	transition: all 0.3s cubic-bezier(0, 0.22, .3, 1);
+    overflow: hidden;
+	transition: all 0.1s cubic-bezier(0, 0.22, .3, 1);
 	
 	&:before{
 		content: '';
@@ -45,11 +46,11 @@
 
 	.back{
 		position: absolute;
-		width: 0;
-		height: 0;
+		width: 0px;
+		height: 0px;
 		border-radius: 50%;
 		z-index: 5;
-		transition: all 2.5s cubic-bezier(0.1, 0.22, .3, 1);
+		transition: all 2s cubic-bezier(0.1, 0.22, .3, 1);
 	}
 
 	&._1 .back{
@@ -59,22 +60,22 @@
 	}
 	&._2 .back{
 		right: -50%;
-		top: -50%;
+		bottom: -50%;
 		background: #FB5607;
 	}
 	&._3 .back{
-		left: -50%;
-		bottom: -50%;
-		background: #f1cc32;
+		left: -110%;
+		top: -50%;
+		background: #bf9900;
 	}
 	&._4 .back{
 		right: -50%;
 		bottom: -50%;
-		background: #50af50;
+		background: #2b912b;
 	}
 	&._5 .back{
 		right: -50%;
-		bottom: -50%;
+		top: -50%;
 		background: #FF006E;
 	}
 	&._6 .back{
@@ -84,8 +85,8 @@
 	}
 
 	&:hover .back{
-		width: calc(2 * 100px);
-		height: calc(2 * 200px);
+		width: calc(2 * 150px);
+		height: calc(2 * 300px);
 	}
 }
 
