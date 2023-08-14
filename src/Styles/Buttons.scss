@@ -7,6 +7,11 @@
     // border: 2px solid red;
 }
 
+
+.down {
+    color: black;
+}
+
 .button{
 
     font-family: 'Poppins', sans-serif;
@@ -64,7 +69,7 @@
 		background: #FB5607;
 	}
 	&._3 .back{
-		left: -110%;
+		left: -70%;
 		top: -50%;
 		background: #bf9900;
 	}
@@ -86,8 +91,8 @@
 
     &._7 .back{
 		right: -150%;
-		bottom: -50%;
-		background: #fff;
+		bottom: -60%;
+		background: #ff3333;
 	}
 
 	&:hover .back{
