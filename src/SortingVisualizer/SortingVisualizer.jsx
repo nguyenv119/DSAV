@@ -637,6 +637,7 @@ export default class SortingVisualizer extends React.Component {
                                             this.handlePause();
                                             this.setState({ activeButton: this.state.isPaused ? "" : "pause" });
                                         }}
+                                        style={{width: '6vw'}}
                                         disabled={!this.state.sortingInProgress}>
                                     <span>{this.state.isPaused ? "Play" : "Pause"}</span>
                                     <div class="back"></div>
