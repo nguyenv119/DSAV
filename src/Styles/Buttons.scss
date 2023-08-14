@@ -8,6 +8,7 @@
 }
 
 .button{
+
     font-family: 'Poppins', sans-serif;
     margin-right: 1.5%;
     cursor:pointer;
@@ -42,14 +43,10 @@
 		z-index: 10;
 	}
 
-	&._1{ background: #252525 }
-
-
 	.back{
 		position: absolute;
 		width: 0;
 		height: 0;
-		filter: url(#filter);
 		border-radius: 50%;
 		z-index: 5;
 		transition: all 2.5s cubic-bezier(0.1, 0.22, .3, 1);
@@ -58,27 +55,37 @@
 	&._1 .back{
 		left: -50%;
 		top: -50%;
-		background: #27ae60;
+		background: #3A86FF;
 	}
 	&._2 .back{
 		right: -50%;
 		top: -50%;
-		background: #c0392b;
+		background: #FB5607;
 	}
 	&._3 .back{
 		left: -50%;
 		bottom: -50%;
-		background: #34495e;
+		background: #f1cc32;
 	}
 	&._4 .back{
 		right: -50%;
 		bottom: -50%;
-		background: #2980b9;
+		background: #50af50;
+	}
+	&._5 .back{
+		right: -50%;
+		bottom: -50%;
+		background: #FF006E;
+	}
+	&._6 .back{
+		right: -50%;
+		bottom: -50%;
+		background: #3a85ff8e;
 	}
 
 	&:hover .back{
-		width: calc(2 * var(--width));
-		height: calc(2 * var(--height));
+		width: calc(2 * 100px);
+		height: calc(2 * 200px);
 	}
 }
 

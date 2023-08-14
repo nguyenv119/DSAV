@@ -532,35 +532,35 @@ export default class SortingVisualizer extends React.Component {
                                         disabled={isSorting}>
                                             <span>Generate New Array</span><div class="back"></div>
                                     </button>
-                                    <button className={`button _1`}
+                                    <button className={`button _2`}
                                          onClick={() => {
                                              this.setState({ activeSortingButton: "bubbleSort", activeAlgorithm: 1 });
                                              this.bubbleSort()
                                         }}
                                         disabled={sortingInProgress}><span>Bubble Sort</span><div class="back"></div>
                                     </button>
-                                    <button className={`button _1`}
+                                    <button className={`button _3`}
                                         onClick={() => {
                                             this.setState({ activeSortingButton: "selectionSort", activeAlgorithm: 2 });
                                             this.selectionSort()
                                         }}
                                         disabled={sortingInProgress}><span>Selection Sort</span><div class="back"></div>
                                     </button>
-                                    <button className={`button _1`}
+                                    <button className={`button _4`}
                                         onClick={() => {
                                             this.setState({ activeSortingButton: "insertionSort", activeAlgorithm: 3 });
                                             this.insertionSort()
                                         }}
                                         disabled={sortingInProgress}><span>Insertion Sort</span><div class="back"></div>
                                     </button>
-                                    <button className={`button _1`}
+                                    <button className={`button _5`}
                                         onClick={() => {
                                             this.setState({ activeSortingButton: "mergeSort", activeAlgorithm: 4 });
                                             this.mergeSort()
                                         }
                                         } disabled={sortingInProgress}><span>Merge Sort</span><div class="back"></div>
                                     </button>
-                                    <button className={`button _1`}
+                                    <button className={`button _6`}
                                         onClick={() => {
                                             this.setState({ activeSortingButton: "heapSort", activeAlgorithm: 5 });
                                             this.heapSort()
@@ -569,12 +569,12 @@ export default class SortingVisualizer extends React.Component {
                                     </button>
                                     
                                     {/* Reset Button */}
-                                    <button 
+                                    {/* <button 
                                         className="button _1"
                                         onClick={this.handleReset}
                                     >
                                         Reset
-                                    </button>
+                                    </button> */}
                                 </div>
                                 {/* <div className="btn-container">
                                     <button className={`btn-3d regular${activeSortingButton === "heapSort" ? ' down' : ''}`}
