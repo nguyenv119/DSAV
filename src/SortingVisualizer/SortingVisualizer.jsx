@@ -632,13 +632,17 @@ export default class SortingVisualizer extends React.Component {
                                 <span style={{ color: SMALLER_COLOR  }}>Worse Case: {totalComparisons}</span>
                             </button>
                             <div className="btn-container">
-                                <button className={`btn-3d regular pp${activeButton === "pause" ? ' down' : ''}`}
-                                    onClick={() => {
-                                        this.handlePause();
-                                        this.setState({ activeButton: this.state.isPaused ? "" : "pause" });
-                                    }}
-                                    disabled={!this.state.sortingInProgress}>{this.state.isPaused ? "Play" : "Pause"}</button>
+                                <button className={`button _7${activeButton === "pause" ? ' down' : ''}`}
+                                        onClick={() => {
+                                            this.handlePause();
+                                            this.setState({ activeButton: this.state.isPaused ? "" : "pause" });
+                                        }}
+                                        disabled={!this.state.sortingInProgress}>
+                                    <span>{this.state.isPaused ? "Play" : "Pause"}</span>
+                                    <div class="back"></div>
+                                </button>
                             </div>
+
                         </div>
                     </div>
                 </div>

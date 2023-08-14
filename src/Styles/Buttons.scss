@@ -84,6 +84,12 @@
 		background: #3a85ff8e;
 	}
 
+    &._7 .back{
+		right: -150%;
+		bottom: -50%;
+		background: #fff;
+	}
+
 	&:hover .back{
 		width: calc(2 * 150px);
 		height: calc(2 * 300px);
