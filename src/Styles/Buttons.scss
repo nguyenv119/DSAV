@@ -12,6 +12,7 @@
     color: black;
 }
 
+.a,
 .button{
 
     font-family: 'Poppins', sans-serif;
@@ -99,6 +100,11 @@
 		width: calc(2 * 150px);
 		height: calc(2 * 300px);
 	}
+}
+
+a.button {
+	border: none;
+    // border-radius: 5px; 
 }
 
 @media only screen and (max-width: 750px) {

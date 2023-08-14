@@ -252,7 +252,7 @@ button[class*="btn"] {border: 1;}
   height: 13vh;
   max-height: 13vh;
   min-height: 13vh;
-  transform: translateY(-30%);
+  transform: translateY(-10%);
   flex-grow: 1;
   overflow: hidden; 
   /* border: 2px solid purple; */
@@ -396,7 +396,6 @@ button[class*="btn"] {border: 1;}
   font-size: 17px;
   overflow-x: auto;
   overflow-y: hidden;
-
   font-size: 1vw; 
   margin-right: 1%;
   white-space: nowrap;
@@ -404,14 +403,14 @@ button[class*="btn"] {border: 1;}
   /* border: 2px solid purple; */
 }
 
-/*.cta.img {
+.cta.img {
   margin-right: 2%; 
   margin-bottom: 1%;
   padding: 5px 6px 6px 7px;
   transform: skewX(0deg);
   border-radius: 25%;
   box-shadow: 0px 0px 3px 0px rgba(17, 17, 17, 0.5);
-}*/
+}
 
 .cta.sorting {
   font-family: 'Poppins', sans-serif;
@@ -543,15 +542,26 @@ button:hover {
 }
 
 @media only screen and (max-width: 1350px) {
-  .cta.sorting {
-    font-size: 15px;
-  }
   .explanation.about-us {
-    transform: translateY(-40%);
+    /* border: 2px solid red; */
+    height: 11vh;
+    min-height: 11vh;
+    max-height: 11vh;
+    transform: translateY(-30%);
   }
 }
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1250px) {
   .explanation.about-us {
+    /* border: 2px solid yellow; */
+    height: 13vh;
+    min-height: 13vh;
+    max-height: 13vh;
+    transform: translateY(-30%);
+  }
+}
+@media only screen and (max-width: 683px) {
+  .explanation.about-us {
+    /* border: 2px solid green; */
     height: 16vh;
     max-height: 16vh;
     min-height: 16vh;

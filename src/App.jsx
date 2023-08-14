@@ -2,7 +2,8 @@ import React from "react";
 import SortingVisualizer from "./SortingVisualizer/SortingVisualizer.jsx";
 import 'bootstrap/dist/css/bootstrap.css';
 import './Styles/App.css';
-import './Styles/Buttons.scss'
+import './Styles/Buttons.scss';
+import './Styles/fontawesome-all.min.css';
 
 class App extends React.Component {
 
