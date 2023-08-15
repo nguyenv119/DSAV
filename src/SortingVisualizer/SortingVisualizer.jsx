@@ -73,7 +73,7 @@ export default class SortingVisualizer extends React.Component {
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 0,
+            activeAlgorithm: 1,
             highlightedLine: [0],
             mergeSortActivated: false,
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
@@ -602,7 +602,9 @@ export default class SortingVisualizer extends React.Component {
                                     ></input>
                                 </div>
                             </div>
-                            <button className="btn-3d colorful regular speed">
+                            <button 
+                                className="button _2"
+                                style={{ padding: "0.6% 2%", cursor: "auto"}}>
                                 Speed
                             </button>
                             <div className="scrollableRangeContainer">
@@ -620,16 +622,10 @@ export default class SortingVisualizer extends React.Component {
                                     ></input>
                                 </div>
                             </div>
-                            <button className="btn-3d colorful regular length">
+                            <button 
+                                className="button _2"
+                                style={{ padding: "0.6% 2%", cursor: "auto"}}>
                                 Array Length
-                            </button>
-                            <button
-                                className="btn-3d regular comparisons"
-                                style={{ fontSize: '16px', height: '60px', left: '-18px'}}
-                            >
-                                <span style={{ color: LARGER_COLOR }}>Current Case: {comparisons}</span>
-                                <br />
-                                <span style={{ color: SMALLER_COLOR  }}>Worse Case: {totalComparisons}</span>
                             </button>
                             <div className="btn-container">
                                 <button className={`button _7${activeButton === "pause" ? ' down' : ''}`}
@@ -637,7 +633,7 @@ export default class SortingVisualizer extends React.Component {
                                             this.handlePause();
                                             this.setState({ activeButton: this.state.isPaused ? "" : "pause" });
                                         }}
-                                        style={{width: '6vw'}}
+                                        style={{width: '6vw',padding: "7% 2%"}}
                                         disabled={!this.state.sortingInProgress}>
                                     <span>{this.state.isPaused ? "Play" : "Pause"}</span>
                                     <div class="back"></div>
@@ -671,7 +667,12 @@ export default class SortingVisualizer extends React.Component {
                         className={`explanation${
                             activeAlgorithmKey === "none" ? ' about-us' : 
                             (activeAlgorithmKey === "mergeSort") || (activeAlgorithmKey === "heapSort") ? ' merge' : ' '}`}>
-
+                            <button
+                                className="comparisons _1"
+                                style={{ fontSize: '0.95vw', height: '4vh', }}>
+                                <span style={{ color: LARGER_COLOR }}>Current Case: {comparisons}</span>
+                                <span style={{ color: SMALLER_COLOR  }}>Worse Case: {totalComparisons}</span>
+                            </button>
                         <h5 className={`${activeAlgorithmKey !== "none" ? 'hidden' : ''}`}><strong>Reach out and Contribute!</strong></h5>
                         <div class="wrapper noButtons">
                             {/* If we are in the sorting algorithms, we don't show the social media */}
