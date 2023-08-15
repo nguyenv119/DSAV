@@ -1,0 +1,162 @@
+.wrapper{
+    // border: 2px solid red;
+}
+
+
+.down {
+    color: black;
+}
+
+.comparisons,
+.buttonSoon,
+.a,
+.button{
+
+    font-family: 'Poppins', sans-serif;
+    margin-right: 2.5%;
+    cursor:pointer;
+    display: flex;
+    padding: 6px 55px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #fff;
+    background-color: transparent;
+    transition: all 1s;
+	box-shadow: rgb(52, 52, 52) 0px 1px 3px 0px;
+    border: none;
+    white-space: nowrap; 
+    font-weight: 900;
+    position:relative;
+    border-radius: 10px; 
+    align-items: center; 
+    justify-content: center; 
+    overflow: hidden;
+	transition: all 0.1s cubic-bezier(0, 0.22, .3, 1);
+	
+	&:before{
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(35, 35, 35, 0.1);
+		// background: rgba(188, 175, 175, 0.1);
+	}
+
+	&.img {
+		padding: 7px;
+		// margin: auto;
+		margin-right: 5%;
+	}
+
+	&._none {
+		padding: 3px 2%;
+		margin: auto;
+		margin-top: 0%;
+		text-align: center;
+		border-radius: 10px;
+		background-color: rgb(2, 2, 2);
+		box-shadow: rgb(28, 28, 28) 0px 1px 3px 0px;
+	}
+	&._none2 {
+		margin: auto;
+		margin-top: 0%;
+		text-align: center;
+		background-color: #101010;
+		box-shadow: none;
+	}
+	&:hover._none {
+		cursor: auto;
+	}
+
+	span{
+		z-index: 10;
+	}
+
+	.back{
+		position: absolute;
+		width: 0px;
+		height: 0px;
+		border-radius: 50%;
+		z-index: 5;
+		transition: all 0.7s cubic-bezier(0.1, 0.22, .3, 1);
+	}
+
+	&._1 .back{
+		left: -50%;
+		top: -50%;
+		background: #3A86FF;
+	}
+	&._2 .back{
+		right: -50%;
+		bottom: -50%;
+		background: #FB5607;
+	}
+	&._3 .back{
+		left: -70%;
+		top: -50%;
+		background: #bf9900;
+	}
+	&._4 .back{
+		right: -20%;
+		bottom: -50%;
+		background: #2b912b;
+	}
+	&._5 .back{
+		right: -50%;
+		top: -50%;
+		background: #FF006E;
+	}
+	&._6 .back{
+		right: -50%;
+		bottom: -50%;
+		background: #3a85ff8e;
+	}
+
+    &._7 .back{
+		right: -150%;
+		bottom: -10%;
+		background: #ff3333;
+	}
+
+	&:hover .back{
+		width: calc(2 * 150px);
+		height: calc(2 * 300px);
+	}
+}
+
+a.button {
+	border: none;
+}
+
+.comparison {
+	display: flex;
+	margin: auto;
+	border-radius: 5px;
+}
+
+.comparisons:hover {
+	cursor:auto;
+}
+
+.comparison {
+	// border: 2px solid red;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 5px; 
+}
+
+.separator {
+    display: inline-block;
+    background-color: #aaa; 
+    width: 1px; 
+    height: 50%;
+    vertical-align: middle;
+}
+
+@media only screen and (max-width: 750px) {
+	.button{
+		// margin: 0.8rem 0;
+	}
+}
