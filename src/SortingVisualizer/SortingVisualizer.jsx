@@ -200,9 +200,9 @@ export default class SortingVisualizer extends React.Component {
             0 : ANIMATION_SPEED_MS === 10 ?
                 10 : ANIMATION_SPEED_MS === 8 ?
                     20 : ANIMATION_SPEED_MS === 6 ?
-                        200 : ANIMATION_SPEED_MS === 4 ?
-                            1000 : ANIMATION_SPEED_MS === 2 ?
-                                2000 : 3000;
+                        150 : ANIMATION_SPEED_MS === 4 ?
+                            500 : ANIMATION_SPEED_MS === 2 ?
+                                1000 : 2000;
         return speed;
     }
 
@@ -615,7 +615,7 @@ export default class SortingVisualizer extends React.Component {
                                 Array Length
                             </button>
                             <label for="customRange4" className="form-label"></label>
-                            <div className="scrollableRange">
+                            <div className="scrollableRange2">
                                 <input
                                     type="range"
                                     className="form-range"

@@ -377,13 +377,15 @@ li {
   align-items: center;
 }
 
+.scrollableRange2,
 .scrollableRange {
-  top: -5px;
+  top: -10px;
   display: flex;
   align-items: center;
   position: relative;
 }
 
+.scrollableRange2,
 .scrollableRange input[type="range"] {
   width: 200px;
   appearance: none;
@@ -393,7 +395,14 @@ li {
 /* The track (or the background) of the scroll bar */
 .scrollableRange input[type="range"]::-webkit-slider-runnable-track {
   height: 10px;
-  background: linear-gradient(to right, #00cf00 30%, #ffffff 50%); /* half green, half light gray */
+  background: linear-gradient(to right, #00ff00 40%, #ff1605 30%); /* half green, half light gray */
+  border-radius: 3px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.scrollableRange2 input[type="range"]::-webkit-slider-runnable-track {
+  height: 10px;
+  background: white;
   border-radius: 3px;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 }
@@ -402,14 +411,11 @@ li {
 .scrollableRange input[type="range"]::-webkit-slider-thumb {
   width: 20px;
   height: 20px;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   border: 1px solid #000000;
   border-radius: 50%;
   margin-top: -2.5%;
 }
-
-
-
 
 @keyframes gradientAnimation {
   0% {
