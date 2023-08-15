@@ -689,16 +689,16 @@ export default class SortingVisualizer extends React.Component {
                         <div class="wrapper noButtons">
                             {/* If we are in the sorting algorithms, we don't show the social media */}
                             <a className={`button img ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://github.com/nguyenv119/DSAV" target="_blank">
-                                <img className="cta-image" src="DSAV/src/public/github-icon.png" alt="Github"></img>
+                                <img className="cta-image" src="github-icon.png" alt="Github"></img>
                             </a>
                             <a className={`button img ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="mailto:nguyenv@brandeis.edu" target="_blank">
-                                <img className="cta-image" src="DSAV/src/public/email-icon.png" alt="Email"></img>
+                                <img className="cta-image" src="email-icon.png" alt="Email"></img>
                             </a>
                             <a className={`button img ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://www.linkedin.com/in/long-nguyen119/" target="_blank">
-                                <img className="cta-image" src="DSAV/src/public/linkedin-icon.png" alt="Linkedin"></img>
+                                <img className="cta-image" src="linkedin-icon.png" alt="Linkedin"></img>
                             </a>
                             <a className={`button img ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://www.instagram.com/_vinh.long_/" target="_blank">
-                                <img className="cta-image" src="DSAV/src/public/instagram-icon.png" alt="Instagram"></img>
+                                <img className="cta-image" src="instagram-icon.png" alt="Instagram"></img>
                             </a>
                         </div>
                     </div>
