@@ -32,7 +32,7 @@ import { left } from "@popperjs/core";
 
 const MINVAL = 10;
 const MAXVAL = 625;
-const SPEED_THRESHOLD = 6;
+const SPEED_THRESHOLD = 5;
 
 export const PRIMARY_COLOR = '#3a85ff8e';
 export const SUPER_PRIMARY_COLOR = '#3A86FF';

@@ -1,9 +1,4 @@
 .wrapper{
-	// width: calc(4 * var(--width));
-	// height: calc(4 * var(--height));
-	// display: flex;
-	// justify-content: center;
-	// align-items: center;
     // border: 2px solid red;
 }
 
@@ -54,6 +49,9 @@
 		margin-top: 0%;
 		text-align: center;
 		box-shadow: rgba(99, 99, 99, 0.2) 0px 1px 1px 1px;
+	}
+	&:hover._none {
+		cursor: auto;
 	}
 
 	span{
@@ -146,93 +144,3 @@ a.button {
 		// margin: 0.8rem 0;
 	}
 }
-
-
-
-
-// .btn-3d.colorful.regular {
-// 	min-width: 145px;
-// 	position: relative;
-// 	top: -2px;
-// 	margin-right: 60px;
-//   }
-  
-//   .btn-3d.regular.colorful.speed {
-// 	min-width: 90px;
-// 	margin-right: 60px;
-//   }
-  
-//   .btn-3d.regular.comparisons {
-// 	pointer-events: none;
-// 	min-width: 200px;
-// 	max-width: 10vw;
-// 	width: 2vw;
-// 	position: relative;
-// 	margin-right: 20px;
-// 	font-size: 1vw; 
-  
-// 	margin-right: 1%;
-// 	white-space: nowrap;
-// 	flex: 1 1 auto;
-//   }
-
-//   .btn-3d {
-// 	position: relative;
-// 	display: inline-block;
-// 	padding: 5px 20px 5px 20px;
-// 	color: white;
-//   font-weight: 500;
-// 	text-align: center;
-// 	transition: top .01s linear;
-// 	text-shadow: 0 1px 0 rgba(0,0,0,0.15);
-//   border-radius: 5px;
-//   border: 1px solid transparent;
-// }
-
-// /* 3D button colors */
-// .btn-3d.regular {
-//   border: 1px solid rgb(64, 64, 64);
-//   box-sizing: border-box;
-// 	background-color: #1a1a1a;
-
-// 	/* box-shadow: 0 0 0 1px #1a1a1a inset,
-//         0 0 0 2px rgba(255,255,255,0.15) inset,
-//         0 8px 0 0 #1a1a1a,
-//         0 8px 0 1px rgba(0,0,0,0.4),
-// 				0 8px 8px 1px rgba(51, 26, 26, 0.5); */
-//   margin-right: 20px;
-// }
-
-// .btn-3d.regular:hover {
-//   /* border-color: #be64ff; */
-//   cursor: pointer;
-// }
-
-// .btn-3d.regular:active {
-//   top: 9px;
-//   background: linear-gradient(253deg, var(--gradcolor1), var(--gradcolor2), var(--gradcolor3));
-//   background-size: 600% 600%;
-//   animation: AnimationName 7s ease infinite;
-// }
-
-// .btn-3d.regular:active {
-// 	box-shadow: 0 0 0 1px #1a1a1a inset,
-// 				0 0 0 2px rgba(255,255,255,0.15) inset,
-// 				0 0 0 1px rgba(0,0,0,0.4);
-// }
-
-// .colorful {
-//   text-align: center;
-//   /* border-radius: 8px;
-//   border: 1px solid transparent; */
-//   font-size: 1em;
-//   font-weight: 500;
-//   background-color: #1a1a1a;
-//   /* transition: border-color 0.25s;
-//   color: white; */
-//   /** Animations */
-//   /* background: linear-gradient(253deg, var(--gradcolor1), var(--gradcolor2), var(--gradcolor3)); */
-//   background-size: 600% 600%;
-//   animation: AnimationName 7s ease infinite;
-//   pointer-events: none;
-// }
