@@ -32,7 +32,7 @@ import { left } from "@popperjs/core";
 
 const MINVAL = 10;
 const MAXVAL = 625;
-const SPEED_THRESHOLD = 5;
+const SPEED_THRESHOLD = 4;
 
 export const PRIMARY_COLOR = '#3a85ff8e';
 export const SUPER_PRIMARY_COLOR = '#3A86FF';
@@ -66,7 +66,7 @@ export default class SortingVisualizer extends React.Component {
             sortingAlgorithm: null,
             isSorting: false,
             buttonsDisabled: false,
-            ANIMATION_SPEED_MS: 6, //6
+            ANIMATION_SPEED_MS: 4, //4
             BARS: 14, // 14
             sortingInProgress: false,
             activeButton: "",
@@ -196,12 +196,12 @@ export default class SortingVisualizer extends React.Component {
     /*
     ? Gets the speed of the animation */
     getSpeed(ANIMATION_SPEED_MS) {
-        const speed = ANIMATION_SPEED_MS === 10 ?
-            0 : ANIMATION_SPEED_MS === 8 ?
-                10 : ANIMATION_SPEED_MS === 6 ?
-                    20 : ANIMATION_SPEED_MS === 4 ?
-                        200 : ANIMATION_SPEED_MS === 2 ?
-                            1000 : ANIMATION_SPEED_MS === 0 ?
+        const speed = ANIMATION_SPEED_MS === 12 ?
+            0 : ANIMATION_SPEED_MS === 10 ?
+                10 : ANIMATION_SPEED_MS === 8 ?
+                    20 : ANIMATION_SPEED_MS === 6 ?
+                        200 : ANIMATION_SPEED_MS === 4 ?
+                            1000 : ANIMATION_SPEED_MS === 2 ?
                                 2000 : 3000;
         return speed;
     }
@@ -599,7 +599,7 @@ export default class SortingVisualizer extends React.Component {
                                         type="range"
                                         className="form-range"
                                         min="0"
-                                        max="10"
+                                        max="12"
                                         step="2"
                                         id="customRange3"
                                         value={ANIMATION_SPEED_MS}
