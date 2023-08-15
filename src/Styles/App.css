@@ -323,18 +323,18 @@ li {
 
 .settings {
   display: flex;
+  margin: auto;
   flex-wrap: nowrap;  
   align-items: center;
   position: relative;
-  width: calc(100% - 90px); /* subtract the total left and right margins */
+  /* width: calc(100% - 90px); */
+  width: 60%;
   bottom: 0%;
   left: 60px;
-  top: 4%;
-  font-size: 17px;
+  top: 7%;
   overflow-x: auto;
   overflow-y: hidden;
-  font-size: 1vw; 
-  margin-right: 1%;
+  /* margin-right: 1%; */
   white-space: nowrap;
   flex: 1 1 auto;
   /* border: 2px solid purple; */
