@@ -323,14 +323,15 @@ li {
 
 .settings {
   display: flex;
-  margin: auto;
+  /* margin: auto; */
   flex-wrap: nowrap;  
   align-items: center;
   position: relative;
   /* width: calc(100% - 90px); */
-  width: 60%;
+  width: 90%;
   bottom: 0%;
-  top: 5%;
+  top: 0%;
+  left: 5%;
   overflow-x: auto;
   overflow-y: hidden;
   /* margin-right: 1%; */
@@ -343,7 +344,14 @@ li {
   display: flex;
   margin: auto;
   flex-direction: column;   
+  align-items: center;
   gap: 0px;           
+}
+
+.setting-item .buttonSoon {
+  background-image: linear-gradient(to right, #0099f7, #f11712);
+  background-size: 400% 400%;  /* Allows the background to move */
+  animation: gradientAnimation 3s infinite;  /* 3 seconds for a full loop of the animation */
 }
 
 .cta.img {
@@ -380,7 +388,7 @@ li {
   width: 200px;
 }
 
-@keyframes AnimationName {
+@keyframes gradientAnimation {
   0% {
     background-position: 50% 0%;
   }

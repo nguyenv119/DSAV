@@ -39,7 +39,7 @@ export const SUPER_PRIMARY_COLOR = '#3A86FF';
 export const SECONDARY_COLOR = '#FB5607';
 export const GREEN_SPEED = 7;
 export const SMALLER_COLOR = "#ea2c1e";
-export const LARGER_COLOR = "#50af50"
+export const LARGER_COLOR = "#4BA14C"
 export const SAMESIZE_COLOR = "#f1cc32";
 export const SMALLEST_SOFAR_COLOR = "#FF006E"
 export const DONE_COLOR = "#FF006E";
@@ -628,18 +628,25 @@ export default class SortingVisualizer extends React.Component {
                                 ></input>
                             </div>
                         </div>
-                            <div className="btn-container">
-                                <button className={`button _7${activeButton === "pause" ? ' down' : ''}`}
-                                        onClick={() => {
-                                            this.handlePause();
-                                            this.setState({ activeButton: this.state.isPaused ? "" : "pause" });
-                                        }}
-                                        style={{width: '6vw',padding: "7% 2%"}}
-                                        disabled={!this.state.sortingInProgress}>
-                                    <span>{this.state.isPaused ? "Play" : "Pause"}</span>
-                                    <div class="back"></div>
-                                </button>
-                            </div>
+                        <div className="btn-container">
+                            <button className={`button _7${activeButton === "pause" ? ' down' : ''}`}
+                                    onClick={() => {
+                                        this.handlePause();
+                                        this.setState({ activeButton: this.state.isPaused ? "" : "pause" });
+                                    }}
+                                    style={{width: '6vw',padding: "7% 2%"}}
+                                    disabled={!this.state.sortingInProgress}>
+                                <span>{this.state.isPaused ? "Play" : "Pause"}</span>
+                                <div class="back"></div>
+                            </button>
+                        </div>
+                        <div className="setting-item">
+                            <button 
+                                className="buttonSoon"
+                                style={{ padding: "4% 50%", cursor: "auto"}}>
+                                Coming Soon...
+                            </button>
+                        </div>
 
                         </div>
                     </div>
