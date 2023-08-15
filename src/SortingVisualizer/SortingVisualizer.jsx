@@ -589,8 +589,8 @@ export default class SortingVisualizer extends React.Component {
                         <div className="settings">
                             <div className="setting-item">
                                 <button 
-                                    className="button _2"
-                                    style={{ padding: "0.6% 2%", cursor: "auto"}}>
+                                    className="button _none2"
+                                    style={{ padding: "4% 12%", cursor: "auto"}}>
                                     Speed
                                 </button>
                                 <label for="customRange3" className="form-label"></label>
@@ -609,12 +609,12 @@ export default class SortingVisualizer extends React.Component {
                             </div>
                         
                         <div className="setting-item">
-                            <label for="customRange4" className="form-label"></label>
                             <button 
-                                className="button _2"
-                                style={{ padding: "0.6% 2%", cursor: "auto"}}>
+                                className="button _none2"
+                                style={{ padding: "4% 12%", cursor: "auto"}}>
                                 Array Length
                             </button>
+                            <label for="customRange4" className="form-label"></label>
                             <div className="scrollableRange">
                                 <input
                                     type="range"

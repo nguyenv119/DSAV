@@ -53,7 +53,7 @@ li {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  left: 30px;
+  left: 3%;
 }
 
 
@@ -206,14 +206,14 @@ li {
 
 .arrayContainer {
   /* border: 2px solid white; */
-  background-color: #181818;
+  background-color: #101010;
   display: flex;
   flex-direction: column;
   position: fixed;
   left: 0%;
   top: 0%;
   height: 100vh; 
-  border-right: solid 3px #0c0c0c;
+  border-right: solid 1px #121212;
   width: 80%;
 }
 
@@ -251,7 +251,7 @@ li {
 }
 
 .buttons {
-  left: 20px; /* adjust as needed */
+  left: 20px;
   top: 0.5%;
   width: calc(100% - 40px); 
   height: 15%;
@@ -330,8 +330,7 @@ li {
   /* width: calc(100% - 90px); */
   width: 60%;
   bottom: 0%;
-  left: 60px;
-  top: 7%;
+  top: 5%;
   overflow-x: auto;
   overflow-y: hidden;
   /* margin-right: 1%; */
@@ -342,6 +341,7 @@ li {
 
 .setting-item {
   display: flex;
+  margin: auto;
   flex-direction: column;   
   gap: 0px;           
 }
@@ -363,21 +363,21 @@ li {
 .scrollableRangeContainer {
   position: relative;
   top: 0px;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .scrollableRange {
+  top: -10px;
   display: flex;
   align-items: center;
   position: relative;
-  top: -13px;
-  margin-right: 20px;
 }
 
 .scrollableRange input {
-  width: 140px;
+  width: 200px;
 }
 
 @keyframes AnimationName {

@@ -21,7 +21,7 @@
     color: #fff;
     background-color: transparent;
     transition: all 1s;
-	box-shadow: rgba(99, 99, 99, 0.2) 0px 1px 3px 0px;
+	box-shadow: rgb(52, 52, 52) 0px 1px 3px 0px;
     border: none;
     white-space: nowrap; 
     font-weight: 900;
@@ -39,16 +39,25 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background: rgba(0,0,0,0.1);
+		background: rgba(35, 35, 35, 0.1);
 		// background: rgba(188, 175, 175, 0.1);
 	}
 
 	&._none {
-		padding: 3px 3%;
+		padding: 3px 2%;
 		margin: auto;
 		margin-top: 0%;
 		text-align: center;
-		box-shadow: rgba(99, 99, 99, 0.2) 0px 1px 1px 1px;
+		border-radius: 10px;
+		background-color: rgb(2, 2, 2);
+		box-shadow: rgb(28, 28, 28) 0px 1px 3px 0px;
+	}
+	&._none2 {
+		margin: auto;
+		margin-top: 0%;
+		text-align: center;
+		background-color: #101010;
+		box-shadow: none;
 	}
 	&:hover._none {
 		cursor: auto;
