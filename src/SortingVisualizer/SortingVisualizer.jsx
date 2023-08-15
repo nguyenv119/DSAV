@@ -667,25 +667,29 @@ export default class SortingVisualizer extends React.Component {
                         className={`explanation${
                             activeAlgorithmKey === "none" ? ' about-us' : 
                             (activeAlgorithmKey === "mergeSort") || (activeAlgorithmKey === "heapSort") ? ' merge' : ' '}`}>
-                            <button
-                                className="comparisons _1"
-                                style={{ fontSize: '0.95vw', height: '4vh', }}>
+                        <button className="button _none" style={{ fontSize: '0.9vw', height: '35px' }}>
+                            <div className="comparison">
                                 <span style={{ color: LARGER_COLOR }}>Current Case: {comparisons}</span>
-                                <span style={{ color: SMALLER_COLOR  }}>Worse Case: {totalComparisons}</span>
-                            </button>
+                            </div>
+                            <div className="separator"></div>
+                            <div className="comparison">
+                                <span style={{ color: SMALLER_COLOR }}>Worst Case: {totalComparisons}</span>
+                            </div>
+                        </button>
+
                         <h5 className={`${activeAlgorithmKey !== "none" ? 'hidden' : ''}`}><strong>Reach out and Contribute!</strong></h5>
                         <div class="wrapper noButtons">
                             {/* If we are in the sorting algorithms, we don't show the social media */}
-                            <a className={`button _1 ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://github.com/nguyenv119/DSAV" target="_blank">
+                            <a className={`button ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://github.com/nguyenv119/DSAV" target="_blank">
                                 <img className="cta-image" src="/github-icon.png" alt="Github"></img>
                             </a>
-                            <a className={`button _1 ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="mailto:nguyenv@brandeis.edu" target="_blank">
+                            <a className={`button ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="mailto:nguyenv@brandeis.edu" target="_blank">
                                 <img className="cta-image" src="/email-icon.png" alt="Email"></img>
                             </a>
-                            <a className={`button _1 ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://www.linkedin.com/in/long-nguyen119/" target="_blank">
+                            <a className={`button ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://www.linkedin.com/in/long-nguyen119/" target="_blank">
                                 <img className="cta-image" src="/linkedin-icon.png" alt="Linkedin"></img>
                             </a>
-                            <a className={`button _1 ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://www.instagram.com/_vinh.long_/" target="_blank">
+                            <a className={`button ${activeAlgorithmKey !== "none" ? 'hidden' : ''}`} href="https://www.instagram.com/_vinh.long_/" target="_blank">
                                 <img className="cta-image" src="/instagram-icon.png" alt="Instagram"></img>
                             </a>
                         </div>

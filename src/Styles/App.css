@@ -173,10 +173,10 @@ li {
   resize: none;
   text-align: center;
   position: static;
-  height: 5vh;
-  max-height: 5vh;
-  min-height: 5vh;
-  transform: translateY(-80%);
+  height: 6vh;
+  max-height: 6vh;
+  min-height: 6vh;
+  transform: translateY(-50%);
   z-index: 0;
   width: 100%;
   /* border: 2px solid purple; */
