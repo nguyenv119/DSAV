@@ -38,7 +38,7 @@ export const PRIMARY_COLOR = '#3a85ff8e';
 export const SUPER_PRIMARY_COLOR = '#3A86FF';
 export const SECONDARY_COLOR = '#FB5607';
 export const GREEN_SPEED = 7;
-export const SMALLER_COLOR = "#FF3A3A";
+export const SMALLER_COLOR = "#FB1505";
 export const LARGER_COLOR = "#30B800"
 export const SAMESIZE_COLOR = "#f1cc32";
 export const SMALLEST_SOFAR_COLOR = "#FF006E"
@@ -643,7 +643,7 @@ export default class SortingVisualizer extends React.Component {
                         <div className="setting-item">
                             <button 
                                 className="buttonSoon"
-                                style={{ padding: "4% 40px", cursor: "auto"}}>
+                                style={{ padding: "3% 40px", cursor: "auto"}}>
                                 More Coming Soon...
                             </button>
                         </div>

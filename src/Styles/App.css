@@ -349,8 +349,7 @@ li {
 }
 
 .setting-item .buttonSoon {
-  background: linear-gradient(-45deg, #FB5607, #FF006E, #8338EC, #3A86FF);
-  /* background: linear-gradient(-45deg, #f36e15, #12a8ff, #face68); */
+  background: linear-gradient(-45deg, #f36e15, #12a8ff, #face68);
   background-size: 400% 400%;  /* Allows the background to move */
   animation: gradientAnimation 3s infinite;  /* 3 seconds for a full loop of the animation */
 }
@@ -409,6 +408,7 @@ li {
 }
 
 /* The thumb (or the handle) of the scroll bar */
+.scrollableRange2 input[type="range"]::-webkit-slider-thumb,
 .scrollableRange input[type="range"]::-webkit-slider-thumb {
   width: 20px;
   height: 20px;
