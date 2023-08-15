@@ -587,7 +587,12 @@ export default class SortingVisualizer extends React.Component {
                             </div>
                         </div>
                         <div className="settings">
-                            <div className="scrollableRangeContainer">
+                            <div className="setting-item">
+                                <button 
+                                    className="button _2"
+                                    style={{ padding: "0.6% 2%", cursor: "auto"}}>
+                                    Speed
+                                </button>
                                 <label for="customRange3" className="form-label"></label>
                                 <div className="scrollableRange">
                                     <input
@@ -602,31 +607,27 @@ export default class SortingVisualizer extends React.Component {
                                     ></input>
                                 </div>
                             </div>
-                            <button 
-                                className="button _2"
-                                style={{ padding: "0.6% 2%", cursor: "auto"}}>
-                                Speed
-                            </button>
-                            <div className="scrollableRangeContainer">
-                                <label for="customRange4" className="form-label"></label>
-                                <div className="scrollableRange">
-                                    <input
-                                        type="range"
-                                        className="form-range"
-                                        min="5"
-                                        max="20"
-                                        step="1"
-                                        id="customRange4"
-                                        value={BARS}
-                                        onChange={this.handleBarsChange}
-                                    ></input>
-                                </div>
-                            </div>
+                        
+                        <div className="setting-item">
+                            <label for="customRange4" className="form-label"></label>
                             <button 
                                 className="button _2"
                                 style={{ padding: "0.6% 2%", cursor: "auto"}}>
                                 Array Length
                             </button>
+                            <div className="scrollableRange">
+                                <input
+                                    type="range"
+                                    className="form-range"
+                                    min="5"
+                                    max="20"
+                                    step="1"
+                                    id="customRange4"
+                                    value={BARS}
+                                    onChange={this.handleBarsChange}
+                                ></input>
+                            </div>
+                        </div>
                             <div className="btn-container">
                                 <button className={`button _7${activeButton === "pause" ? ' down' : ''}`}
                                         onClick={() => {

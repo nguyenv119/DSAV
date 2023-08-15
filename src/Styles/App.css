@@ -340,6 +340,12 @@ li {
   /* border: 2px solid purple; */
 }
 
+.setting-item {
+  display: flex;
+  flex-direction: column;   
+  gap: 0px;           
+}
+
 .cta.img {
   margin-right: 2%; 
   margin-bottom: 1%;
@@ -349,38 +355,17 @@ li {
   box-shadow: 0px 0px 3px 0px rgba(17, 17, 17, 0.5);
 }
 
-.cta.sorting {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 300;
-  margin: 0;
-  text-align: center;
-  font-size: 1vw; 
-  margin-right: 1%;
-  white-space: nowrap;
-  flex: 1 1 auto;
-}
-
-.cta:focus {
-   outline: none; 
-}
-
 .cta.img:hover {
   /* box-shadow: 0px 0px 0px 1px #FF00FF; */
-}
-
-
-button:hover {
-  background-color: linear-gradient(45deg, #FBC638, #FF6363, #00C6FF, #FF00FF, #FBC638);
-  background-size: 500% 500%;
-  animation: AnimationName 3s ease infinite;
-  -webkit-backgrxound-clip: text;
-  /* -webkit-text-fill-color: transparent; */
 }
 
 /** Scrolling bar */
 .scrollableRangeContainer {
   position: relative;
   top: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .scrollableRange {
@@ -393,13 +378,6 @@ button:hover {
 
 .scrollableRange input {
   width: 140px;
-}
-
-.pp {
-  box-sizing: border-bx;
-  position: relative;
-  width: 100px;
-  top: -2px;
 }
 
 @keyframes AnimationName {
