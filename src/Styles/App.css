@@ -395,7 +395,7 @@ li {
 /* The track (or the background) of the scroll bar */
 .scrollableRange input[type="range"]::-webkit-slider-runnable-track {
   height: 10px;
-  background: linear-gradient(to right, #30B702 40%, #ff1605 30%); /* half green, half light gray */
+  background: linear-gradient(to right, #30B702 50%, #ff1605 30%); /* half green, half light gray */
   border-radius: 3px;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 }
