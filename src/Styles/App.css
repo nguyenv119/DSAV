@@ -378,15 +378,36 @@ li {
 }
 
 .scrollableRange {
-  top: -10px;
+  top: -5px;
   display: flex;
   align-items: center;
   position: relative;
 }
 
-.scrollableRange input {
+.scrollableRange input[type="range"] {
   width: 200px;
+  appearance: none;
+  background: transparent;
 }
+
+/* The track (or the background) of the scroll bar */
+.scrollableRange input[type="range"]::-webkit-slider-runnable-track {
+  height: 10px;
+  background: linear-gradient(to right, #00cf00 30%, #ffffff 50%); /* half green, half light gray */
+  border-radius: 3px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* The thumb (or the handle) of the scroll bar */
+.scrollableRange input[type="range"]::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 50%;
+  margin-top: -2.5%;
+}
+
 
 
 
