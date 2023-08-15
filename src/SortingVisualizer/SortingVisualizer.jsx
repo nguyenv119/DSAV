@@ -73,7 +73,7 @@ export default class SortingVisualizer extends React.Component {
             activeSortingButton: "",
             comparisons: 0,
             isPaused: false,
-            activeAlgorithm: 1,
+            activeAlgorithm: 0,
             highlightedLine: [0],
             mergeSortActivated: false,
             algorithmKeys: ["none", "bubbleSort", "selectionSort", "insertionSort", "mergeSort", "heapSort"],
@@ -643,8 +643,8 @@ export default class SortingVisualizer extends React.Component {
                         <div className="setting-item">
                             <button 
                                 className="buttonSoon"
-                                style={{ padding: "4% 50%", cursor: "auto"}}>
-                                Coming Soon...
+                                style={{ padding: "4% 40px", cursor: "auto"}}>
+                                More Coming Soon...
                             </button>
                         </div>
 
