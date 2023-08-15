@@ -675,7 +675,7 @@ export default class SortingVisualizer extends React.Component {
                         className={`explanation${
                             activeAlgorithmKey === "none" ? ' about-us' : 
                             (activeAlgorithmKey === "mergeSort") || (activeAlgorithmKey === "heapSort") ? ' merge' : ' '}`}>
-                        <button className="button _none" style={{ fontSize: '0.9vw', height: '35px' }}>
+                        <button className="button _none" style={{ fontSize: '0.9vw', height: '35px', marginBottom: '5%' }}>
                             <div className="comparison">
                                 <span style={{ color: LARGER_COLOR }}>Current Case: {comparisons}</span>
                             </div>
